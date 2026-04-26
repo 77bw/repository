@@ -2,7 +2,7 @@
 title: Claude Code 核心作者
 type: entity
 tags: [ai-coding]
-sources: []
+sources: ["raw/claude-code-best-practice/README.md"]
 created: 2026-04-26
 updated: 2026-04-26
 summary: Claude Code 相关的核心原创作者和优质内容平台推荐。

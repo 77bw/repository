@@ -2,10 +2,7 @@
 title: Git 分支操作
 type: entity
 tags: [full-stack]
-sources: []
-created: 2026-04-26
-updated: 2026-04-26
-summary: Git 分支常用命令速查，涵盖查看、创建、切换、删除分支的日常操作。
+sources: ["raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/工具使用/01-Git协助/分支操作命令 30581caa0df880a495e8dfd481586bea.md", "raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/工具使用/01-Git协助/分支操作命令/场景：在 feature-A 分支工作到一半，需要紧急切到 master 修 bug 34c81caa0df880648e1efdd656f75fdb.md"]，涵盖查看、创建、切换、删除分支的日常操作。
 ---
 
 # Git 分支操作

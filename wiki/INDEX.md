@@ -10,10 +10,6 @@
 - [[concepts/context-files]] — 向 AI Agent 提供项目级别指令的配置文件
 - [[concepts/coding-agent]] — 能够自主执行编程任务的 AI 系统
 
-## 主题 (topics/) — 新增
-
-- [[topics/claude-code-best-practice-guide]] — Claude Code 创始人 Boris Cherny 等人的 82 条实战技巧，覆盖 Subagents/Skills/Commands/Hooks/Context 全链路
-
 ## 实体 (entities/)
 
 - [[entities/claude-code-best-practice]] — shanraisshan 维护的 Claude Code 最佳实践仓库，涵盖 Subagents/Commands/Skills/Hooks 完整体系与 82 条实战技巧

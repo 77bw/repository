@@ -12,7 +12,7 @@ summary: 基于 Karpathy 方法论，结合 Graphify 图谱检索工具，从零
 
 ## 概述
 
-本 SOP 基于 Andrej Karpathy 提出的"AI 图书管理员"方法论，结合 [[entities/graphify]] 图谱检索工具，形成一套可持续运转的个人知识库工作流。
+本 SOP 基于 Andrej Karpathy 提出的"AI 图书管理员"方法论，结合 Graphify 图谱检索工具（Claude Code 内置 `/graphify` 技能），形成一套可持续运转的个人知识库工作流。
 
 **核心角色分工：**
 - 你 = 采集者 + 提问者

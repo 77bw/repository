@@ -2,7 +2,7 @@
 title: OpenCode + Oh My OpenCode
 type: entity
 tags: [ai-coding]
-sources: []
+sources: ["raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/AI 技术栈/OpenCode + Oh My OpenCode 完整使用指南 2f781caa0df881689124e89483dfa762.md", "raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/AI 技术栈/OpenCode + Oh My OpenCode 完整使用指南/使用小tips 2f581caa0df88050ac20db637bfb912c.md"]
 created: 2026-04-26
 updated: 2026-04-26
 summary: 开源 AI 编程助手 OpenCode 及其增强插件 Oh My OpenCode，提供多模型编排和专业 Agent 矩阵。

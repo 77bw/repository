@@ -2,7 +2,7 @@
 title: OpenClaw 知识管理
 type: entity
 tags: [ai, knowledge-management]
-sources: []
+sources: ["https://github.com/Tornadopp/openclaw-learn"]
 created: 2026-04-26
 updated: 2026-04-26
 summary: AI 驱动的个人知识库管理系统，支持网页存档、GitHub 项目管理、论文整理和跨设备同步。
