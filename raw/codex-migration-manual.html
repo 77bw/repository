@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>从 Claude Code 迁移到 Codex CLI / Codex App 使用手册</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17212b;
+      --muted: #5c6875;
+      --line: #d9e0e7;
+      --soft: #f5f7f9;
+      --panel: #ffffff;
+      --blue: #2457d6;
+      --teal: #0e8174;
+      --gold: #9a6400;
+      --red: #b63838;
+      --code: #101820;
+      --code-ink: #e7eef7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #eef4f7 0, #ffffff 310px),
+        #ffffff;
+      line-height: 1.65;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(10px);
+      padding: 24px 20px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 760;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .version {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 7px;
+      color: #26323f;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      background: #eef3f7;
+      text-decoration: none;
+    }
+
+    main {
+      width: min(1120px, 100%);
+      padding: 48px 44px 88px;
+    }
+
+    .hero {
+      padding: 14px 0 26px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: 32px;
+      align-items: end;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+      margin: 0 0 16px;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      font-size: 18px;
+      color: #334150;
+      margin: 0;
+      max-width: 760px;
+    }
+
+    .terminal-art {
+      border: 1px solid #233142;
+      background: var(--code);
+      color: var(--code-ink);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 22px 50px rgba(16, 24, 32, 0.14);
+    }
+
+    .terminal-bar {
+      display: flex;
+      gap: 7px;
+      padding: 11px 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      background: #172331;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #e25f5f; }
+    .dot:nth-child(2) { background: #e2bd55; }
+    .dot:nth-child(3) { background: #55b86f; }
+
+    .terminal-body {
+      padding: 18px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    section {
+      padding: 34px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      font-size: 28px;
+      line-height: 1.25;
+      margin: 0 0 16px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin: 28px 0 10px;
+      letter-spacing: 0;
+    }
+
+    p { margin: 10px 0; }
+    ul, ol { padding-left: 22px; }
+    li { margin: 6px 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e9f1ff;
+      color: #1d4ab6;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    .tag.warn { background: #fff4dd; color: var(--gold); }
+    .tag.good { background: #e7f7f2; color: var(--teal); }
+    .tag.danger { background: #ffecec; color: var(--red); }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      padding: 0.15em 0.35em;
+      background: #eef2f6;
+      border-radius: 5px;
+    }
+
+    pre {
+      overflow: auto;
+      padding: 16px;
+      color: var(--code-ink);
+      background: var(--code);
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #f1f5f8;
+      font-weight: 760;
+    }
+
+    .callout {
+      border-left: 4px solid var(--blue);
+      background: #f3f7ff;
+      padding: 14px 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .callout.warn {
+      border-left-color: var(--gold);
+      background: #fff8ea;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 18px 0;
+    }
+
+    .step {
+      min-height: 112px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      position: relative;
+    }
+
+    .step strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sources {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .kbd {
+      display: inline-block;
+      min-width: 1.8em;
+      padding: 0.06em 0.42em;
+      border: 1px solid #c8d0d8;
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      background: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      text-align: center;
+    }
+
+    @media (max-width: 880px) {
+      .shell { grid-template-columns: 1fr; }
+      aside {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      nav {
+        columns: 2;
+      }
+      main { padding: 30px 20px 64px; }
+      .hero { grid-template-columns: 1fr; }
+      .grid, .two, .workflow { grid-template-columns: 1fr; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside>
+      <div class="brand">Codex 迁移手册</div>
+      <div class="version">面向 Claude Code 用户<br>本机 CLI：codex-cli 0.118.0</div>
+      <nav>
+        <a href="#overview">1. 心智模型</a>
+        <a href="#quickstart">2. 快速开始</a>
+        <a href="#mapping">3. Claude 到 Codex 映射</a>
+        <a href="#cli">4. CLI 命令总览</a>
+        <a href="#slash">5. CLI Slash 命令</a>
+        <a href="#app">6. Codex App</a>
+        <a href="#permissions">7. 权限与沙盒</a>
+        <a href="#config">8. 配置、规则、记忆</a>
+        <a href="#mcp-skills">9. MCP、Skills、Plugins</a>
+        <a href="#workflows">10. 常用工作流</a>
+        <a href="#prompts">11. 提示词模板</a>
+        <a href="#sources">资料来源</a>
+      </nav>
+    </aside>
+
+    <main>
+      <header class="hero">
+        <div>
+          <h1>从 Claude Code 迁移到 Codex CLI / Codex App</h1>
+          <p class="lead">这是一份给已有 Claude Code 使用习惯的开发者看的 Codex 上手手册：不从零解释“AI 编程助手”，只讲你每天会按什么、敲什么、怎么控制权限、怎么把 Claude 的肌肉记忆迁移过来。</p>
+        </div>
+        <div class="terminal-art" aria-label="Codex CLI terminal preview">
+          <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <div class="terminal-body">$ codex --full-auto
+> 找出登录页测试失败原因，并做最小修复
+
+Codex 会读代码、提出计划、编辑文件、
+运行命令，并在必要时请你确认。</div>
+        </div>
+      </header>
+
+      <section id="overview">
+        <h2>1. 心智模型</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Codex CLI</h3>
+            <p>终端里的本地编码代理。运行在当前目录，能读写文件、执行命令、做 code review，也能非交互式执行任务。</p>
+          </div>
+          <div class="card">
+            <h3>Codex App</h3>
+            <p>桌面版控制中心。适合多项目、多线程、并行代理、内置 worktree、Git、终端、浏览器、自动化和可视化审阅。</p>
+          </div>
+          <div class="card">
+            <h3>共享概念</h3>
+            <p>两者都围绕工作区、权限、上下文、工具、规则文件和可复用技能。CLI 更像键盘流，App 更像任务驾驶舱。</p>
+          </div>
+        </div>
+        <div class="callout">
+          <strong>迁移建议：</strong>如果你习惯 Claude Code 的 REPL，就先用 <code>codex</code>；如果你想同时跑多个任务、看 diff、开本地网页或管理工作树，就用 Codex App。
+        </div>
+      </section>
+
+      <section id="quickstart">
+        <h2>2. 快速开始</h2>
+        <h3>安装与登录</h3>
+        <pre><code># npm 安装或升级
+npm i -g @openai/codex@latest
+
+# 启动交互式 TUI
+codex
+
+# 查看登录状态
+codex login status
+
+# 登录：默认打开浏览器进行 ChatGPT OAuth
+codex login
+
+# 用 API key 登录
+printenv OPENAI_API_KEY | codex login --with-api-key</code></pre>
+
+        <h3>第一次推荐这样跑</h3>
+        <pre><code># 在项目目录启动，先让 Codex 解释项目
+codex "请先阅读这个项目，说明目录结构、启动方式、测试方式，不要改文件"
+
+# 低摩擦自动模式：允许 workspace-write，并在 Codex 判断需要时询问
+codex --full-auto "修复当前测试失败，保持改动最小"
+
+# 非交互式任务，适合脚本或 CI
+codex exec --cd /path/to/repo "运行测试并总结失败原因"</code></pre>
+
+        <h3>Codex App 启动</h3>
+        <pre><code># 从 CLI 打开桌面 App
+codex app
+
+# macOS 上可打开指定工作区
+codex app /path/to/repo</code></pre>
+      </section>
+
+      <section id="mapping">
+        <h2>3. Claude Code 到 Codex 的命令映射</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Claude Code 习惯</th>
+              <th>Codex 对应</th>
+              <th>说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>claude</code></td>
+              <td><code>codex</code></td>
+              <td>启动交互式终端会话。</td>
+            </tr>
+            <tr>
+              <td><code>claude "query"</code></td>
+              <td><code>codex "query"</code></td>
+              <td>启动时带上首条提示。</td>
+            </tr>
+            <tr>
+              <td><code>claude -p "query"</code></td>
+              <td><code>codex exec "query"</code> 或 <code>codex e "query"</code></td>
+              <td>非交互式执行并退出。Codex 支持 <code>--json</code>、<code>-o</code>、<code>--output-schema</code> 等自动化参数。</td>
+            </tr>
+            <tr>
+              <td><code>claude -c</code> / <code>--continue</code></td>
+              <td><code>codex resume --last</code></td>
+              <td>继续最近的交互式会话。</td>
+            </tr>
+            <tr>
+              <td><code>claude --resume &lt;id&gt;</code></td>
+              <td><code>codex resume &lt;session-id&gt;</code></td>
+              <td>按会话 ID 恢复。</td>
+            </tr>
+            <tr>
+              <td><code>claude update</code></td>
+              <td><code>npm i -g @openai/codex@latest</code></td>
+              <td>npm 安装的 Codex 用 npm 升级；也可以查看你的安装渠道是否有其他升级方式。</td>
+            </tr>
+            <tr>
+              <td><code>claude mcp</code></td>
+              <td><code>codex mcp</code></td>
+              <td>管理 MCP 服务器。</td>
+            </tr>
+            <tr>
+              <td><code>CLAUDE.md</code></td>
+              <td><code>AGENTS.md</code></td>
+              <td>项目长期指令文件。Codex 会读取相关目录中的 <code>AGENTS.md</code>。</td>
+            </tr>
+            <tr>
+              <td><code>.claude/settings.json</code></td>
+              <td><code>~/.codex/config.toml</code></td>
+              <td>Codex 以 TOML 配置为主，命令行 <code>-c key=value</code> 可临时覆盖。</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="cli">
+        <h2>4. CLI 命令总览</h2>
+        <p>以下命令来自本机 <code>codex --help</code> 和 OpenAI 官方 CLI reference。你的本机版本为 <code>codex-cli 0.118.0</code>。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>命令</th>
+              <th>用途</th>
+              <th>常见用法</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>codex</code></td><td>启动交互式 TUI。</td><td><code>codex --full-auto</code></td></tr>
+            <tr><td><code>codex exec</code> / <code>codex e</code></td><td>非交互式执行任务。</td><td><code>codex e --json "检查测试"</code></td></tr>
+            <tr><td><code>codex review</code></td><td>非交互式代码审查。</td><td><code>codex review</code></td></tr>
+            <tr><td><code>codex login</code> / <code>logout</code></td><td>管理认证。</td><td><code>codex login status</code></td></tr>
+            <tr><td><code>codex mcp</code></td><td>管理 MCP 服务器。</td><td><code>codex mcp list</code></td></tr>
+            <tr><td><code>codex app</code></td><td>启动 Codex 桌面 App。</td><td><code>codex app /path/to/repo</code></td></tr>
+            <tr><td><code>codex completion</code></td><td>生成 shell completion。</td><td><code>codex completion zsh</code></td></tr>
+            <tr><td><code>codex sandbox</code></td><td>在 Codex 沙盒中运行命令。</td><td>高级/调试场景。</td></tr>
+            <tr><td><code>codex apply</code> / <code>codex a</code></td><td>应用 Codex Cloud 任务产生的最新 diff。</td><td><code>codex apply</code></td></tr>
+            <tr><td><code>codex resume</code></td><td>恢复旧会话。</td><td><code>codex resume --last</code></td></tr>
+            <tr><td><code>codex fork</code></td><td>从旧会话分叉新线程。</td><td><code>codex fork --last</code></td></tr>
+            <tr><td><code>codex cloud</code></td><td>浏览或执行 Codex Cloud 任务。</td><td>实验功能。</td></tr>
+            <tr><td><code>codex features</code></td><td>查看/切换 feature flags。</td><td><code>codex features list</code></td></tr>
+          </tbody>
+        </table>
+
+        <h3>常用全局参数</h3>
+        <table>
+          <thead>
+            <tr><th>参数</th><th>作用</th><th>建议</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>-C, --cd &lt;DIR&gt;</code></td><td>指定工作目录。</td><td>脚本里强烈建议显式写。</td></tr>
+            <tr><td><code>-m, --model &lt;MODEL&gt;</code></td><td>指定模型。</td><td>临时切模型用；长期默认写配置。</td></tr>
+            <tr><td><code>-s, --sandbox</code></td><td><code>read-only</code>、<code>workspace-write</code>、<code>danger-full-access</code>。</td><td>日常用 <code>workspace-write</code>。</td></tr>
+            <tr><td><code>-a, --ask-for-approval</code></td><td><code>untrusted</code>、<code>on-request</code>、<code>never</code>。</td><td>交互用 <code>on-request</code>，自动化用 <code>never</code>。</td></tr>
+            <tr><td><code>--full-auto</code></td><td>低摩擦预设：<code>on-request</code> + <code>workspace-write</code>。</td><td>最适合从 Claude Code 迁移后的日常开发。</td></tr>
+            <tr><td><code>-i, --image &lt;FILE&gt;</code></td><td>附加图片输入。</td><td>给截图、设计稿、报错截图时用。</td></tr>
+            <tr><td><code>--search</code></td><td>启用实时 web search。</td><td>查最新文档、版本、法规时用。</td></tr>
+            <tr><td><code>-c, --config key=value</code></td><td>临时覆盖配置。</td><td>适合一次性调整模型、profile、features。</td></tr>
+            <tr><td><code>--dangerously-bypass-approvals-and-sandbox</code></td><td>跳过确认和沙盒。</td><td>只在外部已强隔离环境用。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="slash">
+        <h2>5. CLI Slash 命令</h2>
+        <p>在交互式 <code>codex</code> 里输入 <code>/</code> 会出现命令列表。任务运行中也可以输入 slash 命令并按 <span class="kbd">Tab</span> 排队到下一轮。</p>
+        <table>
+          <thead>
+            <tr><th>命令</th><th>用途</th><th>Claude Code 用户理解方式</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>/permissions</code></td><td>调整当前会话权限。</td><td>类似切换允许/询问策略。</td></tr>
+            <tr><td><code>/model</code></td><td>切模型和推理强度。</td><td>对应 Claude 的 <code>/model</code>。</td></tr>
+            <tr><td><code>/fast</code></td><td>切换 Fast mode。</td><td>需要速度优先时用。</td></tr>
+            <tr><td><code>/plan</code></td><td>进入计划模式。</td><td>让 Codex 先规划再动手。</td></tr>
+            <tr><td><code>/personality</code></td><td>切换回复风格。</td><td>控制表达方式，不等于改系统能力。</td></tr>
+            <tr><td><code>/status</code></td><td>查看模型、权限、上下文等。</td><td>对应 Claude 的状态/用量检查习惯。</td></tr>
+            <tr><td><code>/compact</code></td><td>压缩上下文。</td><td>长会话续航必备。</td></tr>
+            <tr><td><code>/clear</code></td><td>清屏并开始新聊天。</td><td>想重开上下文时用。</td></tr>
+            <tr><td><code>/diff</code></td><td>查看 Git diff。</td><td>审阅 Codex 改了什么。</td></tr>
+            <tr><td><code>/review</code></td><td>审查当前工作区。</td><td>提交前让另一个视角挑问题。</td></tr>
+            <tr><td><code>/init</code></td><td>生成 <code>AGENTS.md</code> 脚手架。</td><td>对应 Claude 的 <code>/init</code> 生成 <code>CLAUDE.md</code>。</td></tr>
+            <tr><td><code>/mcp</code></td><td>查看 MCP 工具。</td><td>确认外部工具是否连上。</td></tr>
+            <tr><td><code>/mention</code></td><td>把文件或文件夹附到对话。</td><td>类似 Claude 的 <code>@file</code> 指向上下文。</td></tr>
+            <tr><td><code>/apps</code></td><td>浏览并插入 app connector。</td><td>App/连接器能力入口。</td></tr>
+            <tr><td><code>/plugins</code></td><td>管理插件。</td><td>扩展 Codex 能力。</td></tr>
+            <tr><td><code>/agent</code></td><td>切换子代理线程。</td><td>并行任务或探索线程时用。</td></tr>
+            <tr><td><code>/ps</code></td><td>查看后台终端输出。</td><td>长命令跑着时检查状态。</td></tr>
+            <tr><td><code>/stop</code></td><td>停止后台终端。</td><td>取消当前会话启动的后台工作。</td></tr>
+            <tr><td><code>/fork</code></td><td>分叉当前对话。</td><td>保留主线，试另一个方案。</td></tr>
+            <tr><td><code>/resume</code></td><td>恢复旧会话。</td><td>继续历史任务。</td></tr>
+            <tr><td><code>/new</code></td><td>同一 CLI 内开新对话。</td><td>不退出但重开任务。</td></tr>
+            <tr><td><code>/copy</code></td><td>复制最新输出。</td><td>也可按 <span class="kbd">Ctrl</span> + <span class="kbd">O</span>。</td></tr>
+            <tr><td><code>/quit</code> / <code>/exit</code></td><td>退出 CLI。</td><td>退出前确认重要改动已保存。</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="app">
+        <h2>6. Codex App</h2>
+        <p>Codex App 是桌面端的“任务中心”：项目侧边栏、线程、review 面板、终端、浏览器、worktree、自动化都集中在一个窗口里。官方文档说明，App 可在 macOS 和 Windows 使用。</p>
+        <div class="grid two">
+          <div class="card">
+            <h3>适合 App 的场景</h3>
+            <ul>
+              <li>一个项目里同时跑多个线程。</li>
+              <li>用内置 worktree 隔离并行改动。</li>
+              <li>在同一界面看 diff、stage、commit、push。</li>
+              <li>打开本地网页，让 Codex 查看或操作浏览器。</li>
+              <li>创建自动化，让线程按计划醒来检查事情。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>App 快捷键</h3>
+            <ul>
+              <li>命令菜单：<span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span> 或 <span class="kbd">Cmd</span> + <span class="kbd">K</span></li>
+              <li>设置：<span class="kbd">Cmd</span> + <span class="kbd">,</span></li>
+              <li>打开文件夹：<span class="kbd">Cmd</span> + <span class="kbd">O</span></li>
+              <li>新线程：<span class="kbd">Cmd</span> + <span class="kbd">N</span></li>
+              <li>查找线程：<span class="kbd">Cmd</span> + <span class="kbd">F</span></li>
+              <li>切换侧边栏：<span class="kbd">Cmd</span> + <span class="kbd">B</span></li>
+              <li>切换终端：<span class="kbd">Cmd</span> + <span class="kbd">J</span></li>
+            </ul>
+          </div>
+        </div>
+        <h3>App slash 命令</h3>
+        <table>
+          <thead><tr><th>命令</th><th>用途</th></tr></thead>
+          <tbody>
+            <tr><td><code>/feedback</code></td><td>打开反馈对话框，可附带日志。</td></tr>
+            <tr><td><code>/mcp</code></td><td>打开 MCP 状态，查看连接的服务器。</td></tr>
+            <tr><td><code>/plan-mode</code></td><td>切换多步骤规划模式。</td></tr>
+            <tr><td><code>/review</code></td><td>进入代码审查模式，可审查未提交改动或与 base branch 比较。</td></tr>
+            <tr><td><code>/status</code></td><td>显示线程 ID、上下文使用量和速率限制。</td></tr>
+          </tbody>
+        </table>
+        <h3>Deeplink</h3>
+        <pre><code>codex://settings
+codex://skills
+codex://automations
+codex://threads/&lt;thread-id&gt;
+codex://new?prompt=总结这个项目&amp;path=/absolute/path/to/repo</code></pre>
+      </section>
+
+      <section id="permissions">
+        <h2>7. 权限与沙盒</h2>
+        <p>Claude Code 用户迁移时最重要的差异之一，是 Codex 把“是否能执行”和“能访问哪里”拆得很清楚。</p>
+        <table>
+          <thead>
+            <tr><th>维度</th><th>选项</th><th>含义</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Approval policy</td>
+              <td><code>untrusted</code>、<code>on-request</code>、<code>never</code></td>
+              <td>决定什么时候需要人工确认。</td>
+            </tr>
+            <tr>
+              <td>Sandbox</td>
+              <td><code>read-only</code>、<code>workspace-write</code>、<code>danger-full-access</code></td>
+              <td>决定文件系统写权限边界。</td>
+            </tr>
+            <tr>
+              <td>快捷预设</td>
+              <td><code>--full-auto</code></td>
+              <td>等价于低摩擦开发常用组合：工作区可写，并在需要时询问。</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout warn">
+          <strong>谨慎使用：</strong><code>--dangerously-bypass-approvals-and-sandbox</code> 会跳过确认和沙盒，只适合已经由外部容器、虚拟机或 CI runner 强隔离的环境。
+        </div>
+        <pre><code># 只读探索
+codex -s read-only "解释这个仓库的构建流程"
+
+# 日常开发
+codex --full-auto "实现登录页错误提示，并运行相关测试"
+
+# 自动化脚本，失败时不要停下来问我
+codex exec -a never -s workspace-write "格式化并运行单元测试"</code></pre>
+      </section>
+
+      <section id="config">
+        <h2>8. 配置、规则、记忆</h2>
+        <h3><code>~/.codex/config.toml</code></h3>
+        <p>Codex 的默认配置主要在 <code>~/.codex/config.toml</code>。命令行里的 <code>-c key=value</code> 会覆盖本次运行的配置。</p>
+        <pre><code># 临时切模型
+codex -c model='"gpt-5.4"' "解释这段代码"
+
+# 使用 profile
+codex --profile work
+
+# 查看 feature flag
+codex features list
+codex features enable &lt;feature&gt;
+codex features disable &lt;feature&gt;</code></pre>
+
+        <h3><code>AGENTS.md</code></h3>
+        <p>把 Claude Code 里的 <code>CLAUDE.md</code> 思路迁到 Codex 时，通常写成 <code>AGENTS.md</code>：项目结构、命令、测试、代码风格、禁止事项、PR 规范都放这里。</p>
+        <pre><code># 在 Codex CLI 里生成脚手架
+/init</code></pre>
+
+        <h3>建议写进 <code>AGENTS.md</code> 的内容</h3>
+        <ul>
+          <li>项目启动命令、测试命令、lint 命令。</li>
+          <li>哪些目录不能随便改，例如 generated、vendor、migration 历史。</li>
+          <li>提交前必须跑哪些验证。</li>
+          <li>代码风格：命名、错误处理、日志、国际化、UI 规范。</li>
+          <li>安全红线：不要打印密钥、不要访问生产数据、不要执行破坏性命令。</li>
+        </ul>
+      </section>
+
+      <section id="mcp-skills">
+        <h2>9. MCP、Skills、Plugins</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>MCP</h3>
+            <p>把外部工具或数据源接给 Codex。常用命令包括 <code>codex mcp list</code>、<code>codex mcp add</code>、<code>codex mcp remove</code>、<code>codex mcp login</code>。</p>
+          </div>
+          <div class="card">
+            <h3>Skills</h3>
+            <p>可复用的工作流说明。App 中输入 <code>$</code> 可以显式调用技能；启用的 skills 也可能出现在 slash 命令列表里。</p>
+          </div>
+          <div class="card">
+            <h3>Plugins</h3>
+            <p>插件可以打包 skills、MCP server、工具和应用集成。适合把团队内部工具变成 Codex 可发现能力。</p>
+          </div>
+        </div>
+        <pre><code># MCP 示例
+codex mcp list
+codex mcp add docs --url https://example.com/mcp
+codex mcp get docs --json
+codex mcp remove docs</code></pre>
+      </section>
+
+      <section id="workflows">
+        <h2>10. 常用工作流</h2>
+        <div class="workflow">
+          <div class="step"><strong>探索</strong><span><code>codex -s read-only</code><br>先让 Codex 读项目、画边界。</span></div>
+          <div class="step"><strong>计划</strong><span>用 <code>/plan</code> 或明确说“先给计划”。</span></div>
+          <div class="step"><strong>实施</strong><span><code>--full-auto</code> 适合日常小中型改动。</span></div>
+          <div class="step"><strong>验证</strong><span>让 Codex 跑测试、lint、类型检查。</span></div>
+          <div class="step"><strong>审阅</strong><span><code>/diff</code>、<code>/review</code>、App review 面板。</span></div>
+        </div>
+
+        <h3>修 bug</h3>
+        <pre><code>codex --full-auto "复现并修复这个 bug：粘贴报错。先找根因，再做最小改动，最后运行相关测试"</code></pre>
+
+        <h3>理解陌生项目</h3>
+        <pre><code>codex -s read-only "请阅读项目，不要改文件。输出：架构概览、关键入口、运行命令、测试命令、风险点"</code></pre>
+
+        <h3>做代码审查</h3>
+        <pre><code>codex review
+
+# 或在交互式会话中
+/review</code></pre>
+
+        <h3>用图片作为输入</h3>
+        <pre><code>codex -i screenshot.png "根据截图修复页面布局问题，注意移动端不要重叠"</code></pre>
+
+        <h3>长会话续航</h3>
+        <pre><code>/status
+/compact 请保留当前任务目标、已改文件、失败测试、下一步计划</code></pre>
+      </section>
+
+      <section id="prompts">
+        <h2>11. 提示词模板</h2>
+        <h3>Claude Code 老用户最顺手的写法</h3>
+        <pre><code>请先阅读相关文件，确认根因后再修改。
+要求：
+1. 改动尽量小。
+2. 不要重构无关代码。
+3. 修改前说明你要动哪些文件。
+4. 修改后运行最相关的测试。
+5. 最后总结改动和验证结果。</code></pre>
+
+        <h3>让 Codex 少走弯路</h3>
+        <pre><code>这个任务的成功标准是：
+- 用户可以完成 X。
+- Y 情况下不能回归。
+- 必须通过 npm test -- login.spec.ts。
+
+约束：
+- 不要改数据库 schema。
+- 不要引入新依赖。
+- 保持现有 UI 风格。</code></pre>
+
+        <h3>需要 App 多线程时</h3>
+        <pre><code>请把这个任务拆成可以并行的子任务。
+每个子任务说明：
+- 目标
+- 负责文件范围
+- 验证命令
+- 是否需要 worktree 隔离</code></pre>
+      </section>
+
+      <section id="sources">
+        <h2>资料来源</h2>
+        <p class="sources">本文整理于 2026-04-25，结合本机 <code>codex --help</code> / <code>codex --version</code> 输出，以及以下官方资料：</p>
+        <ul class="sources">
+          <li><a href="https://developers.openai.com/codex/cli">OpenAI Developers：Codex CLI</a></li>
+          <li><a href="https://developers.openai.com/codex/cli/reference">OpenAI Developers：Codex CLI command line options</a></li>
+          <li><a href="https://developers.openai.com/codex/cli/slash-commands">OpenAI Developers：Codex CLI slash commands</a></li>
+          <li><a href="https://developers.openai.com/codex/app">OpenAI Developers：Codex app</a></li>
+          <li><a href="https://developers.openai.com/codex/app/commands">OpenAI Developers：Codex app commands</a></li>
+          <li><a href="https://developers.openai.com/codex/guides/agents-md">OpenAI Developers：AGENTS.md</a></li>
+          <li><a href="https://developers.openai.com/codex/mcp">OpenAI Developers：Model Context Protocol</a></li>
+          <li><a href="https://developers.openai.com/codex/skills">OpenAI Developers：Agent Skills</a></li>
+          <li><a href="https://code.claude.com/docs/en/cli-reference">Anthropic：Claude Code CLI reference</a></li>
+          <li><a href="https://code.claude.com/docs/en/slash-commands">Anthropic：Claude Code slash commands</a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

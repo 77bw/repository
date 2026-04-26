@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>Wiki 知识图谱</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0f1117; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+#canvas { width: 100vw; height: 100vh; }
+.node circle { stroke-width: 2; cursor: pointer; transition: r 0.2s; }
+.node text { font-size: 11px; fill: #ccc; pointer-events: none; }
+.link { stroke: #334; stroke-opacity: 0.6; }
+#tooltip {
+  position: fixed; background: #1e2130; border: 1px solid #3a4060;
+  border-radius: 8px; padding: 10px 14px; font-size: 12px; max-width: 260px;
+  pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 10;
+}
+#legend {
+  position: fixed; bottom: 20px; left: 20px; background: #1e2130cc;
+  border-radius: 8px; padding: 12px; font-size: 12px;
+}
+#legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+#legend span { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+#info { position: fixed; top: 20px; left: 20px; font-size: 13px; color: #666; }
+</style>
+</head>
+<body>
+<div id="info">Wiki 知识图谱 · 18 节点 · 拖拽/滚轮缩放</div>
+<div id="tooltip"></div>
+<div id="legend">
+  <div><span style="background:#6c8ebf"></span> concepts</div>
+  <div><span style="background:#82b366"></span> tools</div>
+  <div><span style="background:#d6a84e"></span> articles</div>
+  <div><span style="background:#b85c5c"></span> sources</div>
+  <div><span style="background:#9b6bb5"></span> resources</div>
+</div>
+<svg id="canvas"></svg>
+<script>
+const nodes = [
+  {id:"INDEX",title:"Wiki 主索引",tags:[],desc:"全库索引",dir:"root"},
+  {id:"SCHEMA",title:"Wiki Schema",tags:[],desc:"规范说明书",dir:"root"},
+  {id:"sources/claude-md-guide",title:"Claude.md 新手指南",tags:["ai-coding","prompt-engineering"],desc:"ETH Zurich 研究：CLAUDE.md 反而降低 AI Agent 任务成功率",dir:"sources"},
+  {id:"concepts/AGENTS",title:"AGENTS.md",tags:["ai-coding"],desc:"与 CLAUDE.md 本质相同的 AI Agent 上下文配置文件",dir:"concepts"},
+  {id:"concepts/ClaudeMd",title:"Claude.md",tags:["ai-coding"],desc:"AI 编程 Agent 的上下文配置文件",dir:"concepts"},
+  {id:"concepts/上下文文件",title:"上下文文件",tags:["ai-coding"],desc:"向 AI Agent 提供项目级别指令的配置文件",dir:"concepts"},
+  {id:"concepts/编程Agent",title:"编程Agent",tags:["ai-coding"],desc:"能够自主执行编程任务的 AI 系统",dir:"concepts"},
+  {id:"concepts/agentic-engineering",title:"Agentic 工程技术",tags:["ai-coding","prompt-engineering"],desc:"将 AI 编程助手升级为可重复工程系统的五大核心技巧",dir:"concepts"},
+  {id:"tools/everything-claude-code",title:"Everything Claude Code",tags:["ai-coding"],desc:"Anthropic 黑客马拉松冠军整理的完整 Claude Code 配置集合",dir:"tools"},
+  {id:"tools/opencode",title:"OpenCode + OMO",tags:["ai-coding"],desc:"开源 AI 编程助手（60K+ Stars）及其全能增强插件",dir:"tools"},
+  {id:"tools/github-reference",title:"GitHub 功能术语速查",tags:["full-stack"],desc:"GitHub 核心功能速查表",dir:"tools"},
+  {id:"tools/git-branch",title:"Git 分支操作",tags:["full-stack"],desc:"Git 分支常用命令速查",dir:"tools"},
+  {id:"tools/openclaw-knowledge",title:"OpenClaw 知识管理",tags:["knowledge-management"],desc:"AI 驱动的个人知识库管理系统",dir:"tools"},
+  {id:"articles/claude-code-gen",title:"Claude 代码生成最佳实践",tags:["ai-coding","prompt-engineering"],desc:"Claude 3.5 Sonnet 代码生成能力评测",dir:"articles"},
+  {id:"articles/rag-optimization",title:"RAG 系统性能优化",tags:["ai","prompt-engineering"],desc:"RAG 系统完整链路性能优化",dir:"articles"},
+  {id:"articles/ai-agent-principles",title:"AI Agent 工作原理",tags:["ai","ai-coding"],desc:"深入理解 AI Agent 的工作原理",dir:"articles"},
+  {id:"articles/vibe-coding",title:"Vibe Coding 实践",tags:["ai-coding"],desc:"AI 辅助编程实践方法论",dir:"articles"},
+  {id:"resources/claude-code-authors",title:"Claude Code 核心作者",tags:["ai-coding"],desc:"Claude Code 相关核心原创作者推荐",dir:"resources"}
+];
+
+const edges = [
+  {source:"sources/claude-md-guide",target:"concepts/ClaudeMd"},
+  {source:"sources/claude-md-guide",target:"concepts/AGENTS"},
+  {source:"sources/claude-md-guide",target:"concepts/编程Agent"},
+  {source:"sources/claude-md-guide",target:"concepts/上下文文件"},
+  {source:"concepts/AGENTS",target:"sources/claude-md-guide"},
+  {source:"concepts/ClaudeMd",target:"sources/claude-md-guide"},
+  {source:"concepts/上下文文件",target:"sources/claude-md-guide"},
+  {source:"concepts/编程Agent",target:"sources/claude-md-guide"},
+  {source:"concepts/agentic-engineering",target:"tools/everything-claude-code"},
+  {source:"concepts/agentic-engineering",target:"concepts/上下文文件"},
+  {source:"concepts/agentic-engineering",target:"concepts/编程Agent"},
+  {source:"tools/everything-claude-code",target:"concepts/agentic-engineering"},
+  {source:"tools/everything-claude-code",target:"resources/claude-code-authors"},
+  {source:"tools/everything-claude-code",target:"concepts/上下文文件"},
+  {source:"tools/opencode",target:"tools/everything-claude-code"},
+  {source:"tools/opencode",target:"concepts/agentic-engineering"},
+  {source:"tools/openclaw-knowledge",target:"tools/everything-claude-code"},
+  {source:"tools/git-branch",target:"tools/github-reference"},
+  {source:"tools/github-reference",target:"tools/git-branch"},
+  {source:"articles/claude-code-gen",target:"concepts/agentic-engineering"},
+  {source:"articles/claude-code-gen",target:"tools/everything-claude-code"},
+  {source:"articles/rag-optimization",target:"concepts/agentic-engineering"},
+  {source:"articles/ai-agent-principles",target:"concepts/agentic-engineering"},
+  {source:"articles/ai-agent-principles",target:"concepts/编程Agent"},
+  {source:"articles/vibe-coding",target:"concepts/agentic-engineering"},
+  {source:"articles/vibe-coding",target:"tools/everything-claude-code"},
+  {source:"resources/claude-code-authors",target:"tools/everything-claude-code"}
+];
+
+const colorMap = {
+  concepts: "#6c8ebf", tools: "#82b366", articles: "#d6a84e",
+  sources: "#b85c5c", resources: "#9b6bb5", root: "#555"
+};
+
+const svg = d3.select("#canvas");
+const w = window.innerWidth, h = window.innerHeight;
+const g = svg.append("g");
+
+svg.call(d3.zoom().scaleExtent([0.2, 4]).on("zoom", e => g.attr("transform", e.transform)));
+
+// Compute degree for node sizing
+const degree = {};
+nodes.forEach(n => degree[n.id] = 0);
+edges.forEach(e => { degree[e.source] = (degree[e.source]||0)+1; degree[e.target] = (degree[e.target]||0)+1; });
+
+const sim = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(edges).id(d => d.id).distance(90))
+  .force("charge", d3.forceManyBody().strength(-300))
+  .force("center", d3.forceCenter(w/2, h/2))
+  .force("collision", d3.forceCollide(30));
+
+const link = g.append("g").selectAll("line").data(edges).join("line")
+  .attr("class","link").attr("stroke","#334").attr("stroke-opacity",0.5);
+
+const node = g.append("g").selectAll("g").data(nodes).join("g")
+  .attr("class","node")
+  .call(d3.drag()
+    .on("start", (e,d) => { if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on("drag", (e,d) => { d.fx=e.x; d.fy=e.y; })
+    .on("end", (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+
+node.append("circle")
+  .attr("r", d => 8 + (degree[d.id]||0) * 2)
+  .attr("fill", d => colorMap[d.dir] || "#555")
+  .attr("stroke", d => d3.color(colorMap[d.dir]||"#555").brighter(1))
+  .on("mouseover", (e, d) => {
+    const tip = document.getElementById("tooltip");
+    tip.innerHTML = `<strong>${d.title}</strong><br><span style="color:#888">${d.id}</span><br>${d.desc}<br><em style="color:#6c8ebf">${d.tags.join(", ")||"—"}</em>`;
+    tip.style.opacity = 1;
+    tip.style.left = (e.clientX+14)+"px";
+    tip.style.top = (e.clientY-10)+"px";
+  })
+  .on("mousemove", e => {
+    document.getElementById("tooltip").style.left=(e.clientX+14)+"px";
+    document.getElementById("tooltip").style.top=(e.clientY-10)+"px";
+  })
+  .on("mouseout", () => document.getElementById("tooltip").style.opacity=0);
+
+node.append("text").attr("dy","0.35em").attr("x", d => 10+(degree[d.id]||0)*2)
+  .text(d => d.title.length > 14 ? d.title.slice(0,14)+"…" : d.title);
+
+sim.on("tick", () => {
+  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
+      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
+  node.attr("transform",d=>`translate(${d.x},${d.y})`);
+});
+</script>
+</body>
+</html>

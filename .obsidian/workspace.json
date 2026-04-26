@@ -1,0 +1,224 @@
+{
+  "main": {
+    "id": "763f39c81d486e18",
+    "type": "split",
+    "children": [
+      {
+        "id": "3cda99b5f76568ba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ed2586c914de17b4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "wiki/topics/codex-migration-guide.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "codex-migration-guide"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a02d9a238abe4975",
+    "type": "split",
+    "children": [
+      {
+        "id": "d4156e5993673fef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "01903e07b3431ebe",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "b9718b5a4817eb55",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "31060508c0949177",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4435978d12335810",
+    "type": "split",
+    "children": [
+      {
+        "id": "02fd62d8bea70709",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6520b59e7c2fa63a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "wiki/topics/codex-migration-guide.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "codex-migration-guide 的反向链接列表"
+            }
+          },
+          {
+            "id": "7bcd52af4b139b7a",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "wiki/topics/codex-migration-guide.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "codex-migration-guide 的出链列表"
+            }
+          },
+          {
+            "id": "ffae192b2bd0aae3",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "6539cb714847e577",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "e52e9554d670c484",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "wiki/topics/codex-migration-guide.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "codex-migration-guide 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "ed2586c914de17b4",
+  "lastOpenFiles": [
+    "wiki/topics/karpathy-knowledge-base-sop.md",
+    "raw/karpathy_note_create/Obsidian-AI-The-Complete-Guide-v1.0.0.pdf",
+    "wiki/topics/codex-migration-guide.md",
+    "raw/karpathy_note_create/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+    "raw/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md",
+    "wiki/tools/github-reference.md",
+    "wiki/concepts/coding-agent.md",
+    "wiki/concepts/context-files.md",
+    "wiki/concepts/claude-md.md",
+    "wiki/concepts/agents.md",
+    "wiki/topics/vibe-coding.md",
+    "wiki/topics/rag-optimization.md",
+    "wiki/topics/claude-md-guide.md",
+    "wiki/topics/claude-code-gen.md",
+    "wiki/topics/ai-agent-principles.md",
+    "wiki/topics",
+    "wiki/entities/opencode.md",
+    "wiki/entities/openclaw.md",
+    "wiki/entities/github-reference.md",
+    "wiki/entities/git-branch.md",
+    "wiki/entities/everything-claude-code.md",
+    "wiki/entities/claude-code-authors.md",
+    "wiki/entities",
+    "wiki/tools/git-branch.md",
+    "wiki/tools/everything-claude-code.md",
+    "GitHub 功能术语速查.md",
+    "Claude Code 核心作者.md",
+    "CLAUDE.md",
+    "graphify-out/graph.html",
+    "raw/codex-migration-manual.html",
+    "raw/karpathy_note_create",
+    "raw/Obsidian-AI-The-Complete-Guide-v1.0.0.pdf",
+    "wiki/resources",
+    "wiki/articles",
+    "wiki/tools"
+  ]
+}

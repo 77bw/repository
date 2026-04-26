@@ -1,0 +1,202 @@
+{
+  "main": {
+    "id": "61d14e8102ce6fd9",
+    "type": "split",
+    "children": [
+      {
+        "id": "1937090d4267fdd5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9598c0871d99fafd",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "raw/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7625020296074180",
+    "type": "split",
+    "children": [
+      {
+        "id": "3ab7c459d062791d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6567c4536346fb8d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "a5f21ee237f10f09",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "440ae0bc51c5ef3f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d05af53bfc0930df",
+    "type": "split",
+    "children": [
+      {
+        "id": "e4fe68cd8049757d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c131face06b42a5f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "raw/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy 的反向链接列表"
+            }
+          },
+          {
+            "id": "92335173e9678de0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "raw/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy 的出链列表"
+            }
+          },
+          {
+            "id": "4b2bf8b1d1704e46",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "7a2169fa9633cb68",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "bf2d96185c0bc2aa",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "raw/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "9598c0871d99fafd",
+  "lastOpenFiles": [
+    "2026-04-26.md",
+    "raw/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md",
+    "raw/Karpathy-AI+Obsidian知识库教程-栗氪聊AI - 飞书云文档.md",
+    "raw/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md",
+    "raw",
+    "concepts/ClaudeMd.md",
+    "concepts/上下文文件.md",
+    "concepts/编程Agent.md",
+    "concepts/AGENTS.md",
+    "sources/claude-md-guide.md",
+    "Clippings/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md",
+    "_index.md",
+    "Clippings"
+  ]
+}
