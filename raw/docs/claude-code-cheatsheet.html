@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code 使用清单 · 讲解级速查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Surfaces */
+    --parchment:   #f5f4ed;
+    --ivory:       #faf9f5;
+    --warm-sand:   #e8e6dc;
+    --pure-white:  #ffffff;
+    --near-black:  #141413;
+    --dark-surf:   #30302e;
+
+    /* Text */
+    --fg:          #141413;
+    --fg-strong:   #3d3d3a;
+    --fg-2:        #4d4c48;
+    --fg-3:        #5e5d59;
+    --fg-4:        #87867f;
+    --fg-on-dark:  #b0aea5;
+    --ivory-on-dark: #faf9f5;
+
+    /* Brand */
+    --terracotta:  #c96442;
+    --coral:       #d97757;
+
+    /* Borders & rings */
+    --border-cream: #f0eee6;
+    --border-warm:  #e8e6dc;
+    --border-dark:  #30302e;
+    --ring-warm:    #d1cfc5;
+    --ring-deep:    #c2c0b6;
+
+    /* Semantic (used sparingly) */
+    --crimson:     #b53333;
+    --crimson-soft:#f3d6d0;
+    --olive:       #6f7a60;
+    --olive-soft:  #dfe0c8;
+
+    /* Fonts */
+    --font-serif: "Source Serif 4", "Anthropic Serif", Georgia,
+                  "Songti SC", "SimSun", "Times New Roman", serif;
+    --font-sans:  "Inter", "Anthropic Sans", -apple-system,
+                  BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                  "Microsoft YaHei", "Hiragino Sans GB", system-ui, sans-serif;
+    --font-mono:  "JetBrains Mono", "Anthropic Mono",
+                  "SF Mono", Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { background: var(--parchment); }
+
+  body {
+    font-family: var(--font-sans);
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 72px 32px 120px;
+    color: var(--fg);
+    line-height: 1.6;
+    background: var(--parchment);
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ---------- Typography ---------- */
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--near-black);
+    letter-spacing: -0.01em;
+  }
+  h1 {
+    font-size: 3.25rem;   /* 52px */
+    line-height: 1.1;
+    margin: 0 0 24px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-warm);
+  }
+  h2 {
+    font-size: 2.25rem;   /* 36px */
+    line-height: 1.2;
+    margin: 72px 0 20px;
+    padding-left: 0;
+    border-left: none;
+    position: relative;
+  }
+  h2::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 3px;
+    background: var(--terracotta);
+    margin-bottom: 18px;
+    border-radius: 2px;
+  }
+  h3 {
+    font-size: 1.55rem;   /* ~25px */
+    line-height: 1.3;
+    margin: 40px 0 14px;
+    color: var(--near-black);
+  }
+  h4 {
+    font-size: 1.15rem;
+    line-height: 1.3;
+    margin: 28px 0 10px;
+    color: var(--fg-strong);
+  }
+
+  p {
+    margin: 14px 0;
+    color: var(--fg);
+  }
+  p strong { color: var(--near-black); font-weight: 600; }
+  p em { font-style: italic; color: var(--fg-2); }
+
+  ul, ol {
+    margin: 14px 0;
+    padding-left: 24px;
+    line-height: 1.7;
+  }
+  li { margin: 6px 0; color: var(--fg); }
+  li strong { color: var(--near-black); font-weight: 600; }
+
+  a {
+    color: var(--terracotta);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .15s ease;
+  }
+  a:hover { border-bottom-color: var(--terracotta); }
+
+  /* ---------- Code ---------- */
+  code {
+    background: var(--warm-sand);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-size: 0.88em;
+    color: var(--terracotta);
+    font-family: var(--font-mono);
+    letter-spacing: -0.01em;
+  }
+  pre {
+    background: var(--near-black);
+    color: var(--ivory-on-dark);
+    padding: 20px 24px;
+    border-radius: 16px;
+    overflow-x: auto;
+    line-height: 1.6;
+    margin: 20px 0;
+    box-shadow:
+      0 0 0 1px var(--dark-surf),
+      0 1px 2px rgba(20, 20, 19, 0.04);
+  }
+  pre code {
+    background: transparent;
+    color: var(--ivory-on-dark);
+    padding: 0;
+    font-size: 0.88rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---------- Callouts ---------- */
+  .callout {
+    padding: 18px 22px;
+    margin: 20px 0;
+    border-radius: 12px;
+    background: var(--ivory);
+    box-shadow: 0 0 0 1px var(--border-cream);
+    position: relative;
+  }
+  .callout::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 3px;
+    border-radius: 12px 0 0 12px;
+  }
+  .callout p:first-child { margin-top: 0; }
+  .callout p:last-child  { margin-bottom: 0; }
+  .callout > *:first-of-type { margin-top: 4px; }
+
+  .learn::after  { background: var(--terracotta); }
+  .when::after   { background: var(--olive); }
+  .caveat::after { background: var(--crimson); }
+  .tip {
+    background: var(--warm-sand);
+    box-shadow: 0 0 0 1px var(--ring-warm);
+  }
+  .tip::after    { background: var(--near-black); }
+
+  .callout::before {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .learn::before  { content: "💡 学习要点"; color: var(--terracotta); }
+  .when::before   { content: "🎯 什么时候用"; color: var(--olive); }
+  .caveat::before { content: "⚠️ 坑点";       color: var(--crimson); }
+  .tip::before    { content: "🧭 上手建议";    color: var(--near-black); }
+
+  /* ---------- TOC ---------- */
+  .toc {
+    background: var(--ivory);
+    padding: 24px 36px;
+    border-radius: 16px;
+    box-shadow: 0 0 0 1px var(--border-cream);
+  }
+  .toc ol {
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 32px;
+    line-height: 1.9;
+  }
+  .toc li { break-inside: avoid; margin: 4px 0; }
+  .toc a {
+    color: var(--fg);
+    border-bottom-color: transparent;
+  }
+  .toc a:hover {
+    color: var(--terracotta);
+    border-bottom-color: var(--terracotta);
+  }
+
+  /* ---------- Tables ---------- */
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 0.95rem;
+    background: var(--ivory);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px var(--border-cream);
+  }
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border-cream);
+  }
+  tr:last-child td { border-bottom: none; }
+  th {
+    background: var(--warm-sand);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--near-black);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-warm);
+  }
+  td { color: var(--fg); }
+  td strong { color: var(--near-black); }
+
+  /* ---------- Keyboard shortcuts ---------- */
+  kbd {
+    background: var(--ivory);
+    box-shadow:
+      0 0 0 1px var(--ring-warm),
+      0 1px 0 0 var(--ring-warm);
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    color: var(--near-black);
+    font-weight: 500;
+  }
+
+  /* ---------- Tags ---------- */
+  .tag {
+    display: inline-block;
+    font-size: 0.68em;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: var(--font-sans);
+  }
+  .tag-new {
+    background: var(--terracotta);
+    color: var(--ivory);
+  }
+  .tag-core {
+    background: var(--olive-soft);
+    color: #3f4731;
+    box-shadow: 0 0 0 1px rgba(111, 122, 96, 0.25);
+  }
+  .tag-advanced {
+    background: var(--warm-sand);
+    color: var(--fg-2);
+    box-shadow: 0 0 0 1px var(--ring-warm);
+  }
+
+  /* ---------- Rulers & misc ---------- */
+  hr {
+    border: 0;
+    border-top: 1px solid var(--border-warm);
+    margin: 64px 0;
+  }
+  blockquote {
+    border-left: 3px solid var(--terracotta);
+    margin: 20px 0;
+    padding: 6px 20px;
+    color: var(--fg-3);
+    font-style: italic;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+  }
+
+  /* ---------- Intro & Footer ---------- */
+  .intro {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--fg-2);
+    margin: 16px 0 24px;
+  }
+  .intro strong {
+    color: var(--near-black);
+    font-weight: 500;
+  }
+
+  .footer {
+    color: var(--fg-4);
+    text-align: center;
+    margin-top: 120px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-warm);
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+  .footer code {
+    background: var(--ivory);
+    color: var(--fg-3);
+    box-shadow: 0 0 0 1px var(--border-cream);
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 767px) {
+    body { padding: 40px 20px 80px; }
+    h1 { font-size: 2.25rem; }
+    h2 { font-size: 1.75rem; margin-top: 56px; }
+    h3 { font-size: 1.25rem; }
+    .toc ol { columns: 1; }
+    pre { padding: 16px; font-size: 0.82rem; }
+    table { font-size: 0.85rem; }
+    th, td { padding: 10px 12px; }
+  }
+
+  /* Print */
+  @media print {
+    body { max-width: none; padding: 0; }
+    pre, .callout, table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Claude Code 使用清单 · 讲解级速查</h1>
+
+<p><strong>面向读者：</strong>想重新系统梳理 Claude Code 能力、让自己更会"驾驶"而不仅仅是"使用"它的老用户。</p>
+
+<p><strong>阅读方式：</strong>每一节都按 <em>"是什么 → 怎么用 → 为什么要这么设计 → 什么时候用 → 踩坑提醒"</em> 的节奏展开。带颜色的小方块是重点。不用一次读完，遇到问题回来查即可。</p>
+
+<div class="callout learn">
+<p>Claude Code 的设计哲学是 <strong>"CLI 优先的 Agent 容器"</strong>：它不是一个聊天窗口，而是一个可以被你 <em>改装</em> 的工作台。你手上有 4 层可扩展能力——输入层（<code>@ ! #</code>）、会话层（记忆/权限/输出风格）、协作层（子 Agent/Skills/MCP）、自动化层（Hooks/Plugins）。理解这 4 层的分工，你就理解了 Claude Code 的全部。</p>
+</div>
+
+<h2 id="toc">📑 目录</h2>
+
+<div class="toc">
+<ol>
+  <li><a href="#mental-model">心智模型：Claude Code 到底是什么</a></li>
+  <li><a href="#input-modes">输入四剑客：<code>@</code> <code>!</code> <code>#</code> 粘贴图片</a></li>
+  <li><a href="#keyboard">键盘快捷键全景</a></li>
+  <li><a href="#slash-commands">内置斜杠命令逐条讲</a></li>
+  <li><a href="#session">会话生命周期：clear / compact / resume / checkpoint</a></li>
+  <li><a href="#memory">记忆系统 CLAUDE.md 的三层结构</a></li>
+  <li><a href="#settings">settings.json：权限、环境、钩子一站式配置</a></li>
+  <li><a href="#subagents">Subagents 子代理：并行与上下文隔离</a></li>
+  <li><a href="#skills">Skills 技能：按需加载的"专业知识包"</a></li>
+  <li><a href="#hooks">Hooks 钩子：让 Claude Code 自动化起来</a></li>
+  <li><a href="#mcp">MCP 服务器：外接你自己的工具箱</a></li>
+  <li><a href="#plugins">Plugins 插件：把能力打包分发</a></li>
+  <li><a href="#output-styles">Output Styles 输出风格：改变 Claude 的"人格"</a></li>
+  <li><a href="#custom-commands">自定义斜杠命令：沉淀你的常用工作流</a></li>
+  <li><a href="#advanced">进阶模式：Plan / Thinking / Headless / Worktree</a></li>
+  <li><a href="#ide-statusline">IDE 集成与状态栏</a></li>
+  <li><a href="#decision-tree">决策树：遇到问题该拿哪把刀</a></li>
+</ol>
+</div>
+
+<hr>
+
+<h2 id="mental-model">1. 心智模型：Claude Code 到底是什么</h2>
+
+<p>一句话概括：<strong>Claude Code 是一个"会用工具的 LLM"跑在你的本地终端里</strong>。</p>
+
+<p>它不同于网页版聊天的核心点是：</p>
+
+<ul>
+  <li><strong>有工具</strong>——能读写文件、跑 Bash、改 Git、上网查资料；</li>
+  <li><strong>有上下文</strong>——能把项目里的 <code>CLAUDE.md</code>、你当前的目录、最近的对话都作为环境；</li>
+  <li><strong>有权限边界</strong>——你可以通过 <code>settings.json</code> 精细控制它能做什么、该问谁；</li>
+  <li><strong>可扩展</strong>——Hooks、Skills、Subagents、MCP、Plugins 都是给你留的扩展点。</li>
+</ul>
+
+<div class="callout learn">
+<p>把它想象成 <strong>一个新入职的工程师，配了一个你可以自定义的"员工手册"</strong>。CLAUDE.md 是手册正文，settings.json 是权限卡，Skills 是培训课程，Hooks 是流程 SOP，Subagent 是可以临时拉来帮忙的同事。你管理它的方式，决定了它的产出。</p>
+</div>
+
+<hr>
+
+<h2 id="input-modes">2. 输入四剑客：<code>@</code> <code>!</code> <code>#</code> 粘贴图片</h2>
+
+<p>Claude Code 的输入框不是单纯的文本框，前缀字符会触发特殊模式。记住这 4 个入口，你几乎用不着打开编辑器。</p>
+
+<h3>2.1 <code>@</code> 引用文件或目录 <span class="tag tag-core">核心</span></h3>
+
+<pre><code>请帮我重构 @src/utils/parser.js，让它更容易测试
+对比 @src/v1/api.py 和 @src/v2/api.py，说说重写带来了什么</code></pre>
+
+<p><code>@</code> 会把文件内容注入上下文。它有两层价值：</p>
+<ul>
+  <li><strong>精准定位</strong>——你告诉了 Claude 要改哪里，它就不会去猜；</li>
+  <li><strong>省 token</strong>——相比让 Claude 自己 grep 找文件，你直接 <code>@</code> 过去，少走几步弯路。</li>
+</ul>
+
+<div class="callout when">
+<p>任何时候你 <em>已经知道</em> 目标文件/目录时，都用 <code>@</code> 去提。只有在完全不知道从哪开始时，才让 Claude 自己搜。</p>
+</div>
+
+<h3>2.2 <code>!</code> 直接执行 Bash</h3>
+
+<pre><code>! git status
+! pytest tests/test_parser.py -v
+! npm run build 2>&1 | tail -20</code></pre>
+
+<p>以 <code>!</code> 开头的那一行直接在你的 shell 里执行，<strong>输出进入对话上下文</strong>。这一点是关键——它不是打开一个一次性终端，而是让 Claude 能"看到"命令的输出，从而在后续回答里基于这些输出做判断。</p>
+
+<div class="callout when">
+<p>当你想让 Claude 基于某个命令的结果继续做事（比如测试失败了让它分析），先用 <code>!</code> 跑一下，再让它分析，比让它自己 Bash 要快也更可控。</p>
+</div>
+
+<h3>2.3 <code>#</code> 快速写入记忆</h3>
+
+<pre><code># 本项目的所有新 API 必须写 OpenAPI 注解
+# 我是后端方向，前端概念需要类比 Django 的视角</code></pre>
+
+<p><code>#</code> 开头的行是"记忆快捷方式"——Claude 会把这条写入 CLAUDE.md（你选一个层级：项目 / 用户全局）。下次新会话，它仍然知道。</p>
+
+<div class="callout learn">
+<p><strong>为什么要有 <code>#</code>？</strong>因为 Claude 默认不会主动修改 CLAUDE.md。它希望把"记忆"动作显式交给你。<code>#</code> 就是一个成本极低的开关，让你不用切到编辑器也能沉淀经验。</p>
+</div>
+
+<h3>2.4 粘贴图片 <span class="tag tag-new">多模态</span></h3>
+
+<p>直接在输入框 <kbd>Ctrl</kbd>+<kbd>V</kbd> / <kbd>Cmd</kbd>+<kbd>V</kbd> 粘贴截图即可。Claude 能看到它。</p>
+
+<div class="callout when">
+<p>典型场景：UI 报错截图、PO 圈出的设计稿、Excel 表格片段、手写白板。比起描述"我这个按钮挤出来了"，粘图直接解决问题。</p>
+</div>
+
+<h3>2.5 拖拽文件（含图片）</h3>
+
+<p>在大多数终端里，拖文件到输入框会自动变成文件路径。如果想让 Claude 读内容，在前面加 <code>@</code>；如果是图片，Claude Code 会识别为图像附件。</p>
+
+<hr>
+
+<h2 id="keyboard">3. 键盘快捷键全景</h2>
+
+<table>
+  <thead>
+    <tr><th>快捷键</th><th>作用</th><th>何时用</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><kbd>Esc</kbd></td><td>中断 Claude 当前动作</td><td>它走错方向了，赶紧停</td></tr>
+    <tr><td><kbd>Esc</kbd> <kbd>Esc</kbd>（双击）</td><td>编辑上一条消息</td><td>发完才发现少说了一个关键约束</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td>退出当前会话</td><td>完全离开</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>退出 Claude Code</td><td>关掉程序</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>清屏（不清上下文）</td><td>屏幕太乱但想保留对话</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>切换到逐字展开模式（verbose）</td><td>想看 Claude 每个工具调用的完整参数与输出</td></tr>
+    <tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>循环切换 auto-accept / plan / 默认 模式</td><td>想让它自己跑 vs 想先看计划</td></tr>
+    <tr><td><kbd>Tab</kbd></td><td>自动补全（文件路径、命令）</td><td>输入 <code>@</code> 后补文件名</td></tr>
+    <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>翻命令历史</td><td>重复上条指令</td></tr>
+    <tr><td>三个空格 + <kbd>Enter</kbd></td><td>多行输入模式</td><td>想粘贴大段文字不误触发送</td></tr>
+    <tr><td><kbd>\</kbd> + <kbd>Enter</kbd></td><td>换行不发送</td><td>同上，更简洁</td></tr>
+  </tbody>
+</table>
+
+<div class="callout learn">
+<p><strong>Shift+Tab 是被低估的核心快捷键。</strong>它在三个模式之间循环：</p>
+<ul>
+  <li><strong>默认</strong>——每次危险操作都问你；</li>
+  <li><strong>auto-accept（bypass permissions）</strong>——全部自动通过，适合无副作用的批量任务；</li>
+  <li><strong>plan mode</strong>——先写计划不动手，你点头才执行。</li>
+</ul>
+<p>养成"复杂改动前先 Shift+Tab 进 plan 模式"的习惯，能避免 80% 的返工。</p>
+</div>
+
+<hr>
+
+<h2 id="slash-commands">4. 内置斜杠命令逐条讲</h2>
+
+<p>斜杠命令是 Claude Code 暴露出来的"遥控器"。下面按使用频率和重要度排序。</p>
+
+<h3>4.1 会话/上下文管理</h3>
+
+<table>
+  <thead><tr><th>命令</th><th>做什么</th><th>讲解</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>/clear</code> <span class="tag tag-core">核心</span></td>
+      <td>清空当前对话上下文</td>
+      <td>从"任务 A"切到"任务 B"时必做。不清会导致 A 的上下文污染 B 的判断。</td>
+    </tr>
+    <tr>
+      <td><code>/compact</code></td>
+      <td>把长对话压缩成摘要继续</td>
+      <td>Claude Code 会在接近上下文上限时自动压缩；你也可以手动触发，加个指令告诉它"重点保留 X 相关的决策"。</td>
+    </tr>
+    <tr>
+      <td><code>/resume</code></td>
+      <td>恢复之前的某个会话</td>
+      <td>退出后想继续昨天那个任务，用这个挑一条。</td>
+    </tr>
+    <tr>
+      <td><code>/export</code></td>
+      <td>导出对话（可作为文档/复盘）</td>
+      <td>做 code review 后想把讨论沉淀成 PR 描述时好用。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout caveat">
+<p>很多人从头到尾不 <code>/clear</code>，一天下来对话里混着 5 个任务。结果就是每个回答都带着无关的前文偏见，而且 token 烧得飞快。<strong>每换一个实质性话题，就清一次。</strong></p>
+</div>
+
+<h3>4.2 配置与状态</h3>
+
+<table>
+  <tbody>
+    <tr><td><code>/help</code></td><td>列出所有命令。记不清时的兜底。</td></tr>
+    <tr><td><code>/status</code></td><td>查看当前账号、模型、工作目录、已启用的 MCP 与插件。排查"怎么不对劲"的第一步。</td></tr>
+    <tr><td><code>/cost</code></td><td>当前会话累计消耗的 token 与美元估算。</td></tr>
+    <tr><td><code>/model</code></td><td>切换模型（Opus / Sonnet / Haiku）。</td></tr>
+    <tr><td><code>/config</code></td><td>打开交互式配置面板：主题、输出风格、语言、快捷项。</td></tr>
+    <tr><td><code>/doctor</code></td><td>自检：权限、网络、MCP 连通性。升级后有异常先跑它。</td></tr>
+    <tr><td><code>/upgrade</code></td><td>升级 Claude Code 自身。</td></tr>
+    <tr><td><code>/login</code> / <code>/logout</code></td><td>切换账号或重新认证。</td></tr>
+  </tbody>
+</table>
+
+<div class="callout learn">
+<p><strong>模型选择的决策框架：</strong></p>
+<ul>
+  <li><strong>Opus</strong>——架构决策、复杂重构、难 bug、涉及多系统推理。慢、贵，但"想得对"。</li>
+  <li><strong>Sonnet</strong>——日常编码主力。性价比最优。</li>
+  <li><strong>Haiku</strong>——跑批、格式化、简单重复任务、作为 Subagent 的"打工人"。</li>
+</ul>
+<p>策略：默认 Sonnet，遇到硬茬切 Opus，大量小任务并行时让 Subagent 用 Haiku。</p>
+</div>
+
+<h3>4.3 项目管理</h3>
+
+<table>
+  <tbody>
+    <tr><td><code>/init</code></td><td>在当前项目生成一个初始 CLAUDE.md（Claude 会读代码后写摘要）。新进一个项目必跑。</td></tr>
+    <tr><td><code>/memory</code></td><td>打开 CLAUDE.md 编辑菜单，选择要编辑的层级（项目 / 用户 / 企业）。</td></tr>
+    <tr><td><code>/add-dir</code></td><td>把项目外的目录临时加入 Claude 可读范围。做跨仓库迁移时关键。</td></tr>
+    <tr><td><code>/permissions</code></td><td>查看/编辑当前权限规则。</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4 协作能力入口</h3>
+
+<table>
+  <tbody>
+    <tr><td><code>/agents</code></td><td>管理子 Agent：查看、创建、编辑。</td></tr>
+    <tr><td><code>/mcp</code></td><td>管理 MCP 服务器：列出、启用、查看状态。</td></tr>
+    <tr><td><code>/hooks</code></td><td>管理钩子配置。</td></tr>
+    <tr><td><code>/output-style</code></td><td>切换输出风格（Default / Explanatory / Learning / 自定义）。</td></tr>
+    <tr><td><code>/plugin</code></td><td>管理插件（安装/启停/升级）。</td></tr>
+  </tbody>
+</table>
+
+<h3>4.5 协作开发</h3>
+
+<table>
+  <tbody>
+    <tr><td><code>/review</code></td><td>对当前分支变更做 code review。相当于给自己一个"第二意见"。</td></tr>
+    <tr><td><code>/pr_comments</code></td><td>拉取并整理某 PR 上的评论，让 Claude 协助逐条回应。</td></tr>
+    <tr><td><code>/security-review</code></td><td>对当前改动做一次安全视角审查（SQL 注入、权限、秘密泄漏等）。</td></tr>
+  </tbody>
+</table>
+
+<div class="callout tip">
+<p>提 PR 前固定跑两条：<code>/review</code> + <code>/security-review</code>。比起等队友 review 发现问题，自己先过一遍能把扯皮降到最低。</p>
+</div>
+
+<hr>
+
+<h2 id="session">5. 会话生命周期：clear / compact / resume / checkpoint</h2>
+
+<p>会话管理能力决定了 Claude Code 是"一次性工具"还是"可持续工作伙伴"。</p>
+
+<h3>5.1 上下文的三种状态</h3>
+
+<ol>
+  <li><strong>活跃</strong>——当前会话正在累积消息；</li>
+  <li><strong>压缩</strong>——自动或手动触发 <code>/compact</code>，老消息变成摘要；</li>
+  <li><strong>归档</strong>——你退出了，但可以 <code>/resume</code> 回来。</li>
+</ol>
+
+<h3>5.2 Checkpoint（回滚点）</h3>
+
+<p>Claude Code 会在重大编辑前自动打 checkpoint。你可以通过界面提示的 <kbd>Esc</kbd> <kbd>Esc</kbd> 回到上一条消息，配合"撤销到某个 checkpoint"恢复文件状态。</p>
+
+<div class="callout learn">
+<p><strong>Checkpoint 和 Git 不是一回事。</strong>它是 Claude Code 内置的文件快照，为了"agent 搞砸了能拉回来"。你仍然应该勤快 <code>git commit</code>——checkpoint 不会跨会话保留，也不替代版本管理。</p>
+</div>
+
+<h3>5.3 /compact 的进阶用法</h3>
+
+<pre><code>/compact 重点保留：我们决定把 auth 拆成独立 service 的原因、
+        以及已经改好的 3 个文件；其它讨论可以压缩。</code></pre>
+
+<p>加自然语言指令告诉 Claude <em>压缩的取舍</em>。默认压缩是均匀的，指定后会偏向保留关键决策。</p>
+
+<hr>
+
+<h2 id="memory">6. 记忆系统 CLAUDE.md 的三层结构</h2>
+
+<p>Claude Code 启动时会按 <strong>从大到小、从远到近</strong> 的顺序加载记忆：</p>
+
+<table>
+  <thead><tr><th>层级</th><th>路径</th><th>适合放什么</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>企业策略</td>
+      <td>系统级（由管理员部署）</td>
+      <td>公司统一规范、合规要求</td>
+    </tr>
+    <tr>
+      <td>用户全局</td>
+      <td><code>~/.claude/CLAUDE.md</code></td>
+      <td>你的个人偏好（如"注释写中文"、"不要用 emoji"）</td>
+    </tr>
+    <tr>
+      <td>项目级</td>
+      <td><code>&lt;repo&gt;/CLAUDE.md</code></td>
+      <td>本项目的架构、命名、常用脚本</td>
+    </tr>
+    <tr>
+      <td>项目本地（不提交）</td>
+      <td><code>&lt;repo&gt;/CLAUDE.local.md</code></td>
+      <td>你个人在这个项目里的偏好，不想污染队友</td>
+    </tr>
+    <tr>
+      <td>子目录级</td>
+      <td><code>&lt;repo&gt;/some/sub/CLAUDE.md</code></td>
+      <td>只有在这个子目录工作时才加载</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout learn">
+<p><strong>为什么要分层？</strong>因为不同偏好的"适用半径"不同。"我喜欢简短回答"是你的偏好，不应写进项目；"本项目用 pnpm 而不是 npm"是项目事实，不应写进个人全局。分层让规则的归属清晰，避免打架。</p>
+</div>
+
+<h3>6.1 CLAUDE.md 写什么最值得</h3>
+
+<ol>
+  <li><strong>跑得通的命令</strong>：测试怎么跑、lint 怎么跑、dev server 怎么起。</li>
+  <li><strong>避坑清单</strong>：过去踩过什么坑、为什么用 A 不用 B。</li>
+  <li><strong>命名约定</strong>：文件后缀、函数前缀、文件夹语义。</li>
+  <li><strong>外部系统指针</strong>：Linear 项目名、Grafana 面板 URL、Slack 频道。</li>
+</ol>
+
+<div class="callout caveat">
+<p>不要把能从代码里看出来的东西抄进 CLAUDE.md（比如"这个项目用 React"）。Claude 会自己读。写那些 <strong>只能通过对话才知道</strong> 的事。</p>
+</div>
+
+<hr>
+
+<h2 id="settings">7. settings.json：权限、环境、钩子一站式配置</h2>
+
+<p>settings.json 是 Claude Code 的"操作系统配置"。它也分层：</p>
+
+<table>
+  <tbody>
+    <tr><td>企业级</td><td>系统管理员部署</td></tr>
+    <tr><td>用户级</td><td><code>~/.claude/settings.json</code></td></tr>
+    <tr><td>项目共享</td><td><code>&lt;repo&gt;/.claude/settings.json</code>（提交到 git）</td></tr>
+    <tr><td>项目本地</td><td><code>&lt;repo&gt;/.claude/settings.local.json</code>（gitignore）</td></tr>
+  </tbody>
+</table>
+
+<h3>7.1 权限规则：allow / ask / deny</h3>
+
+<pre><code>{
+  "permissions": {
+    "allow": [
+      "Bash(git diff:*)",
+      "Bash(npm run test:*)",
+      "Read(./**)",
+      "Edit(./src/**)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Read(./.env*)",
+      "Read(./**/*.key)"
+    ]
+  }
+}</code></pre>
+
+<div class="callout learn">
+<p><strong>权限模式的三个段位：</strong></p>
+<ul>
+  <li><code>allow</code>——直接执行不问。</li>
+  <li><code>ask</code>——每次问你。</li>
+  <li><code>deny</code>——直接拒绝，Claude 连尝试都不会。</li>
+</ul>
+<p>规则支持 glob。命令里用 <code>Tool(pattern)</code> 的语法匹配工具名+参数。</p>
+</div>
+
+<div class="callout tip">
+<p>把 <code>.env</code>、密钥文件、<code>rm -rf</code> 这类写进全局 <code>deny</code>，一劳永逸地避免意外。项目级的 <code>allow</code> 里放本项目常跑的测试/构建命令，减少被打断的次数。</p>
+</div>
+
+<h3>7.2 环境变量</h3>
+
+<pre><code>{
+  "env": {
+    "NODE_ENV": "development",
+    "ANTHROPIC_LOG": "debug"
+  }
+}</code></pre>
+
+<h3>7.3 状态栏与输出风格</h3>
+
+<pre><code>{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "outputStyle": "Learning"
+}</code></pre>
+
+<hr>
+
+<h2 id="subagents">8. Subagents 子代理：并行与上下文隔离</h2>
+
+<p>Subagent 是 <strong>Claude Code 里的 Claude Code</strong>——一个带独立上下文的子对话。主 agent 可以派它去做事，只把结论收回来。</p>
+
+<h3>8.1 为什么要有 Subagent</h3>
+
+<ol>
+  <li><strong>上下文隔离</strong>：主对话不被大量工具输出污染；</li>
+  <li><strong>并行</strong>：可以同时派 3 个去查不同模块；</li>
+  <li><strong>角色分工</strong>：一个专管 code review、一个专管测试、一个专管文档。</li>
+</ol>
+
+<h3>8.2 如何定义</h3>
+
+<p>在 <code>~/.claude/agents/</code> 或 <code>&lt;repo&gt;/.claude/agents/</code> 放一个 Markdown 文件：</p>
+
+<pre><code>---
+name: test-runner
+description: 跑指定测试并精简输出。用于回归测试。
+tools: Bash, Read
+model: haiku
+---
+
+你是测试执行专家。收到命令后：
+1. 跑指定的测试文件或测试名
+2. 如果有失败，只把失败部分完整贴出来
+3. 成功时用一句话总结
+</code></pre>
+
+<h3>8.3 如何使用</h3>
+
+<p>Claude 会根据描述自动触发；你也可以显式说"用 test-runner agent 跑一下 auth 相关测试"。通过 <code>/agents</code> 命令管理。</p>
+
+<div class="callout when">
+<p>合适的场景：① 开 3 个并行去调研不同技术方案；② 跑长时间任务（构建、测试）时不阻塞主对话；③ 有明确 SOP 的重复性活（代码审查、安全扫描、API 文档生成）。</p>
+</div>
+
+<div class="callout caveat">
+<p>Subagent 调用是有成本的——每派一个都会复制上下文+启动。不要把"读一个文件"这种琐事也交给 Subagent。它适合<strong>"定义清楚的、可并行的、大任务"</strong>。</p>
+</div>
+
+<hr>
+
+<h2 id="skills">9. Skills 技能：按需加载的"专业知识包"</h2>
+
+<p>Skill 是一个带元数据的知识/工具包，Claude 会根据 <em>当前任务</em> 判断是否触发。和 Subagent 的区别：</p>
+
+<table>
+  <thead><tr><th></th><th>Skill</th><th>Subagent</th></tr></thead>
+  <tbody>
+    <tr><td>运行在哪</td><td>主对话里</td><td>独立子对话</td></tr>
+    <tr><td>目的</td><td>注入专业知识/步骤</td><td>承包一个独立任务</td></tr>
+    <tr><td>触发</td><td>关键词/意图匹配</td><td>显式或按 description 派遣</td></tr>
+  </tbody>
+</table>
+
+<h3>9.1 Skill 文件结构</h3>
+
+<pre><code>.claude/skills/my-skill/
+├── SKILL.md          # 主文档（Claude 会读的）
+├── references/       # 详细参考（按需加载）
+├── examples/         # 示例
+└── scripts/          # 可执行工具</code></pre>
+
+<p>SKILL.md 的 frontmatter：</p>
+
+<pre><code>---
+name: api-design
+description: 设计 RESTful API 时触发。覆盖命名、错误码、版本策略。
+---
+
+# API Design
+
+## 什么时候用这个 skill
+当用户要新增 endpoint、重构 API、或讨论 API 兼容性时。
+
+## 核心原则
+...</code></pre>
+
+<div class="callout learn">
+<p><strong>Skill 的设计哲学叫"渐进式披露"：</strong>SKILL.md 是入口，只写最精炼的引导；细节放 references/。Claude 先读入口，需要时再读详细文件。这样在低需求场景不会浪费 token，在高需求场景又能查到完整资料。</p>
+</div>
+
+<h3>9.2 怎么让 Skill 被可靠触发</h3>
+
+<ul>
+  <li><strong>description 要具体</strong>——"写 API 时用"不如"用户要设计/重构 REST endpoint 时触发"；</li>
+  <li><strong>包含关键词</strong>——"endpoint"、"route"、"API" 都写上；</li>
+  <li><strong>避开过宽</strong>——"代码审查时用"会到处触发，加限定词。</li>
+</ul>
+
+<hr>
+
+<h2 id="hooks">10. Hooks 钩子：让 Claude Code 自动化起来</h2>
+
+<p>Hooks 是 <strong>在特定事件点执行你指定命令</strong> 的机制。它让 Claude Code 从"聊天式 agent"升级为"可嵌入工作流的自动化平台"。</p>
+
+<h3>10.1 事件清单</h3>
+
+<table>
+  <thead><tr><th>事件</th><th>触发时机</th><th>典型用途</th></tr></thead>
+  <tbody>
+    <tr><td><code>SessionStart</code></td><td>会话开启</td><td>加载项目上下文、检查权限</td></tr>
+    <tr><td><code>UserPromptSubmit</code></td><td>用户发消息时</td><td>预处理、关键词告警、禁止敏感词</td></tr>
+    <tr><td><code>PreToolUse</code></td><td>工具调用前</td><td>安全扫描、参数校验</td></tr>
+    <tr><td><code>PostToolUse</code></td><td>工具调用后</td><td>格式化、自动测试、更新日志</td></tr>
+    <tr><td><code>Stop</code></td><td>Claude 结束回答</td><td>通知、收尾检查</td></tr>
+    <tr><td><code>SubagentStop</code></td><td>子 agent 结束</td><td>聚合结果</td></tr>
+    <tr><td><code>PreCompact</code></td><td>压缩前</td><td>把关键上下文备份出去</td></tr>
+    <tr><td><code>Notification</code></td><td>提示时</td><td>推桌面通知 / Slack</td></tr>
+  </tbody>
+</table>
+
+<h3>10.2 配置示例：保存后自动格式化</h3>
+
+<pre><code>{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prettier --write \"$CLAUDE_TOOL_INPUT_FILE_PATH\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+
+<h3>10.3 用 Hook 实现"自动化行为"</h3>
+
+<div class="callout learn">
+<p><strong>关键洞察：</strong>当你说"以后每次 X 发生时都做 Y"，这必须靠 Hook 实现，不能靠 CLAUDE.md 记忆。因为 CLAUDE.md 是 <em>建议</em>，Claude 看心情执行；Hook 是 <em>宿主强制执行</em> 的，跳不过。</p>
+<p>想稳定触发的自动行为，都用 Hook 配 settings.json。</p>
+</div>
+
+<div class="callout caveat">
+<p>Hook 命令在你的 shell 里跑。写脚本时注意：① 失败会中断工具执行；② 超时会被干掉；③ 不要写阻塞交互命令。开发时先从 <code>echo</code> 开始，验证触发点正确再替换成真实逻辑。</p>
+</div>
+
+<hr>
+
+<h2 id="mcp">11. MCP 服务器：外接你自己的工具箱</h2>
+
+<p>MCP（Model Context Protocol）是 Anthropic 提的标准协议，让 LLM 可以连外部工具/数据源。你在 Claude Code 里看到的 <code>mcp__chrome-devtools__*</code>、<code>mcp__context7__*</code> 就是 MCP 工具。</p>
+
+<h3>11.1 两种部署形态</h3>
+
+<table>
+  <tbody>
+    <tr><td><strong>stdio</strong></td><td>本地进程，Claude Code 拉起来，通过标准输入输出通信</td></tr>
+    <tr><td><strong>SSE / HTTP</strong></td><td>远程服务，Claude Code 通过 HTTP 长连接通信</td></tr>
+  </tbody>
+</table>
+
+<h3>11.2 配置文件位置</h3>
+
+<pre><code>.mcp.json                           # 项目级，随 git 提交
+~/.claude/mcp.json                  # 用户级
+.claude/settings.json 里的 mcpServers # 也行</code></pre>
+
+<h3>11.3 示例</h3>
+
+<pre><code>{
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "internal-api": {
+      "command": "node",
+      "args": ["./mcp-servers/internal/index.js"],
+      "env": {
+        "API_TOKEN": "${INTERNAL_API_TOKEN}"
+      }
+    }
+  }
+}</code></pre>
+
+<div class="callout when">
+<p>MCP 的甜蜜区：① 公司内部 API / 数据源（内部 SRE 看板、CRM）；② 特定领域工具（Notion、Linear、Sentry、Grafana）；③ 实时数据（chrome-devtools 看浏览器当前状态、context7 拉最新文档）。</p>
+</div>
+
+<div class="callout learn">
+<p><strong>MCP vs 插件内嵌工具 vs Hook 的边界：</strong></p>
+<ul>
+  <li><strong>MCP</strong>——"Claude 按需调用的工具"，像 API。</li>
+  <li><strong>Hook</strong>——"事件触发时宿主跑的脚本"，Claude 不直接调用。</li>
+  <li><strong>Skill</strong>——"纯知识/流程包"，不涉及外部连接。</li>
+</ul>
+<p>需要 Claude 主动查询/操作外部系统 → MCP。需要某事件发生时强制执行本地动作 → Hook。</p>
+</div>
+
+<hr>
+
+<h2 id="plugins">12. Plugins 插件：把能力打包分发</h2>
+
+<p>Plugin 是把以上这些东西（commands / agents / skills / hooks / mcpServers）打成一个可分发的包的机制。</p>
+
+<h3>12.1 标准结构</h3>
+
+<pre><code>my-plugin/
+├── .claude-plugin/
+│   └── plugin.json          # 元数据
+├── commands/                # 斜杠命令
+│   └── my-command.md
+├── agents/                  # 子 agent
+│   └── my-agent.md
+├── skills/                  # 技能
+│   └── my-skill/SKILL.md
+├── hooks/                   # 钩子
+│   └── hooks.json
+├── .mcp.json                # MCP 服务器
+└── README.md</code></pre>
+
+<h3>12.2 ${CLAUDE_PLUGIN_ROOT}</h3>
+
+<p>插件里引用自己的文件，一律用这个变量——这样插件被安装到任意位置都能正常工作。</p>
+
+<pre><code>{
+  "hooks": {
+    "PostToolUse": [{
+      "matcher": "Write",
+      "hooks": [{
+        "type": "command",
+        "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/format.py"
+      }]
+    }]
+  }
+}</code></pre>
+
+<h3>12.3 管理命令</h3>
+
+<pre><code>/plugin          # 交互式管理面板
+/plugin install &lt;source&gt;
+/plugin list
+/plugin enable / disable &lt;name&gt;</code></pre>
+
+<div class="callout tip">
+<p>团队共用的规范、脚本、review 流程，做成插件比让每人自己 copy 好。一次发布，统一更新，版本化管理。</p>
+</div>
+
+<hr>
+
+<h2 id="output-styles">13. Output Styles 输出风格：改变 Claude 的"人格"</h2>
+
+<p>Output Style 是 Claude Code 的系统 prompt 层的可切换预设。不同风格下，Claude 的解释深度、提问习惯、注释量都不同。</p>
+
+<h3>13.1 内置风格</h3>
+
+<table>
+  <tbody>
+    <tr><td><code>Default</code></td><td>简洁、专业，面向有经验开发者。</td></tr>
+    <tr><td><code>Explanatory</code></td><td>每一步都给解释，适合跨领域任务。</td></tr>
+    <tr><td><code>Learning</code> <span class="tag tag-new">你当前用的</span></td><td>主动教你原理、加学习点，适合学新框架/新概念。</td></tr>
+  </tbody>
+</table>
+
+<h3>13.2 自定义风格</h3>
+
+<p>在 <code>~/.claude/output-styles/</code> 或 <code>&lt;repo&gt;/.claude/output-styles/</code> 放一个 Markdown 文件：</p>
+
+<pre><code>---
+name: senior-reviewer
+description: 严格的高级工程师视角，专挑问题
+---
+
+你是一位十年以上经验的 senior engineer 在做 review：
+- 永远先指出最严重的问题
+- 不写"looks good"这种客套
+- 提出具体的改法或反例
+- 对测试覆盖率和边界条件格外敏感</code></pre>
+
+<div class="callout learn">
+<p>Output Style 替换的是 <em>回答方式</em>，不是 <em>任务能力</em>。它影响 Claude 怎么说话，不影响它能调哪些工具。要改能力边界，去动 Skills / Subagents / MCP。</p>
+</div>
+
+<hr>
+
+<h2 id="custom-commands">14. 自定义斜杠命令：沉淀你的常用工作流</h2>
+
+<p>反复输入的长 prompt，做成斜杠命令。放在 <code>~/.claude/commands/</code>（全局）或 <code>&lt;repo&gt;/.claude/commands/</code>（项目）。</p>
+
+<h3>14.1 基础文件格式</h3>
+
+<pre><code>---
+description: 给当前改动生成中文 commit message
+argument-hint: [scope?]
+allowed-tools: Bash(git:*)
+---
+
+请基于以下 diff 写一条中文 commit message。
+格式：&lt;type&gt;(&lt;scope&gt;): &lt;主题&gt;
+
+当前 staged diff：
+!`git diff --staged`
+
+未 staged 的改动（参考）：
+!`git diff`
+
+$ARGUMENTS</code></pre>
+
+<h3>14.2 三种动态能力</h3>
+
+<table>
+  <thead><tr><th>语法</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td><code>$ARGUMENTS</code></td><td>用户在命令后传的全部参数</td></tr>
+    <tr><td><code>$1</code> <code>$2</code></td><td>按位置取参数</td></tr>
+    <tr><td><code>@&lt;path&gt;</code></td><td>把文件内容注入</td></tr>
+    <tr><td><code>!`&lt;cmd&gt;`</code></td><td>在命令定义里执行 shell，结果嵌进 prompt</td></tr>
+  </tbody>
+</table>
+
+<div class="callout when">
+<p>做自定义命令的筛选标准：① 一周用 2 次以上；② prompt 固定 &gt; 80%；③ 参数化能明显提速。满足两条就值得做。</p>
+</div>
+
+<hr>
+
+<h2 id="advanced">15. 进阶模式</h2>
+
+<h3>15.1 Plan Mode（计划模式）</h3>
+
+<p>按 <kbd>Shift</kbd>+<kbd>Tab</kbd> 切到 plan mode，Claude 会：</p>
+<ol>
+  <li>只读探索代码，不改任何文件；</li>
+  <li>产出一份明确的实施计划；</li>
+  <li>等你点头后退出 plan 模式执行。</li>
+</ol>
+
+<div class="callout when">
+<p>涉及超过 3 个文件、架构选择、或多个合理方案的任务，先 plan 再动手。本质上是把"想清楚"和"写出来"分开，像 TDD 的红绿重构分三步一样。</p>
+</div>
+
+<h3>15.2 Extended Thinking（长思考）</h3>
+
+<p>在消息里写 <code>think</code> / <code>think hard</code> / <code>think harder</code> / <code>ultrathink</code> 会分别分配递增的思考预算。遇到硬茬时加一下。</p>
+
+<div class="callout learn">
+<p><strong>底层原理：</strong>这些关键词会让 Claude 在回答前多花 token 做"内部推理"。更深的思考在用户侧看起来就是"反应慢一点，但答案更靠谱"。不是什么时候都值得开——简单任务用反而浪费。</p>
+</div>
+
+<h3>15.3 Headless 模式（命令行单轮）</h3>
+
+<pre><code>claude -p "总结这个项目做什么" --output-format json
+claude -p "修复 src/api.ts 的 lint 错误" &gt; result.txt</code></pre>
+
+<p><code>-p</code>（print）模式是非交互的一次性执行，适合脚本里嵌入 Claude、CI 流水线、定时任务。</p>
+
+<h3>15.4 Worktrees（隔离改动）</h3>
+
+<p>Git worktree 让你在同一个 repo 里开多个工作副本。Claude Code 支持在 worktree 里运行，<strong>让并行任务互不污染</strong>。</p>
+
+<pre><code>git worktree add ../my-repo-feature-x feature-x
+cd ../my-repo-feature-x
+claude</code></pre>
+
+<div class="callout when">
+<p>同时做两个无关 feature、或需要回到 main 分支跑测试又不想打断当前工作流时特别好用。</p>
+</div>
+
+<h3>15.5 Background tasks</h3>
+
+<p>长耗时任务（构建、测试、爬虫）可以让 Claude 在后台跑，同时继续对话，完成后再通知你。Bash 工具的 <code>run_in_background</code> 参数就是这个机制。</p>
+
+<hr>
+
+<h2 id="ide-statusline">16. IDE 集成与状态栏</h2>
+
+<h3>16.1 IDE 扩展</h3>
+
+<ul>
+  <li><strong>VS Code</strong>——官方扩展，支持 inline 编辑提示、侧边栏对话；</li>
+  <li><strong>JetBrains</strong>——官方插件，支持 IDEA / WebStorm / PyCharm 等。</li>
+</ul>
+
+<p>IDE 里的优势：更直观的 diff 预览、快捷键与编辑器原生整合、文件选择器对接。</p>
+
+<h3>16.2 自定义状态栏</h3>
+
+<p>在 settings.json 里指定一个脚本，Claude Code 会周期性调用它渲染底部状态栏。</p>
+
+<pre><code>{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}</code></pre>
+
+<p>脚本可以输出：当前分支、未提交文件数、时钟、token 消耗……按你想看到的来。</p>
+
+<hr>
+
+<h2 id="decision-tree">17. 决策树：遇到问题该拿哪把刀</h2>
+
+<h3>17.1 我想让 Claude 在某事件发生时自动做某事</h3>
+<p>→ <strong>Hook</strong>（在 settings.json 配 PreToolUse/PostToolUse/Stop 等）。</p>
+
+<h3>17.2 我想让 Claude 调用某个外部系统</h3>
+<p>→ <strong>MCP 服务器</strong>（stdio 本地或 HTTP 远程）。</p>
+
+<h3>17.3 我有一套固定的专业知识/SOP 想让 Claude 在合适时用</h3>
+<p>→ <strong>Skill</strong>（描述清楚触发条件，把详细内容渐进披露）。</p>
+
+<h3>17.4 我有一个复杂的、独立的、可并行的任务</h3>
+<p>→ <strong>Subagent</strong>（定义清楚职责、工具白名单、用的模型）。</p>
+
+<h3>17.5 我经常输入一段相同的长 prompt</h3>
+<p>→ <strong>自定义斜杠命令</strong>（参数化 + <code>@</code> + <code>!`</code> 组合）。</p>
+
+<h3>17.6 我想改变 Claude 的说话风格</h3>
+<p>→ <strong>Output Style</strong>（自定义 prompt 模板）。</p>
+
+<h3>17.7 我想让 Claude 记住一些项目事实</h3>
+<p>→ <strong>CLAUDE.md</strong>（分层写：企业/用户/项目/子目录/本地）。</p>
+
+<h3>17.8 我想把以上一整套能力分发给队友</h3>
+<p>→ <strong>Plugin</strong>（打包发布）。</p>
+
+<h3>17.9 我想精细控制 Claude 能不能执行某命令</h3>
+<p>→ <strong>settings.json 的 permissions</strong>（allow / ask / deny + glob）。</p>
+
+<h3>17.10 我想让它在脚本/CI 里非交互地跑</h3>
+<p>→ <strong>Headless 模式 <code>claude -p</code></strong>。</p>
+
+<hr>
+
+<h2 id="closing">🎓 学习路径建议</h2>
+
+<div class="callout learn">
+<p><strong>如果你只能做 3 件事来提升使用 Claude Code 的水平，优先级：</strong></p>
+<ol>
+  <li><strong>花 20 分钟把 <code>~/.claude/CLAUDE.md</code> 和当前项目的 CLAUDE.md 写好。</strong>
+      这是投入产出比最高的动作——你未来每次会话都在受益。</li>
+  <li><strong>配 3 个高频自定义斜杠命令。</strong>
+      比如 <code>/commit</code>（自动生成中文 commit message）、<code>/test-fix</code>（跑测试并修失败）、<code>/pr-desc</code>（基于 diff 生成 PR 描述）。</li>
+  <li><strong>用 Plan Mode 处理你下一个复杂改动。</strong>
+      体会"先想清楚再动手"和"一上来就写"的差别，你会上瘾的。</li>
+</ol>
+<p>Hooks / Subagents / Skills / MCP 这些高级能力，遇到 <em>真实痛点</em> 时再学就够了。没有痛点硬学一遍，一周就忘光。</p>
+</div>
+
+<p class="footer">
+最后更新：2026-04-22 · 基于 Claude Code 官方文档（context7 拉取 /anthropics/claude-code）<br>
+本文件在 <code>claude-code-cheatsheet.html</code>，双击可浏览器打开。
+</p>
+
+</body>
+</html>

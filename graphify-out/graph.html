@@ -1,149 +1,256 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Wiki 知识图谱</title>
-<script src="https://d3js.org/d3.v7.min.js"></script>
+<title>graphify - graphify-out/graph.html</title>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0f1117; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-#canvas { width: 100vw; height: 100vh; }
-.node circle { stroke-width: 2; cursor: pointer; transition: r 0.2s; }
-.node text { font-size: 11px; fill: #ccc; pointer-events: none; }
-.link { stroke: #334; stroke-opacity: 0.6; }
-#tooltip {
-  position: fixed; background: #1e2130; border: 1px solid #3a4060;
-  border-radius: 8px; padding: 10px 14px; font-size: 12px; max-width: 260px;
-  pointer-events: none; opacity: 0; transition: opacity 0.2s; z-index: 10;
-}
-#legend {
-  position: fixed; bottom: 20px; left: 20px; background: #1e2130cc;
-  border-radius: 8px; padding: 12px; font-size: 12px;
-}
-#legend div { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
-#legend span { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-#info { position: fixed; top: 20px; left: 20px; font-size: 13px; color: #666; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f0f1a; color: #e0e0e0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; display: flex; height: 100vh; overflow: hidden; }
+  #graph { flex: 1; }
+  #sidebar { width: 280px; background: #1a1a2e; border-left: 1px solid #2a2a4e; display: flex; flex-direction: column; overflow: hidden; }
+  #search-wrap { padding: 12px; border-bottom: 1px solid #2a2a4e; }
+  #search { width: 100%; background: #0f0f1a; border: 1px solid #3a3a5e; color: #e0e0e0; padding: 7px 10px; border-radius: 6px; font-size: 13px; outline: none; }
+  #search:focus { border-color: #4E79A7; }
+  #search-results { max-height: 140px; overflow-y: auto; padding: 4px 12px; border-bottom: 1px solid #2a2a4e; display: none; }
+  .search-item { padding: 4px 6px; cursor: pointer; border-radius: 4px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .search-item:hover { background: #2a2a4e; }
+  #info-panel { padding: 14px; border-bottom: 1px solid #2a2a4e; min-height: 140px; }
+  #info-panel h3 { font-size: 13px; color: #aaa; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+  #info-content { font-size: 13px; color: #ccc; line-height: 1.6; }
+  #info-content .field { margin-bottom: 5px; }
+  #info-content .field b { color: #e0e0e0; }
+  #info-content .empty { color: #555; font-style: italic; }
+  .neighbor-link { display: block; padding: 2px 6px; margin: 2px 0; border-radius: 3px; cursor: pointer; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border-left: 3px solid #333; }
+  .neighbor-link:hover { background: #2a2a4e; }
+  #neighbors-list { max-height: 160px; overflow-y: auto; margin-top: 4px; }
+  #legend-wrap { flex: 1; overflow-y: auto; padding: 12px; }
+  #legend-wrap h3 { font-size: 13px; color: #aaa; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; border-radius: 4px; font-size: 12px; }
+  .legend-item:hover { background: #2a2a4e; padding-left: 4px; }
+  .legend-item.dimmed { opacity: 0.35; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .legend-count { color: #666; font-size: 11px; }
+  #stats { padding: 10px 14px; border-top: 1px solid #2a2a4e; font-size: 11px; color: #555; }
 </style>
 </head>
 <body>
-<div id="info">Wiki 知识图谱 · 18 节点 · 拖拽/滚轮缩放</div>
-<div id="tooltip"></div>
-<div id="legend">
-  <div><span style="background:#6c8ebf"></span> concepts</div>
-  <div><span style="background:#82b366"></span> tools</div>
-  <div><span style="background:#d6a84e"></span> articles</div>
-  <div><span style="background:#b85c5c"></span> sources</div>
-  <div><span style="background:#9b6bb5"></span> resources</div>
+<div id="graph"></div>
+<div id="sidebar">
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="Search nodes..." autocomplete="off">
+    <div id="search-results"></div>
+  </div>
+  <div id="info-panel">
+    <h3>Node Info</h3>
+    <div id="info-content"><span class="empty">Click a node to inspect it</span></div>
+  </div>
+  <div id="legend-wrap">
+    <h3>Communities</h3>
+    <div id="legend"></div>
+  </div>
+  <div id="stats">52 nodes &middot; 70 edges &middot; 9 communities</div>
 </div>
-<svg id="canvas"></svg>
 <script>
-const nodes = [
-  {id:"INDEX",title:"Wiki 主索引",tags:[],desc:"全库索引",dir:"root"},
-  {id:"SCHEMA",title:"Wiki Schema",tags:[],desc:"规范说明书",dir:"root"},
-  {id:"sources/claude-md-guide",title:"Claude.md 新手指南",tags:["ai-coding","prompt-engineering"],desc:"ETH Zurich 研究：CLAUDE.md 反而降低 AI Agent 任务成功率",dir:"sources"},
-  {id:"concepts/AGENTS",title:"AGENTS.md",tags:["ai-coding"],desc:"与 CLAUDE.md 本质相同的 AI Agent 上下文配置文件",dir:"concepts"},
-  {id:"concepts/ClaudeMd",title:"Claude.md",tags:["ai-coding"],desc:"AI 编程 Agent 的上下文配置文件",dir:"concepts"},
-  {id:"concepts/上下文文件",title:"上下文文件",tags:["ai-coding"],desc:"向 AI Agent 提供项目级别指令的配置文件",dir:"concepts"},
-  {id:"concepts/编程Agent",title:"编程Agent",tags:["ai-coding"],desc:"能够自主执行编程任务的 AI 系统",dir:"concepts"},
-  {id:"concepts/agentic-engineering",title:"Agentic 工程技术",tags:["ai-coding","prompt-engineering"],desc:"将 AI 编程助手升级为可重复工程系统的五大核心技巧",dir:"concepts"},
-  {id:"tools/everything-claude-code",title:"Everything Claude Code",tags:["ai-coding"],desc:"Anthropic 黑客马拉松冠军整理的完整 Claude Code 配置集合",dir:"tools"},
-  {id:"tools/opencode",title:"OpenCode + OMO",tags:["ai-coding"],desc:"开源 AI 编程助手（60K+ Stars）及其全能增强插件",dir:"tools"},
-  {id:"tools/github-reference",title:"GitHub 功能术语速查",tags:["full-stack"],desc:"GitHub 核心功能速查表",dir:"tools"},
-  {id:"tools/git-branch",title:"Git 分支操作",tags:["full-stack"],desc:"Git 分支常用命令速查",dir:"tools"},
-  {id:"tools/openclaw-knowledge",title:"OpenClaw 知识管理",tags:["knowledge-management"],desc:"AI 驱动的个人知识库管理系统",dir:"tools"},
-  {id:"articles/claude-code-gen",title:"Claude 代码生成最佳实践",tags:["ai-coding","prompt-engineering"],desc:"Claude 3.5 Sonnet 代码生成能力评测",dir:"articles"},
-  {id:"articles/rag-optimization",title:"RAG 系统性能优化",tags:["ai","prompt-engineering"],desc:"RAG 系统完整链路性能优化",dir:"articles"},
-  {id:"articles/ai-agent-principles",title:"AI Agent 工作原理",tags:["ai","ai-coding"],desc:"深入理解 AI Agent 的工作原理",dir:"articles"},
-  {id:"articles/vibe-coding",title:"Vibe Coding 实践",tags:["ai-coding"],desc:"AI 辅助编程实践方法论",dir:"articles"},
-  {id:"resources/claude-code-authors",title:"Claude Code 核心作者",tags:["ai-coding"],desc:"Claude Code 相关核心原创作者推荐",dir:"resources"}
-];
+const RAW_NODES = [{"id": "schema_wiki_schema", "label": "Wiki Schema", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Wiki Schema", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/SCHEMA.md", "file_type": "document", "degree": 1}, {"id": "index_wiki_index", "label": "Wiki Index", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 40.0, "font": {"size": 12, "color": "#ffffff"}, "title": "Wiki Index", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/INDEX.md", "file_type": "document", "degree": 11}, {"id": "agenticengineering_concept", "label": "Agentic Engineering", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 31.8, "font": {"size": 12, "color": "#ffffff"}, "title": "Agentic Engineering", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 8}, {"id": "agenticengineering_prd_first", "label": "PRD First Development", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "PRD First Development", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 1}, {"id": "agenticengineering_modular_rules", "label": "Modular Rules Architecture", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Modular Rules Architecture", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 1}, {"id": "agenticengineering_commandify", "label": "Commandify Everything", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Commandify Everything", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 2}, {"id": "agenticengineering_context_engineering", "label": "Context Engineering", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Context Engineering", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 2}, {"id": "agenticengineering_subagent_orchestration", "label": "Subagent Orchestration", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Subagent Orchestration", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/concepts/agentic-engineering.md", "file_type": "document", "degree": 2}, {"id": "claudemd_concept", "label": "CLAUDE.md", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 26.4, "font": {"size": 12, "color": "#ffffff"}, "title": "CLAUDE.md", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/concepts/claude-md.md", "file_type": "document", "degree": 6}, {"id": "agents_concept", "label": "AGENTS.md", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "AGENTS.md", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/concepts/agents.md", "file_type": "document", "degree": 3}, {"id": "codingagent_concept", "label": "Coding Agent", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 23.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Coding Agent", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/concepts/coding-agent.md", "file_type": "document", "degree": 5}, {"id": "contextfiles_concept", "label": "Context Files", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 26.4, "font": {"size": 12, "color": "#ffffff"}, "title": "Context Files", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/concepts/context-files.md", "file_type": "document", "degree": 6}, {"id": "claudecodeauthors_entity", "label": "Claude Code Authors", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 23.6, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Authors", "community": 2, "community_name": "Claude Code Authors", "source_file": "wiki/entities/claude-code-authors.md", "file_type": "document", "degree": 5}, {"id": "claudecodeauthors_boris_cherny", "label": "Boris Cherny", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Boris Cherny", "community": 2, "community_name": "Claude Code Authors", "source_file": "wiki/entities/claude-code-authors.md", "file_type": "document", "degree": 2}, {"id": "claudecodeauthors_affaan_mustafa", "label": "Affaan Mustafa", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Affaan Mustafa", "community": 2, "community_name": "Claude Code Authors", "source_file": "wiki/entities/claude-code-authors.md", "file_type": "document", "degree": 1}, {"id": "claudecodeauthors_alex_albert", "label": "Alex Albert", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Alex Albert", "community": 2, "community_name": "Claude Code Authors", "source_file": "wiki/entities/claude-code-authors.md", "file_type": "document", "degree": 1}, {"id": "claudecodeauthors_riley_goodside", "label": "Riley Goodside", "color": {"background": "#E15759", "border": "#E15759", "highlight": {"background": "#ffffff", "border": "#E15759"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Riley Goodside", "community": 2, "community_name": "Claude Code Authors", "source_file": "wiki/entities/claude-code-authors.md", "file_type": "document", "degree": 1}, {"id": "claudecodebestpractice_entity", "label": "Claude Code Best Practice", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 31.8, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Best Practice", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/entities/claude-code-best-practice.md", "file_type": "document", "degree": 8}, {"id": "claudecodebestpractice_subagents", "label": "Claude Code Subagents", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Subagents", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/entities/claude-code-best-practice.md", "file_type": "document", "degree": 2}, {"id": "claudecodebestpractice_commands", "label": "Claude Code Commands", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Commands", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/entities/claude-code-best-practice.md", "file_type": "document", "degree": 2}, {"id": "claudecodebestpractice_skills", "label": "Claude Code Skills", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Claude Code Skills", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/entities/claude-code-best-practice.md", "file_type": "document", "degree": 1}, {"id": "claudecodebestpractice_hooks", "label": "Claude Code Hooks", "color": {"background": "#F28E2B", "border": "#F28E2B", "highlight": {"background": "#ffffff", "border": "#F28E2B"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Claude Code Hooks", "community": 1, "community_name": "Agentic Engineering Techniques", "source_file": "wiki/entities/claude-code-best-practice.md", "file_type": "document", "degree": 1}, {"id": "openclaw_entity", "label": "OpenClaw", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "OpenClaw", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/openclaw.md", "file_type": "document", "degree": 2}, {"id": "githubreference_entity", "label": "GitHub Reference", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "GitHub Reference", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/github-reference.md", "file_type": "document", "degree": 1}, {"id": "claudeplugins_entity", "label": "Claude Plugins Official", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 29.1, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Plugins Official", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/claude-plugins-official.md", "file_type": "document", "degree": 7}, {"id": "claudeplugins_skill_creator", "label": "skill-creator Plugin", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "skill-creator Plugin", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/claude-plugins-official.md", "file_type": "document", "degree": 1}, {"id": "claudeplugins_feature_dev", "label": "feature-dev Plugin", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "feature-dev Plugin", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/claude-plugins-official.md", "file_type": "document", "degree": 1}, {"id": "claudeplugins_claude_md_management", "label": "claude-md-management Plugin", "color": {"background": "#4E79A7", "border": "#4E79A7", "highlight": {"background": "#ffffff", "border": "#4E79A7"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "claude-md-management Plugin", "community": 0, "community_name": "Context Config Files", "source_file": "wiki/entities/claude-plugins-official.md", "file_type": "document", "degree": 2}, {"id": "everything_claude_code_entity", "label": "Everything Claude Code", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 29.1, "font": {"size": 12, "color": "#ffffff"}, "title": "Everything Claude Code", "community": 7, "community_name": "AI Coding Tools", "source_file": "wiki/entities/everything-claude-code.md", "file_type": "document", "degree": 7}, {"id": "everything_claude_code_hooks", "label": "Everything Claude Code - Session Hooks", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Everything Claude Code - Session Hooks", "community": 8, "community_name": "Claude Code Hooks", "source_file": "wiki/entities/everything-claude-code.md", "file_type": "document", "degree": 2}, {"id": "everything_claude_code_subagent", "label": "Everything Claude Code - Subagent Orchestration", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Everything Claude Code - Subagent Orchestration", "community": 4, "community_name": "AI Agent Orchestration", "source_file": "wiki/entities/everything-claude-code.md", "file_type": "document", "degree": 3}, {"id": "git_branch_entity", "label": "Git Branch Operations", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Git Branch Operations", "community": 3, "community_name": "Claude Code Best Practices", "source_file": "wiki/entities/git-branch.md", "file_type": "document", "degree": 1}, {"id": "opencode_entity", "label": "OpenCode + Oh My OpenCode", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "OpenCode + Oh My OpenCode", "community": 4, "community_name": "AI Agent Orchestration", "source_file": "wiki/entities/opencode.md", "file_type": "document", "degree": 2}, {"id": "opencode_omo_agents", "label": "Oh My OpenCode Agent System", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Oh My OpenCode Agent System", "community": 4, "community_name": "AI Agent Orchestration", "source_file": "wiki/entities/opencode.md", "file_type": "document", "degree": 2}, {"id": "vibe_coding_topic", "label": "Vibe Coding Practice", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Vibe Coding Practice", "community": 7, "community_name": "AI Coding Tools", "source_file": "wiki/topics/vibe-coding.md", "file_type": "document", "degree": 2}, {"id": "ai_agent_principles_topic", "label": "AI Agent Principles", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "AI Agent Principles", "community": 4, "community_name": "AI Agent Orchestration", "source_file": "wiki/topics/ai-agent-principles.md", "file_type": "document", "degree": 1}, {"id": "rag_optimization_topic", "label": "RAG System Optimization", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "RAG System Optimization", "community": 6, "community_name": "Knowledge Base & RAG", "source_file": "wiki/topics/rag-optimization.md", "file_type": "document", "degree": 1}, {"id": "claude_code_gen_topic", "label": "Claude Code Generation Best Practices", "color": {"background": "#FF9DA7", "border": "#FF9DA7", "highlight": {"background": "#ffffff", "border": "#FF9DA7"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Generation Best Practices", "community": 7, "community_name": "AI Coding Tools", "source_file": "wiki/topics/claude-code-gen.md", "file_type": "document", "degree": 2}, {"id": "karpathy_sop_topic", "label": "Karpathy Knowledge Base + Graphify SOP", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Karpathy Knowledge Base + Graphify SOP", "community": 6, "community_name": "Knowledge Base & RAG", "source_file": "wiki/topics/karpathy-knowledge-base-sop.md", "file_type": "document", "degree": 1}, {"id": "karpathy_sop_graphify_phase", "label": "Karpathy SOP - Graphify Phase (50+ articles)", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Karpathy SOP - Graphify Phase (50+ articles)", "community": 6, "community_name": "Knowledge Base & RAG", "source_file": "wiki/topics/karpathy-knowledge-base-sop.md", "file_type": "document", "degree": 3}, {"id": "karpathy_sop_rationale_graphify", "label": "Rationale: Why Graphify after 50 articles", "color": {"background": "#B07AA1", "border": "#B07AA1", "highlight": {"background": "#ffffff", "border": "#B07AA1"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Rationale: Why Graphify after 50 articles", "community": 6, "community_name": "Knowledge Base & RAG", "source_file": "wiki/topics/karpathy-knowledge-base-sop.md", "file_type": "document", "degree": 1}, {"id": "claude_md_guide_topic", "label": "Claude.md Guide", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude.md Guide", "community": 5, "community_name": "CLAUDE.md Research & Codex Migration", "source_file": "wiki/topics/claude-md-guide.md", "file_type": "document", "degree": 2}, {"id": "claude_md_guide_eth_finding", "label": "ETH Zurich Finding: CLAUDE.md Reduces Task Success", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "ETH Zurich Finding: CLAUDE.md Reduces Task Success", "community": 5, "community_name": "CLAUDE.md Research & Codex Migration", "source_file": "wiki/topics/claude-md-guide.md", "file_type": "document", "degree": 1}, {"id": "claude_code_best_practice_topic", "label": "Claude Code Best Practice Guide (82 Tips)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 26.4, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code Best Practice Guide (82 Tips)", "community": 3, "community_name": "Claude Code Best Practices", "source_file": "wiki/topics/claude-code-best-practice-guide.md", "file_type": "document", "degree": 6}, {"id": "claude_code_best_practice_context_mgmt", "label": "Claude Code - Context Management (40%/60% rule)", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code - Context Management (40%/60% rule)", "community": 3, "community_name": "Claude Code Best Practices", "source_file": "wiki/topics/claude-code-best-practice-guide.md", "file_type": "document", "degree": 2}, {"id": "claude_code_best_practice_subagents", "label": "Claude Code - Subagent Isolation Pattern", "color": {"background": "#59A14F", "border": "#59A14F", "highlight": {"background": "#ffffff", "border": "#59A14F"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code - Subagent Isolation Pattern", "community": 4, "community_name": "AI Agent Orchestration", "source_file": "wiki/topics/claude-code-best-practice-guide.md", "file_type": "document", "degree": 3}, {"id": "claude_code_best_practice_hooks", "label": "Claude Code - Hooks (PostToolUse/Stop/PreToolUse)", "color": {"background": "#9C755F", "border": "#9C755F", "highlight": {"background": "#ffffff", "border": "#9C755F"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code - Hooks (PostToolUse/Stop/PreToolUse)", "community": 8, "community_name": "Claude Code Hooks", "source_file": "wiki/topics/claude-code-best-practice-guide.md", "file_type": "document", "degree": 2}, {"id": "claude_code_best_practice_settings", "label": "Claude Code - Settings Priority Hierarchy", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Claude Code - Settings Priority Hierarchy", "community": 3, "community_name": "Claude Code Best Practices", "source_file": "wiki/topics/claude-code-best-practice-guide.md", "file_type": "document", "degree": 1}, {"id": "claude_code_tips_topic", "label": "Claude Code High-Frequency Tips", "color": {"background": "#76B7B2", "border": "#76B7B2", "highlight": {"background": "#ffffff", "border": "#76B7B2"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Claude Code High-Frequency Tips", "community": 3, "community_name": "Claude Code Best Practices", "source_file": "wiki/topics/claude-code-tips.md", "file_type": "document", "degree": 3}, {"id": "codex_migration_topic", "label": "Codex Migration Guide from Claude Code", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 18.2, "font": {"size": 12, "color": "#ffffff"}, "title": "Codex Migration Guide from Claude Code", "community": 5, "community_name": "CLAUDE.md Research & Codex Migration", "source_file": "wiki/topics/codex-migration-guide.md", "file_type": "document", "degree": 3}, {"id": "codex_migration_command_map", "label": "Codex - Claude Code Command Mapping", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 12.7, "font": {"size": 0, "color": "#ffffff"}, "title": "Codex - Claude Code Command Mapping", "community": 5, "community_name": "CLAUDE.md Research & Codex Migration", "source_file": "wiki/topics/codex-migration-guide.md", "file_type": "document", "degree": 1}, {"id": "codex_migration_agents_md", "label": "AGENTS.md (Codex equivalent of CLAUDE.md)", "color": {"background": "#EDC948", "border": "#EDC948", "highlight": {"background": "#ffffff", "border": "#EDC948"}}, "size": 15.5, "font": {"size": 12, "color": "#ffffff"}, "title": "AGENTS.md (Codex equivalent of CLAUDE.md)", "community": 5, "community_name": "CLAUDE.md Research & Codex Migration", "source_file": "wiki/topics/codex-migration-guide.md", "file_type": "document", "degree": 2}];
+const RAW_EDGES = [{"from": "schema_wiki_schema", "to": "index_wiki_index", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "agenticengineering_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "claudemd_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "agents_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "contextfiles_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "codingagent_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "claudecodebestpractice_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "openclaw_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "claudecodeauthors_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "githubreference_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "index_wiki_index", "to": "claudeplugins_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "agenticengineering_prd_first", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "agenticengineering_modular_rules", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "agenticengineering_commandify", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "agenticengineering_context_engineering", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "agenticengineering_subagent_orchestration", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "codingagent_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_concept", "to": "claudecodebestpractice_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "agenticengineering_commandify", "to": "claudecodebestpractice_commands", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "agenticengineering_context_engineering", "to": "contextfiles_concept", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "agenticengineering_subagent_orchestration", "to": "claudecodebestpractice_subagents", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claudemd_concept", "to": "agents_concept", "label": "semantically_similar_to", "title": "semantically_similar_to [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudemd_concept", "to": "contextfiles_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudemd_concept", "to": "codingagent_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudemd_concept", "to": "claudeplugins_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudemd_concept", "to": "claudeplugins_claude_md_management", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "agents_concept", "to": "contextfiles_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "codingagent_concept", "to": "contextfiles_concept", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "codingagent_concept", "to": "claudeplugins_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "contextfiles_concept", "to": "openclaw_entity", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claudecodeauthors_entity", "to": "claudecodeauthors_boris_cherny", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodeauthors_entity", "to": "claudecodeauthors_affaan_mustafa", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodeauthors_entity", "to": "claudecodeauthors_alex_albert", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodeauthors_entity", "to": "claudecodeauthors_riley_goodside", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodeauthors_boris_cherny", "to": "claudecodebestpractice_entity", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claudecodebestpractice_entity", "to": "claudecodebestpractice_subagents", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodebestpractice_entity", "to": "claudecodebestpractice_commands", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodebestpractice_entity", "to": "claudecodebestpractice_skills", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodebestpractice_entity", "to": "claudecodebestpractice_hooks", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudecodebestpractice_entity", "to": "claudeplugins_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudeplugins_entity", "to": "claudeplugins_skill_creator", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudeplugins_entity", "to": "claudeplugins_feature_dev", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claudeplugins_entity", "to": "claudeplugins_claude_md_management", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "everything_claude_code_hooks", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "everything_claude_code_subagent", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "opencode_entity", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "vibe_coding_topic", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "claude_code_gen_topic", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "claude_code_best_practice_topic", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_entity", "to": "codex_migration_topic", "label": "references", "title": "references [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "everything_claude_code_hooks", "to": "claude_code_best_practice_hooks", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "everything_claude_code_subagent", "to": "opencode_omo_agents", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "everything_claude_code_subagent", "to": "claude_code_best_practice_subagents", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "git_branch_entity", "to": "claude_code_tips_topic", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "opencode_entity", "to": "opencode_omo_agents", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "vibe_coding_topic", "to": "claude_code_gen_topic", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "ai_agent_principles_topic", "to": "claude_code_best_practice_subagents", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "rag_optimization_topic", "to": "karpathy_sop_graphify_phase", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "karpathy_sop_topic", "to": "karpathy_sop_graphify_phase", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "karpathy_sop_graphify_phase", "to": "karpathy_sop_rationale_graphify", "label": "rationale_for", "title": "rationale_for [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_md_guide_topic", "to": "claude_md_guide_eth_finding", "label": "rationale_for", "title": "rationale_for [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_md_guide_topic", "to": "codex_migration_agents_md", "label": "semantically_similar_to", "title": "semantically_similar_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_code_best_practice_topic", "to": "claude_code_best_practice_context_mgmt", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_code_best_practice_topic", "to": "claude_code_best_practice_subagents", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_code_best_practice_topic", "to": "claude_code_best_practice_hooks", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_code_best_practice_topic", "to": "claude_code_best_practice_settings", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "claude_code_best_practice_topic", "to": "claude_code_tips_topic", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "claude_code_best_practice_context_mgmt", "to": "claude_code_tips_topic", "label": "conceptually_related_to", "title": "conceptually_related_to [INFERRED]", "dashes": true, "width": 1, "color": {"opacity": 0.35}, "confidence": "INFERRED"}, {"from": "codex_migration_topic", "to": "codex_migration_command_map", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}, {"from": "codex_migration_topic", "to": "codex_migration_agents_md", "label": "implements", "title": "implements [EXTRACTED]", "dashes": false, "width": 2, "color": {"opacity": 0.7}, "confidence": "EXTRACTED"}];
+const LEGEND = [{"cid": 0, "color": "#4E79A7", "label": "Context Config Files", "count": 12}, {"cid": 1, "color": "#F28E2B", "label": "Agentic Engineering Techniques", "count": 11}, {"cid": 2, "color": "#E15759", "label": "Claude Code Authors", "count": 5}, {"cid": 3, "color": "#76B7B2", "label": "Claude Code Best Practices", "count": 5}, {"cid": 4, "color": "#59A14F", "label": "AI Agent Orchestration", "count": 5}, {"cid": 5, "color": "#EDC948", "label": "CLAUDE.md Research &amp; Codex Migration", "count": 5}, {"cid": 6, "color": "#B07AA1", "label": "Knowledge Base &amp; RAG", "count": 4}, {"cid": 7, "color": "#FF9DA7", "label": "AI Coding Tools", "count": 3}, {"cid": 8, "color": "#9C755F", "label": "Claude Code Hooks", "count": 2}];
 
-const edges = [
-  {source:"sources/claude-md-guide",target:"concepts/ClaudeMd"},
-  {source:"sources/claude-md-guide",target:"concepts/AGENTS"},
-  {source:"sources/claude-md-guide",target:"concepts/编程Agent"},
-  {source:"sources/claude-md-guide",target:"concepts/上下文文件"},
-  {source:"concepts/AGENTS",target:"sources/claude-md-guide"},
-  {source:"concepts/ClaudeMd",target:"sources/claude-md-guide"},
-  {source:"concepts/上下文文件",target:"sources/claude-md-guide"},
-  {source:"concepts/编程Agent",target:"sources/claude-md-guide"},
-  {source:"concepts/agentic-engineering",target:"tools/everything-claude-code"},
-  {source:"concepts/agentic-engineering",target:"concepts/上下文文件"},
-  {source:"concepts/agentic-engineering",target:"concepts/编程Agent"},
-  {source:"tools/everything-claude-code",target:"concepts/agentic-engineering"},
-  {source:"tools/everything-claude-code",target:"resources/claude-code-authors"},
-  {source:"tools/everything-claude-code",target:"concepts/上下文文件"},
-  {source:"tools/opencode",target:"tools/everything-claude-code"},
-  {source:"tools/opencode",target:"concepts/agentic-engineering"},
-  {source:"tools/openclaw-knowledge",target:"tools/everything-claude-code"},
-  {source:"tools/git-branch",target:"tools/github-reference"},
-  {source:"tools/github-reference",target:"tools/git-branch"},
-  {source:"articles/claude-code-gen",target:"concepts/agentic-engineering"},
-  {source:"articles/claude-code-gen",target:"tools/everything-claude-code"},
-  {source:"articles/rag-optimization",target:"concepts/agentic-engineering"},
-  {source:"articles/ai-agent-principles",target:"concepts/agentic-engineering"},
-  {source:"articles/ai-agent-principles",target:"concepts/编程Agent"},
-  {source:"articles/vibe-coding",target:"concepts/agentic-engineering"},
-  {source:"articles/vibe-coding",target:"tools/everything-claude-code"},
-  {source:"resources/claude-code-authors",target:"tools/everything-claude-code"}
-];
+// HTML-escape helper — prevents XSS when injecting graph data into innerHTML
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 
-const colorMap = {
-  concepts: "#6c8ebf", tools: "#82b366", articles: "#d6a84e",
-  sources: "#b85c5c", resources: "#9b6bb5", root: "#555"
-};
+// Build vis datasets
+const nodesDS = new vis.DataSet(RAW_NODES.map(n => ({
+  id: n.id, label: n.label, color: n.color, size: n.size,
+  font: n.font, title: n.title,
+  _community: n.community, _community_name: n.community_name,
+  _source_file: n.source_file, _file_type: n.file_type, _degree: n.degree,
+})));
 
-const svg = d3.select("#canvas");
-const w = window.innerWidth, h = window.innerHeight;
-const g = svg.append("g");
+const edgesDS = new vis.DataSet(RAW_EDGES.map((e, i) => ({
+  id: i, from: e.from, to: e.to,
+  label: '',
+  title: e.title,
+  dashes: e.dashes,
+  width: e.width,
+  color: e.color,
+  arrows: { to: { enabled: true, scaleFactor: 0.5 } },
+})));
 
-svg.call(d3.zoom().scaleExtent([0.2, 4]).on("zoom", e => g.attr("transform", e.transform)));
+const container = document.getElementById('graph');
+const network = new vis.Network(container, { nodes: nodesDS, edges: edgesDS }, {
+  physics: {
+    enabled: true,
+    solver: 'forceAtlas2Based',
+    forceAtlas2Based: {
+      gravitationalConstant: -60,
+      centralGravity: 0.005,
+      springLength: 120,
+      springConstant: 0.08,
+      damping: 0.4,
+      avoidOverlap: 0.8,
+    },
+    stabilization: { iterations: 200, fit: true },
+  },
+  interaction: {
+    hover: true,
+    tooltipDelay: 100,
+    hideEdgesOnDrag: true,
+    navigationButtons: false,
+    keyboard: false,
+  },
+  nodes: { shape: 'dot', borderWidth: 1.5 },
+  edges: { smooth: { type: 'continuous', roundness: 0.2 }, selectionWidth: 3 },
+});
 
-// Compute degree for node sizing
-const degree = {};
-nodes.forEach(n => degree[n.id] = 0);
-edges.forEach(e => { degree[e.source] = (degree[e.source]||0)+1; degree[e.target] = (degree[e.target]||0)+1; });
+network.once('stabilizationIterationsDone', () => {
+  network.setOptions({ physics: { enabled: false } });
+});
 
-const sim = d3.forceSimulation(nodes)
-  .force("link", d3.forceLink(edges).id(d => d.id).distance(90))
-  .force("charge", d3.forceManyBody().strength(-300))
-  .force("center", d3.forceCenter(w/2, h/2))
-  .force("collision", d3.forceCollide(30));
+function showInfo(nodeId) {
+  const n = nodesDS.get(nodeId);
+  if (!n) return;
+  const neighborIds = network.getConnectedNodes(nodeId);
+  const neighborItems = neighborIds.map(nid => {
+    const nb = nodesDS.get(nid);
+    const color = nb ? nb.color.background : '#555';
+    return `<span class="neighbor-link" style="border-left-color:${esc(color)}" onclick="focusNode(${JSON.stringify(nid)})">${esc(nb ? nb.label : nid)}</span>`;
+  }).join('');
+  document.getElementById('info-content').innerHTML = `
+    <div class="field"><b>${esc(n.label)}</b></div>
+    <div class="field">Type: ${esc(n._file_type || 'unknown')}</div>
+    <div class="field">Community: ${esc(n._community_name)}</div>
+    <div class="field">Source: ${esc(n._source_file || '-')}</div>
+    <div class="field">Degree: ${n._degree}</div>
+    ${neighborIds.length ? `<div class="field" style="margin-top:8px;color:#aaa;font-size:11px">Neighbors (${neighborIds.length})</div><div id="neighbors-list">${neighborItems}</div>` : ''}
+  `;
+}
 
-const link = g.append("g").selectAll("line").data(edges).join("line")
-  .attr("class","link").attr("stroke","#334").attr("stroke-opacity",0.5);
+function focusNode(nodeId) {
+  network.focus(nodeId, { scale: 1.4, animation: true });
+  network.selectNodes([nodeId]);
+  showInfo(nodeId);
+}
 
-const node = g.append("g").selectAll("g").data(nodes).join("g")
-  .attr("class","node")
-  .call(d3.drag()
-    .on("start", (e,d) => { if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
-    .on("drag", (e,d) => { d.fx=e.x; d.fy=e.y; })
-    .on("end", (e,d) => { if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }));
+// Track hovered node — hover detection is more reliable than click params
+let hoveredNodeId = null;
+network.on('hoverNode', params => {
+  hoveredNodeId = params.node;
+  container.style.cursor = 'pointer';
+});
+network.on('blurNode', () => {
+  hoveredNodeId = null;
+  container.style.cursor = 'default';
+});
+container.addEventListener('click', () => {
+  if (hoveredNodeId !== null) {
+    showInfo(hoveredNodeId);
+    network.selectNodes([hoveredNodeId]);
+  }
+});
+network.on('click', params => {
+  if (params.nodes.length > 0) {
+    showInfo(params.nodes[0]);
+  } else if (hoveredNodeId === null) {
+    document.getElementById('info-content').innerHTML = '<span class="empty">Click a node to inspect it</span>';
+  }
+});
 
-node.append("circle")
-  .attr("r", d => 8 + (degree[d.id]||0) * 2)
-  .attr("fill", d => colorMap[d.dir] || "#555")
-  .attr("stroke", d => d3.color(colorMap[d.dir]||"#555").brighter(1))
-  .on("mouseover", (e, d) => {
-    const tip = document.getElementById("tooltip");
-    tip.innerHTML = `<strong>${d.title}</strong><br><span style="color:#888">${d.id}</span><br>${d.desc}<br><em style="color:#6c8ebf">${d.tags.join(", ")||"—"}</em>`;
-    tip.style.opacity = 1;
-    tip.style.left = (e.clientX+14)+"px";
-    tip.style.top = (e.clientY-10)+"px";
-  })
-  .on("mousemove", e => {
-    document.getElementById("tooltip").style.left=(e.clientX+14)+"px";
-    document.getElementById("tooltip").style.top=(e.clientY-10)+"px";
-  })
-  .on("mouseout", () => document.getElementById("tooltip").style.opacity=0);
+const searchInput = document.getElementById('search');
+const searchResults = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML = '';
+  if (!q) { searchResults.style.display = 'none'; return; }
+  const matches = RAW_NODES.filter(n => n.label.toLowerCase().includes(q)).slice(0, 20);
+  if (!matches.length) { searchResults.style.display = 'none'; return; }
+  searchResults.style.display = 'block';
+  matches.forEach(n => {
+    const el = document.createElement('div');
+    el.className = 'search-item';
+    el.textContent = n.label;
+    el.style.borderLeft = `3px solid ${n.color.background}`;
+    el.style.paddingLeft = '8px';
+    el.onclick = () => {
+      network.focus(n.id, { scale: 1.5, animation: true });
+      network.selectNodes([n.id]);
+      showInfo(n.id);
+      searchResults.style.display = 'none';
+      searchInput.value = '';
+    };
+    searchResults.appendChild(el);
+  });
+});
+document.addEventListener('click', e => {
+  if (!searchResults.contains(e.target) && e.target !== searchInput)
+    searchResults.style.display = 'none';
+});
 
-node.append("text").attr("dy","0.35em").attr("x", d => 10+(degree[d.id]||0)*2)
-  .text(d => d.title.length > 14 ? d.title.slice(0,14)+"…" : d.title);
-
-sim.on("tick", () => {
-  link.attr("x1",d=>d.source.x).attr("y1",d=>d.source.y)
-      .attr("x2",d=>d.target.x).attr("y2",d=>d.target.y);
-  node.attr("transform",d=>`translate(${d.x},${d.y})`);
+const hiddenCommunities = new Set();
+const legendEl = document.getElementById('legend');
+LEGEND.forEach(c => {
+  const item = document.createElement('div');
+  item.className = 'legend-item';
+  item.innerHTML = `<div class="legend-dot" style="background:${c.color}"></div>
+    <span class="legend-label">${c.label}</span>
+    <span class="legend-count">${c.count}</span>`;
+  item.onclick = () => {
+    if (hiddenCommunities.has(c.cid)) {
+      hiddenCommunities.delete(c.cid);
+      item.classList.remove('dimmed');
+    } else {
+      hiddenCommunities.add(c.cid);
+      item.classList.add('dimmed');
+    }
+    const updates = RAW_NODES
+      .filter(n => n.community === c.cid)
+      .map(n => ({ id: n.id, hidden: hiddenCommunities.has(c.cid) }));
+    nodesDS.update(updates);
+  };
+  legendEl.appendChild(item);
+});
+</script>
+<script>
+// Render hyperedges as shaded regions
+const hyperedges = [{"id": "context_files_agent_system", "label": "Context Files + Coding Agent + CLAUDE.md form the AI Agent instruction system", "nodes": ["contextfiles_concept", "codingagent_concept", "claudemd_concept", "agents_concept"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 0.95, "source_file": "wiki/concepts/context-files.md"}, {"id": "best_practice_four_mechanisms", "label": "Subagents + Commands + Skills + Hooks form Claude Code extension architecture", "nodes": ["claudecodebestpractice_subagents", "claudecodebestpractice_commands", "claudecodebestpractice_skills", "claudecodebestpractice_hooks"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "wiki/entities/claude-code-best-practice.md"}, {"id": "agentic_engineering_workflow", "label": "PRD First + Commandify + Subagent Orchestration form the Agentic Engineering workflow", "nodes": ["agenticengineering_prd_first", "agenticengineering_commandify", "agenticengineering_subagent_orchestration"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 0.9, "source_file": "wiki/concepts/agentic-engineering.md"}, {"id": "claude_code_ecosystem_pattern", "label": "Claude Code Ecosystem: Hooks + Subagents + Skills", "nodes": ["everything_claude_code_hooks", "claude_code_best_practice_hooks", "everything_claude_code_subagent", "claude_code_best_practice_subagents"], "relation": "implement", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "wiki/entities/everything-claude-code.md"}, {"id": "context_file_equivalence_pattern", "label": "Context File Pattern: CLAUDE.md / AGENTS.md / context-files", "nodes": ["claude_md_guide_topic", "codex_migration_agents_md", "claude_code_best_practice_settings"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.82, "source_file": "wiki/topics/codex-migration-guide.md"}, {"id": "knowledge_base_workflow_pattern", "label": "Knowledge Base Workflow: raw \u2192 wiki \u2192 graphify \u2192 query", "nodes": ["karpathy_sop_topic", "karpathy_sop_graphify_phase", "karpathy_sop_rationale_graphify"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 0.95, "source_file": "wiki/topics/karpathy-knowledge-base-sop.md"}];
+// afterDrawing passes ctx already transformed to network coordinate space.
+// Draw node positions raw — no manual pan/zoom/DPR math needed.
+network.on('afterDrawing', function(ctx) {
+    hyperedges.forEach(h => {
+        const positions = h.nodes
+            .map(nid => network.getPositions([nid])[nid])
+            .filter(p => p !== undefined);
+        if (positions.length < 2) return;
+        ctx.save();
+        ctx.globalAlpha = 0.12;
+        ctx.fillStyle = '#6366f1';
+        ctx.strokeStyle = '#6366f1';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        // Centroid and expanded hull in network coordinates
+        const cx = positions.reduce((s, p) => s + p.x, 0) / positions.length;
+        const cy = positions.reduce((s, p) => s + p.y, 0) / positions.length;
+        const expanded = positions.map(p => ({
+            x: cx + (p.x - cx) * 1.15,
+            y: cy + (p.y - cy) * 1.15
+        }));
+        ctx.moveTo(expanded[0].x, expanded[0].y);
+        expanded.slice(1).forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 0.4;
+        ctx.stroke();
+        // Label
+        ctx.globalAlpha = 0.8;
+        ctx.fillStyle = '#4f46e5';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(h.label, cx, cy - 5);
+        ctx.restore();
+    });
 });
 </script>
 </body>
