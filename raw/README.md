@@ -16,4 +16,5 @@
 | `docs/` | 参考文档 | PDF、HTML 速查手册、迁移指南 |
 | `web/` | 网页文章 | Karpathy 知识库方法等 |
 | `wechat/` | 微信公众号 | 收藏的公众号文章（预留） |
+| `ai-chat/` | AI 对话沉淀 | 日常开发中与 AI 对话产出的有用文档 |
 | `claude-code-best-practice/` | GitHub 仓库 | shanraisshan 的 Claude Code 最佳实践 |

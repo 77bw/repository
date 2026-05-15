@@ -73,5 +73,4 @@ cp -r everything-claude-code/rules/* ~/.claude/rules/
 ## 相关实体与概念
 
 - [[concepts/agentic-engineering]]
-- [[entities/claude-code-authors]]
 - [[concepts/context-files]]

@@ -12,11 +12,9 @@
 
 ## 实体 (entities/)
 
-- [[entities/claude-code-best-practice]] — shanraisshan 维护的 Claude Code 最佳实践仓库，涵盖 Subagents/Commands/Skills/Hooks 完整体系与 82 条实战技巧
 - [[entities/everything-claude-code]] — Anthropic 黑客马拉松冠军的完整 Claude Code 配置集合
 - [[entities/opencode]] — OpenCode + Oh My OpenCode 开源 AI 编程助手
 - [[entities/openclaw]] — AI 驱动个人知识库管理系统
-- [[entities/claude-code-authors]] — Claude Code 核心原创作者与优质内容平台推荐
 - [[entities/github-reference]] — GitHub 核心功能术语速查表
 - [[entities/git-branch]] — Git 分支操作常用命令速查
 - [[entities/claude-plugins-official]] — Claude Code 官方插件集合，覆盖 AI 编程全流程
@@ -31,3 +29,6 @@
 - [[topics/vibe-coding]] — Vibe Coding AI 辅助编程实践方法论
 - [[topics/karpathy-knowledge-base-sop]] — Karpathy 知识库 + Graphify 搭建与使用完整 SOP
 - [[topics/codex-migration-guide]] — 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册
+- [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令、最佳实践
+- [[topics/tdd-ddd-data-collection]] — 数据采集工程师视角的 TDD/DDD 取舍与三种测试分工
+- [[topics/agent-team-architecture]] — Claude Code teamcreate 七大场景实战 + Mavis Worker-Verifier-Engine 架构哲学
