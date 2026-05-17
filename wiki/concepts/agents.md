@@ -2,9 +2,10 @@
 title: AGENTS.md
 type: concept
 tags: [ai-coding, ai]
-sources: [raw/Claude.md,AI 编程的 "宪法"，如何编写 Claude.md 新手指南 - 飞书云文档.md]
+sources:
+  - 'raw/feishu/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md'
 created: 2026-04-26
-updated: 2026-04-26
+updated: 2026-05-18
 summary: 与 CLAUDE.md 本质相同的 AI Agent 上下文配置文件，由 ETH Zurich 研究中使用此名称进行测试。
 ---
 

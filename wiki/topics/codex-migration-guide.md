@@ -2,9 +2,9 @@
 title: 从 Claude Code 迁移到 Codex CLI / Codex App 使用手册
 type: topic
 tags: [ai-coding]
-sources: [raw/codex-migration-manual.html]
+sources: [raw/docs/codex-migration-manual.html]
 created: 2026-04-26
-updated: 2026-04-26
+updated: 2026-05-18
 summary: 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册，含命令映射、权限配置、工作流与提示词模板
 ---
 
@@ -224,4 +224,4 @@ codex -s read-only "请阅读项目，不要改文件。输出：架构概览、
 
 ## 来源
 
-- [[raw/codex-migration-manual]]
+- [[raw/docs/codex-migration-manual]]

@@ -2,9 +2,11 @@
 title: Everything Claude Code
 type: entity
 tags: [ai-coding]
-sources: ["raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/AI 技术栈/ClaudeCode/Everything Claude Code 使用指南 2fc81caa0df881839b61ddb79c82f131.md", "raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/AI 技术栈/ClaudeCode/Everything Claude Code 使用指南/使用指南/Anthropic 黑客马拉松冠军- ClaudeCode配置整理和补充 2fd81caa0df88056a6a3d6c978c8136a.md"]
+sources:
+  - "raw/notion/tech-stack/Everything Claude Code 使用指南 2fc81caa0df881839b61ddb79c82f131.md"
+  - "raw/notion/tech-stack/Anthropic 黑客马拉松冠军- ClaudeCode配置整理和补充 2fd81caa0df88056a6a3d6c978c8136a.md"
 created: 2026-04-26
-updated: 2026-04-26
+updated: 2026-05-18
 summary: Anthropic 黑客马拉松冠军整理的完整 Claude Code 配置集合，覆盖跨会话记忆、持续学习、项目可维护性、子智能体编排四大核心功能。
 ---
 

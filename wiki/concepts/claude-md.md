@@ -3,10 +3,10 @@ title: CLAUDE.md
 type: concept
 tags: [ai-coding, ai]
 sources:
-  - raw/feishu/Claude.md,AI 编程的 "宪法"，如何编写 Claude.md 新手指南 - 飞书云文档.md
+  - 'raw/feishu/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md'
   - raw/ai-chat/claude_md_complete_guide.md
 created: 2026-04-26
-updated: 2026-05-15
+updated: 2026-05-18
 summary: AI 编程 Agent 的上下文配置文件，用于向 LLM 提供项目级别的指令和约束。
 ---
 

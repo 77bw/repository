@@ -3,9 +3,9 @@ title: claude-plugins-official
 type: entity
 tags: [ai-coding, ai]
 sources:
-  - "raw/Claude Code 官方最强插件 claude-plugins-official ，AI编程全流程覆盖 - 飞书云文档.md"
+  - "raw/feishu/Claude Code 官方最强插件 claude-plugins-official ，AI编程全流程覆盖 - 飞书云文档.md"
 created: 2026-04-26
-updated: 2026-04-26
+updated: 2026-05-18
 summary: Claude Code 官方插件集合，覆盖 AI 编程全流程，包含技能、子代理、命令等多种形式。
 ---
 
@@ -37,4 +37,4 @@ Anthropic 官方发布的 Claude Code 插件集合，覆盖代码简化、功能
 
 ## 来源
 
-- `raw/Claude Code 官方最强插件 claude-plugins-official ，AI编程全流程覆盖 - 飞书云文档.md`
+- `raw/feishu/Claude Code 官方最强插件 claude-plugins-official ，AI编程全流程覆盖 - 飞书云文档.md`

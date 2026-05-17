@@ -2,7 +2,10 @@
 title: GitHub 功能术语速查
 type: entity
 tags: [full-stack]
-sources: ["raw/Notion note/ExportBlock-e5803e1d-77c8-40c3-8740-733711539745-Part-1/📚 02-知识库/工具使用/01-Git协助/GitHub 功能术语速查 31981caa0df8805fb2daccb0659dd904.md"]，帮助快速了解各功能的用途和使用场景。
+sources: ["raw/notion/tools/GitHub 功能术语速查 31981caa0df8805fb2daccb0659dd904.md"]
+created: 2026-04-26
+updated: 2026-05-18
+summary: GitHub 核心功能速查表，帮助快速了解各功能的用途和使用场景。
 ---
 
 # GitHub 功能术语速查
