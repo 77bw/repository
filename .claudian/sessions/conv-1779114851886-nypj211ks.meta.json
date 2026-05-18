@@ -1,0 +1,24 @@
+{
+  "id": "conv-1779114851886-nypj211ks",
+  "providerId": "claude",
+  "title": "我想创建一个类似导师的提示词Agent吧，就是教我如何生成完整的指令提示词，以及整个步骤过程，应该使...",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1779114851886,
+  "updatedAt": 1779115038558,
+  "lastResponseAt": 1779114854922,
+  "sessionId": "4353e1e9-0a36-45d4-8891-9481bcea058e",
+  "providerState": {
+    "providerSessionId": "4353e1e9-0a36-45d4-8891-9481bcea058e"
+  },
+  "currentNote": "wiki/entities/everything-claude-code.md",
+  "usage": {
+    "model": "opus",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 0,
+    "percentage": 0,
+    "contextWindowIsAuthoritative": false
+  }
+}

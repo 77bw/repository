@@ -1,0 +1,23 @@
+{
+  "id": "conv-1779116020089-ijkhq6118",
+  "providerId": "claude",
+  "title": "搜索我的文章。",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1779116020089,
+  "updatedAt": 1779116289194,
+  "lastResponseAt": 1779116289194,
+  "sessionId": "4027e40c-2e42-4a2d-93fa-a09e0a3e58a5",
+  "providerState": {
+    "providerSessionId": "4027e40c-2e42-4a2d-93fa-a09e0a3e58a5"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 1,
+    "cacheCreationInputTokens": 6933,
+    "cacheReadInputTokens": 43105,
+    "contextWindow": 1000000,
+    "contextTokens": 50039,
+    "percentage": 5,
+    "contextWindowIsAuthoritative": true
+  }
+}

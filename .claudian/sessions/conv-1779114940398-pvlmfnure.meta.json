@@ -1,0 +1,24 @@
+{
+  "id": "conv-1779114940398-pvlmfnure",
+  "providerId": "claude",
+  "title": "Create a prompt engineering mentor agent",
+  "titleGenerationStatus": "success",
+  "createdAt": 1779114940398,
+  "updatedAt": 1779115814640,
+  "lastResponseAt": 1779115307040,
+  "sessionId": "14129d6c-8593-406f-9a5c-7069cd09ab94",
+  "providerState": {
+    "providerSessionId": "14129d6c-8593-406f-9a5c-7069cd09ab94"
+  },
+  "currentNote": "wiki/entities/everything-claude-code.md",
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 527,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 33920,
+    "contextWindow": 1000000,
+    "contextTokens": 34447,
+    "percentage": 3,
+    "contextWindowIsAuthoritative": false
+  }
+}
