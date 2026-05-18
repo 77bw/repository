@@ -26,9 +26,10 @@
 - [[topics/claude-code-gen]] — Claude 3.5 Sonnet 代码生成能力评测与最佳实践
 - [[topics/rag-optimization]] — RAG 系统从检索到生成的完整链路性能优化
 - [[topics/ai-agent-principles]] — 深入理解 AI Agent 工作原理与实践应用
-- [[topics/vibe-coding]] — Vibe Coding AI 辅助编程实践方法论
+- [[topics/vibe-coding]] — Vibe Coding 四步方法论：需求→设计→任务→多 Agent 协作，附 FC 模拟器实例
 - [[topics/karpathy-knowledge-base-sop]] — Karpathy 知识库 + Graphify 搭建与使用完整 SOP
 - [[topics/codex-migration-guide]] — 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册
-- [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令、最佳实践
+- [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令、60 行精简实战
 - [[topics/tdd-ddd-data-collection]] — 数据采集工程师视角的 TDD/DDD 取舍与三种测试分工
 - [[topics/agent-team-architecture]] — Claude Code teamcreate 七大场景实战 + Mavis Worker-Verifier-Engine 架构哲学
+- [[topics/ai-driven-git-workflow]] — AI 协助 Git 的六层协作模式：你是调度者，不是 Git 工程师
