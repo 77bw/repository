@@ -1,0 +1,22 @@
+{
+  "id": "conv-1779214528494-tatvnqjmw",
+  "providerId": "claude",
+  "title": "搜索我的知识库",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1779214528495,
+  "updatedAt": 1779214532065,
+  "lastResponseAt": 1779214531910,
+  "sessionId": "37fbea77-4842-4079-b667-10997be8b84b",
+  "providerState": {
+    "providerSessionId": "37fbea77-4842-4079-b667-10997be8b84b"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 0,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 1000000,
+    "contextTokens": 0,
+    "percentage": 0
+  }
+}

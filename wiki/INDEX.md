@@ -33,3 +33,4 @@
 - [[topics/tdd-ddd-data-collection]] — 数据采集工程师视角的 TDD/DDD 取舍与三种测试分工
 - [[topics/agent-team-architecture]] — Claude Code teamcreate 七大场景实战 + Mavis Worker-Verifier-Engine 架构哲学
 - [[topics/ai-driven-git-workflow]] — AI 协助 Git 的六层协作模式：你是调度者，不是 Git 工程师
+- [[topics/prompt-mentor-guide]] — 双 CLI 提示词导师方法论：澄清→调研→拆解→交付包，含启动语模板与爬虫案例完整产出
