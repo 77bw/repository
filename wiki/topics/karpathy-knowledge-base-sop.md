@@ -2,7 +2,7 @@
 title: Karpathy 知识库 + Graphify 搭建与使用 SOP
 type: topic
 tags: [knowledge-management, ai-coding, ai]
-sources: [raw/web/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md]
+sources: [raw/web/karpathy-knowledge-base-article.md]
 created: 2026-04-26
 updated: 2026-05-21
 summary: 基于 Karpathy 方法论，结合 Graphify 图谱检索工具，从零搭建可持续生长的个人 AI 知识库的完整 SOP
@@ -179,4 +179,4 @@ Graphify 会读取指定目录（如 `wiki/`），输出：
 
 ## 来源
 
-- [[raw/web/把一堆乱七八糟的笔记，变成一个会自己生长的知识库-Karpathy.md]]
+- [[raw/web/karpathy-knowledge-base-article.md]]

@@ -3,8 +3,8 @@ title: Vibe Coding 实践
 type: topic
 tags: [ai-coding, prompt-engineering]
 sources:
-  - "raw/notion/articles/vibe-coding：我的 AI 编程实践 60ddeb93255d4c3488122b5843a55694.md"
-  - raw/ai-chat/VibeCoding就该这么做.md
+  - "raw/notion/articles/vibe-coding-practice.md"
+  - raw/ai-chat/vibe-coding-how-to.md
 created: 2026-03-24
 updated: 2026-05-21
 summary: AI 辅助编程方法论 Vibe Coding：通过需求→设计→任务划分→多 Agent 协作四步流程引导 AI 输出可维护代码，以 B 站老王 FC 模拟器开发为完整实例。
@@ -102,8 +102,9 @@ Vibe Coding 的核心洞察是：**AI 编程的失败几乎都是上下文管理
 - [[concepts/coding-agent]]
 - [[entities/everything-claude-code]]
 - [[topics/agent-team-architecture]]
+- [[topics/tdd-ddd-data-collection]]
 
 ## 来源
 
-- `raw/notion/articles/vibe-coding：我的 AI 编程实践 60ddeb93255d4c3488122b5843a55694.md`（GitHub twwch/vibe-coding 项目）
-- `raw/ai-chat/VibeCoding就该这么做.md`（B 站程序员老王 FC 模拟器视频解读）
+- `raw/notion/articles/vibe-coding-practice.md`（GitHub twwch/vibe-coding 项目）
+- `raw/ai-chat/vibe-coding-how-to.md`（B 站程序员老王 FC 模拟器视频解读）

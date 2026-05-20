@@ -51,78 +51,11 @@ codex exec --cd /path/to/repo "运行测试并总结失败原因"
 
 ---
 
-## 3. Claude Code → Codex 命令映射
+## 3. 命令映射、CLI 总览、Slash 命令、权限沙盒、工作流与提示词模板
 
-| Claude Code | Codex 对应 | 说明 |
-|-------------|-----------|------|
-| `claude` | `codex` | 启动交互式会话 |
-| `claude "query"` | `codex "query"` | 启动时带首条提示 |
-| `claude -p "query"` | `codex exec "query"` | 非交互式执行 |
-| `claude -c` | `codex resume --last` | 继续最近会话 |
-| `claude --resume <id>` | `codex resume <id>` | 按 ID 恢复会话 |
-| `claude mcp` | `codex mcp` | 管理 MCP 服务器 |
-| `CLAUDE.md` | `AGENTS.md` | 项目长期指令文件 |
-| `.claude/settings.json` | `~/.codex/config.toml` | 配置文件（Codex 用 TOML） |
+Claude Code 到 Codex 的完整命令映射表、CLI 命令总览、Slash 命令对照、权限与沙盒三级配置、修 bug / 理解项目 / 长会话续航等常用工作流模板，以及通用提示词模板。
 
----
-
-## 4. CLI 命令总览
-
-| 命令                       | 用途                  |
-| ------------------------ | ------------------- |
-| `codex`                  | 启动交互式 TUI           |
-| `codex exec` / `codex e` | 非交互式执行              |
-| `codex review`           | 非交互式代码审查            |
-| `codex resume`           | 恢复旧会话               |
-| `codex fork`             | 从旧会话分叉新线程           |
-| `codex app`              | 启动桌面 App            |
-| `codex mcp`              | 管理 MCP 服务器          |
-| `codex features`         | 查看/切换 feature flags |
-
-**常用全局参数：**
-
-| 参数 | 作用 |
-|------|------|
-| `--full-auto` | 低摩擦预设：workspace-write + on-request |
-| `-s read-only / workspace-write / danger-full-access` | 沙盒级别 |
-| `-a untrusted / on-request / never` | 审批策略 |
-| `--search` | 启用实时 web search |
-| `-i <FILE>` | 附加图片输入 |
-| `-c key=value` | 临时覆盖配置 |
-
----
-
-## 5. CLI Slash 命令
-
-| 命令 | 用途 | Claude Code 对应 |
-|------|------|-----------------|
-| `/plan` | 进入计划模式 | — |
-| `/compact` | 压缩上下文 | `/compact` |
-| `/diff` | 查看 Git diff | — |
-| `/review` | 审查当前工作区 | — |
-| `/init` | 生成 AGENTS.md 脚手架 | `/init` 生成 CLAUDE.md |
-| `/mention` | 附加文件到对话 | `@file` |
-| `/model` | 切换模型 | `/model` |
-| `/status` | 查看模型/权限/上下文 | — |
-| `/fork` | 分叉当前对话 | — |
-| `/clear` | 清屏开新聊天 | — |
-
----
-
-## 6. 权限与沙盒
-
-```bash
-# 只读探索
-codex -s read-only "解释这个仓库的构建流程"
-
-# 日常开发
-codex --full-auto "实现登录页错误提示，并运行相关测试"
-
-# 自动化脚本
-codex exec -a never -s workspace-write "格式化并运行单元测试"
-```
-
-> `--dangerously-bypass-approvals-and-sandbox` 只在外部已强隔离环境使用。
+详见 [[topics/codex-command-mapping]]。
 
 ---
 
@@ -151,49 +84,11 @@ codex exec -a never -s workspace-write "格式化并运行单元测试"
 
 ---
 
-## 9. 常用工作流
+## 9. 常用工作流与提示词模板
 
-**修 bug：**
-```
-codex --full-auto "复现并修复这个 bug：[报错]。先找根因，再做最小改动，最后运行相关测试"
-```
+修 bug、理解陌生项目、长会话续航等常用工作流，以及通用提示词模板和明确成功标准的写法。
 
-**理解陌生项目：**
-```
-codex -s read-only "请阅读项目，不要改文件。输出：架构概览、关键入口、运行命令、测试命令、风险点"
-```
-
-**长会话续航：**
-```
-/compact 请保留当前任务目标、已改文件、失败测试、下一步计划
-```
-
----
-
-## 10. 提示词模板
-
-**通用模板（Claude Code 老用户习惯）：**
-```
-请先阅读相关文件，确认根因后再修改。
-要求：
-1. 改动尽量小。
-2. 不要重构无关代码。
-3. 修改前说明你要动哪些文件。
-4. 修改后运行最相关的测试。
-5. 最后总结改动和验证结果。
-```
-
-**明确成功标准：**
-```
-这个任务的成功标准是：
-- 用户可以完成 X。
-- Y 情况下不能回归。
-- 必须通过 npm test -- login.spec.ts。
-
-约束：
-- 不要改数据库 schema。
-- 不要引入新依赖。
-```
+详见 [[topics/codex-command-mapping]]。
 
 ---
 

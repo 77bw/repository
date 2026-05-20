@@ -181,7 +181,7 @@ sha256: <body 的 SHA256，body 指 frontmatter 之后的内容>
 - [[相关概念]]
 
 ## 来源
-- [[raw/path/to/source]]
+- raw/path/to/source
 ```
 
 ### entity 页

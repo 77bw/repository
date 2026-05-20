@@ -3,8 +3,8 @@ title: Claude Code 高频实用技巧
 type: topic
 tags: [ai-coding, ai]
 sources:
-  - "raw/feishu/15 条高频实用的 Claude Code 技巧 - 飞书云文档.md"
-  - "raw/feishu/Claude Code 团队分享的 10 个内部AI 编程技巧 - 飞书云文档.md"
+  - "raw/feishu/claude-code-15-tips.md"
+  - "raw/feishu/claude-code-10-internal-tips.md"
 created: 2026-04-26
 updated: 2026-05-21
 summary: 整合 Claude Code 团队内部技巧与社区高频实用技巧，涵盖并行开发、Plan 模式、子代理、技能等核心用法。
@@ -49,8 +49,10 @@ confidence: high
 - [[concepts/claude-md]]
 - [[concepts/coding-agent]]
 - [[entities/claude-plugins-official]]
+- [[entities/opencode]]
+- [[topics/claude-code-gen]]
 
 ## 来源
 
-- `raw/feishu/15 条高频实用的 Claude Code 技巧 - 飞书云文档.md`
-- `raw/feishu/Claude Code 团队分享的 10 个内部AI 编程技巧 - 飞书云文档.md`
+- `raw/feishu/claude-code-15-tips.md`
+- `raw/feishu/claude-code-10-internal-tips.md`

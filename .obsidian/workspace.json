@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/topics/agent-team-architecture.md",
+                "file": "wiki/log.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "agent-team-architecture"
+              "title": "log"
             }
           }
         ]
@@ -53,10 +53,10 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "Boris Cherny",
                 "matchingCase": false,
                 "explainSearch": false,
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               },
@@ -74,7 +74,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "wiki/topics/agent-team-architecture.md",
+                "file": "wiki/log.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "agent-team-architecture 的反向链接列表"
+              "title": "log 的反向链接列表"
             }
           },
           {
@@ -156,13 +157,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "wiki/topics/agent-team-architecture.md",
+                "file": "wiki/log.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "agent-team-architecture 的大纲"
+              "title": "log 的大纲"
             }
           },
           {
@@ -197,43 +198,43 @@
   },
   "active": "cf3a78e665ad7c48",
   "lastOpenFiles": [
-    "outputs/2026-05-21-p1-review.md",
-    "outputs/2026-05-21-wiki-confidence-baseline.md",
-    "outputs/2026-05-21-raw-frontmatter-baseline.md",
-    "outputs/2026-05-21-lint-baseline.md",
+    "outputs/2026-05-21-p2-review.md",
+    "wiki/topics/agent-team-architecture.md",
+    "wiki/topics/codex-command-mapping.md",
+    "wiki/topics/prompt-mentor-case-study.md",
+    "wiki/topics/claude-md-best-practices.md",
+    "wiki/topics/claude-code-teamcreate-practice.md",
+    "raw/wechat/wechat-video-content-summary.md",
+    "raw/web/karpathy-knowledge-base-article.md",
+    "raw/notion/knowledge-base-index.md",
+    "raw/notion/tools/tools-usage.md",
+    "raw/notion/tools/git-stash-switch-branch-scenario.md",
+    "raw/notion/tools/git-branch-commands.md",
+    "raw/notion/tools/github-terminology-reference.md",
+    "raw/notion/tools/git-assistance.md",
+    "raw/notion/tech-stack/configuration.md",
+    "raw/notion/tech-stack/usage-guide.md",
+    "raw/notion/tech-stack/usage-tips.md",
+    "raw/notion/tech-stack/opencode-json-config.md",
+    "raw/notion/tech-stack/oh-my-opencode-json-config.md",
+    "raw/notion/tech-stack/everything-claude-code-guide-raw.md",
+    "raw/notion/tech-stack/opencode-oh-my-opencode-guide.md",
+    "raw/notion/tech-stack/everything-claude-code-guide.md",
+    "raw/notion/tech-stack/claude-code-overview.md",
+    "raw/notion/tech-stack/anthropic-hackathon-claude-code-config.md",
+    "raw/notion/tech-stack/ai-tech-stack.md",
+    "raw/notion/tech-stack/claude-code-top-5-techniques.md",
+    "raw/docs/obsidian-ai-the-complete-guide-v1.0.0.pdf",
+    "raw/docs/codex-migration-manual.html.meta.yaml",
+    "raw/docs/claude-code-cheatsheet.html.meta.yaml",
+    "raw/docs/Obsidian-AI-The-Complete-Guide-v1.0.0.pdf.meta.yaml",
     "outputs",
-    "wiki/log.md",
     "wiki/_archive",
     "wiki/queries",
     "wiki/comparisons",
     "未命名.base",
-    "wiki/INDEX.md",
     "graphify-out/cache/ef5d16131eafdc821a164bcd6fa445469ce1c13d2550ab3bf800538b47fc9b0d.json",
-    "graphify-out/cache/06d181d629126228ea95461c85d3dccb101674a75c7adefe97dd0dca3890001b.json",
-    "graphify-out/cache/fa3c89b7a1f783c9fc66f717f46b3e4119b8929bddc19221a7fe06e2e87e0f12.json",
-    "graphify-out/cache/210a5289f3a61bb0643021252b03034a5ecb35e37b3856d89859adfa622892ac.json",
-    "graphify-out/cache/99773e3c0678dc5c85a55f1046079756b380da967803475f910a1cb24b184f3e.json",
-    "raw/wechat/微信视频号内容总结文档.md",
-    "wiki/topics/prompt-mentor-guide.md",
-    "raw/ai-chat/2026-05-20-prompt-mentor-shopee-case.md",
-    "wiki/topics/claude-md-mechanisms.md",
-    "CLAUDE.md",
-    "wiki/entities/everything-claude-code.md",
-    "wiki/entities/claude-plugins-official.md",
-    "README.md",
-    "2026-05-18.md",
     "未命名.canvas",
-    "wiki/entities/git-branch.md",
-    "wiki/concepts/context-files.md",
-    "wiki/concepts/coding-agent.md",
-    "wiki/concepts/claude-md.md",
-    "wiki/concepts/agents.md",
-    "wiki/concepts/agentic-engineering.md",
-    "wiki/topics/agent-team-architecture.md",
-    "wiki/topics/ai-driven-git-workflow.md",
-    "wiki/topics/claude-md-guide.md",
-    "wiki/topics/claude-code-tips.md",
-    "wiki/topics/claude-code-gen.md",
     "raw/claude-code-best-practice/tutorial/day0/assets/login.png",
     "raw/claude-code-best-practice/tips/assets/thariq-26-4-16/9.png",
     "raw/claude-code-best-practice/tips/assets/thariq-26-4-16/8.png",

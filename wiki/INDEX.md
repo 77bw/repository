@@ -4,7 +4,7 @@
 > 任何查询前先读此文件定位相关页。
 > 详细规则见 [[SCHEMA]]。
 >
-> Last updated: 2026-05-21 | Total pages: 24
+> Last updated: 2026-05-21 | Total pages: 28
 
 ---
 
@@ -31,11 +31,15 @@
 - [[topics/ai-agent-principles]] — 深入理解 AI Agent 工作原理与实践应用
 - [[topics/ai-driven-git-workflow]] — AI 协助 Git 的六层协作模式：你是调度者，不是 Git 工程师
 - [[topics/claude-code-gen]] — Claude 3.5 Sonnet 代码生成能力评测与最佳实践
+- [[topics/claude-code-teamcreate-practice]] — Claude Code teamcreate 七大经典场景提示词模板
 - [[topics/claude-code-tips]] — 整合 Claude Code 团队内部技巧与社区高频实用技巧，涵盖并行开发、Plan 模式、子代理等
+- [[topics/claude-md-best-practices]] — CLAUDE.md 写作规范、60行精简法、推荐目录结构与调试方法
 - [[topics/claude-md-guide]] — ETH Zurich 研究：CLAUDE.md 反而降低 Agent 成功率并增加成本 20%+
-- [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令、60 行精简实战
+- [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令
+- [[topics/codex-command-mapping]] — Claude Code 到 Codex 的完整命令映射、CLI 总览、权限沙盒与提示词模板
 - [[topics/codex-migration-guide]] — 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册
 - [[topics/karpathy-knowledge-base-sop]] — Karpathy 知识库 + Graphify 搭建与使用完整 SOP
+- [[topics/prompt-mentor-case-study]] — 提示词导师实战案例：Shopee 爬虫交付包、调度速查表、双 CLI 协作要点
 - [[topics/prompt-mentor-guide]] — 双 CLI 提示词导师方法论：澄清→调研→拆解→交付包，含启动语模板与爬虫案例完整产出
 - [[topics/rag-optimization]] — RAG 系统从检索到生成的完整链路性能优化
 - [[topics/tdd-ddd-data-collection]] — 数据采集工程师视角的 TDD/DDD 取舍与三种测试分工

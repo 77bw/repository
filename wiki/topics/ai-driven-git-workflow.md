@@ -3,7 +3,7 @@ title: AI 驱动的 Git 工作流
 type: topic
 tags: [ai-coding, full-stack]
 sources:
-  - "raw/notion/tools/01-Git协助 30581caa0df8806c9d91c3915aa767d9.md"
+  - "raw/notion/tools/git-assistance.md"
 created: 2026-05-18
 updated: 2026-05-21
 summary: "AI 协助 Git 的六层协作模式：让 AI 写 commit、创建 PR、做 review、跑自定义 Commands/Skills、连接 MCP——你是调度者，不是 Git 工程师。"
@@ -159,4 +159,4 @@ Git 知识依然需要——但需要的是**心智模型**（仓库、分支、
 
 ## 来源
 
-- `raw/notion/tools/01-Git协助 30581caa0df8806c9d91c3915aa767d9.md`
+- `raw/notion/tools/git-assistance.md`

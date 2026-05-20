@@ -49,3 +49,29 @@
 - `outputs/2026-05-21-raw-frontmatter-baseline.md`
 - `outputs/2026-05-21-wiki-confidence-baseline.md`
 - `outputs/2026-05-21-p1-review.md`
+
+## [2026-05-21 01:45] migrate | P2 阶段：文件名规范化 + 超长页拆分 + 反链补齐
+
+并行 4 子代理（阶段 A→B→C）+ Review 终审 PASS。
+
+**文件名规范化（32 个 raw/ 文件）：**
+- git mv 重命名：去掉中文/空格/UUID/大写，统一英文小写+连字符
+- 更新 wiki 中 37 处 sources 引用指向新路径
+- 验证：无违规文件名残留，无旧路径引用残留
+
+**SCHEMA 断链 + sidecar：**
+- 修复 SCHEMA.md 模板中 1 处 `[[raw/...]]` 占位符（改为纯文本）
+- 创建 3 个 sidecar 元数据文件（pdf + 2 html 的 sha256 + ingested）
+
+**超长页拆分（4 页 → 8 页）：**
+- agent-team-architecture (369→200) + claude-code-teamcreate-practice (198)
+- claude-md-mechanisms (282→200) + claude-md-best-practices (108)
+- prompt-mentor-guide (258→126) + prompt-mentor-case-study (165)
+- codex-migration-guide (227→123) + codex-command-mapping (145)
+
+**反链补齐：**
+- 28 个 wiki 页面全部有 ≥1 入向 wikilink，知识图谱完全连通
+- 高连接度节点：agentic-engineering(18) / claude-md(14) / context-files(11) / coding-agent(11)
+
+**报告：**
+- `outputs/2026-05-21-p2-review.md`
