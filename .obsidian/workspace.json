@@ -188,8 +188,12 @@
       "realclaudian:Open Claudian": false
     }
   },
-  "active": "0bab1f0cbcddd4a0",
+  "active": "01903e07b3431ebe",
   "lastOpenFiles": [
+    "wiki/log.md",
+    "wiki/_archive",
+    "wiki/queries",
+    "wiki/comparisons",
     "未命名.base",
     "wiki/INDEX.md",
     "graphify-out/cache/ef5d16131eafdc821a164bcd6fa445469ce1c13d2550ab3bf800538b47fc9b0d.json",
@@ -198,9 +202,6 @@
     "graphify-out/cache/210a5289f3a61bb0643021252b03034a5ecb35e37b3856d89859adfa622892ac.json",
     "graphify-out/cache/99773e3c0678dc5c85a55f1046079756b380da967803475f910a1cb24b184f3e.json",
     "graphify-out/cache/a4cda93f2bc763317218c67192a94eef2266fe076085763b53658b0b52e26804.json",
-    "graphify-out/cache/a8ecc5e139f5d38bfcaa20d4c637f057d38a0ebda8033c8222787f8eb3d9c39d.json",
-    "graphify-out/cache/d804a20e00f21b59a56977a0e4eea11853cd419d8d137fef61da55c09bb9062c.json",
-    "graphify-out/cache/60dffcf8b0e15db5755565a12e3da6117e4a4200f2e13414e5d787161dda4a75.json",
     "raw/wechat/微信视频号内容总结文档.md",
     "wiki/topics/prompt-mentor-guide.md",
     "raw/ai-chat/2026-05-20-prompt-mentor-shopee-case.md",
