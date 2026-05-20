@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: f00c44a5b9e37ffafc4f5b252d0f593c8c21af6626185b90c970e132687811d1
+---
+
 # opencode.json 配置文件
 
 > ⚠️ 注意：此配置使用 Antigravity Tools 反代格式，不能直接用于其他 API 服务！

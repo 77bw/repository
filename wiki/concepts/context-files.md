@@ -5,8 +5,9 @@ tags: [ai-coding, ai]
 sources:
   - 'raw/feishu/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md'
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 向 AI Agent 提供项目级别指令的配置文件（如 CLAUDE.md、AGENTS.md），研究表明其效果存在争议。
+confidence: medium
 ---
 
 # 上下文文件

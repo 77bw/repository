@@ -5,8 +5,9 @@ tags: [ai-coding, ai]
 sources:
   - "raw/feishu/Claude Code 官方最强插件 claude-plugins-official ，AI编程全流程覆盖 - 飞书云文档.md"
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: Claude Code 官方插件集合，覆盖 AI 编程全流程，包含技能、子代理、命令等多种形式。
+confidence: medium
 ---
 
 # claude-plugins-official

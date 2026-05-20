@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-05-16
+sha256: 506c7c010febbdbeaac61a18a06ac5159d67e5d4d869f9d5f4235d87dd9d64d5
+---
+
 # 🧠 Claude Code Agent Team 实战指南与核心提示词库
 
 ## 第一部分：Agent Team 核心工作流解析 (思维导图大纲)

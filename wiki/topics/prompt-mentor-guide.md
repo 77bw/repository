@@ -7,8 +7,9 @@ sources:
   - raw/ai-chat/VibeCoding就该这么做.md
   - raw/ai-chat/claude-code-agent-team-guide.md
 created: 2026-05-20
-updated: 2026-05-20
+updated: 2026-05-21
 summary: 双 CLI 工作流的提示词导师方法论：澄清→调研→拆解→交付包，搭配 skill / subagent / MCP 调度策略和可复用模板，专为「另一个干净上下文的 AI 会话」准备完整指令包。
+confidence: medium
 ---
 
 # 提示词导师 Agent 完整指南

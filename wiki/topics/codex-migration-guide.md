@@ -4,8 +4,9 @@ type: topic
 tags: [ai-coding]
 sources: [raw/docs/codex-migration-manual.html]
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册，含命令映射、权限配置、工作流与提示词模板
+confidence: medium
 ---
 
 # 从 Claude Code 迁移到 Codex CLI / Codex App

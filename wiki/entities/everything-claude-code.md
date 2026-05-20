@@ -8,8 +8,9 @@ sources:
   - "raw/notion/tech-stack/everything-claude-code-guide md 2ff81caa0df8813f998ffaafec20aeb2.md"
   - "raw/notion/tech-stack/使用指南 2fd81caa0df8804ba98bc5292a535179.md"
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: Anthropic 黑客马拉松冠军 affaan-m 整理的 Claude Code 配置集合，覆盖跨会话记忆、持续学习、项目可维护性、子智能体编排，提供 PLAN→CHECKPOINT→TDD→VERIFY→REVIEW→LEARN→RECORD 七步标准开发循环。
+confidence: high
 ---
 
 # Everything Claude Code

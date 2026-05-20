@@ -6,8 +6,9 @@ sources:
   - raw/ai-chat/claude-code-agent-team-guide.md
   - raw/ai-chat/mavis-multi-agent-architecture.md
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-05-21
 summary: Claude Code teamcreate 七大实战场景提示词 + Mavis Worker-Verifier-Engine 架构哲学，多 Agent 协作从"操作技巧"到"系统设计"的完整视角。
+confidence: medium
 ---
 
 # Agent Team 架构与实战指南

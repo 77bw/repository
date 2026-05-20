@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: 721aa85bd945081ebc3c0d80d5192f8d1fa50e1d3ae0b613189ef11abde3d184
+---
+
 # GitHub 功能术语速查
 
 ## 核心功能

@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: c0e86f5e434001d4ddc0846c03cca2bae879d87eee083934f6478a1e3e9d9384
+---
+
 # Everything Claude Code 使用指南
 
 > 来自 Anthropic 黑客马拉松获胜者的完整 Claude Code 配置集合

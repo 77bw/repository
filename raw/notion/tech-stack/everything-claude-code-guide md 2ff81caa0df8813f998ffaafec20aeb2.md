@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: 3e2852f94617b4626d8f4fc7101d08c47a4e8b28d633e815dd608c191031b28a
+---
+
 # everything-claude-code-guide.md
 
 # Everything Claude Code 使用指南

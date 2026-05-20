@@ -5,8 +5,9 @@ tags: [ai-coding, ai]
 sources:
   - 'raw/feishu/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md'
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 能够自主执行编程任务的 AI 系统，如 Claude Code、Cursor 等，通过上下文文件获取项目指令。
+confidence: medium
 ---
 
 # 编程 Agent

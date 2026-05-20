@@ -6,8 +6,9 @@ sources:
   - raw/ai-chat/claude_md_complete_guide.md
   - raw/wechat/微信视频号内容总结文档.md
 created: 2026-05-15
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 完整剖析 CLAUDE.md 的文件层级、加载机制、rules 路径作用域、渐进式披露指令与五大最佳实践，附 60 行精简法实战案例。
+confidence: high
 ---
 
 # CLAUDE.md 完整机制与最佳实践

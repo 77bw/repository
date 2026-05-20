@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-05-16
+sha256: 4068494094cf0c4ac57cb84c402094bd17c7de142c583e000acb4e0af9423c1f
+---
+
 # Mavis：让两个Agent"互掐"，比一个聪明Agent靠谱
 
 > 原作者：花叔

@@ -4,8 +4,9 @@ type: concept
 tags: [ai-coding, prompt-engineering]
 sources: ["raw/notion/tech-stack/5个ClaudeCode顶级工程技术 2ef81caa0df8805298cfe8e2dc7b7845.md"]
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 将 AI 编程助手从"聊天工具"升级为"可重复工程系统"的五大核心技巧。
+confidence: medium
 ---
 
 # Agentic 工程技术

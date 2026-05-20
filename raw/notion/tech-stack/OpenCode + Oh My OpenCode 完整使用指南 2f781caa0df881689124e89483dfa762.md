@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: 2f7f24889bac1902191e9d813b989bbcd7fbba2af48db90215516317c1462771
+---
+
 # OpenCode + Oh My OpenCode 完整使用指南
 
 # lOpenCode + Oh My OpenCode 完整使用指南

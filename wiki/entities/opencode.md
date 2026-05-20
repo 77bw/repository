@@ -6,8 +6,9 @@ sources:
   - "raw/notion/tech-stack/OpenCode + Oh My OpenCode 完整使用指南 2f781caa0df881689124e89483dfa762.md"
   - "raw/notion/tech-stack/使用小tips 2f581caa0df88050ac20db637bfb912c.md"
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: 开源 AI 编程助手 OpenCode 及其增强插件 Oh My OpenCode，提供多模型编排和专业 Agent 矩阵。
+confidence: high
 ---
 
 # OpenCode + Oh My OpenCode

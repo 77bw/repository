@@ -4,8 +4,9 @@ type: topic
 tags: [spider, full-stack, knowledge-management]
 sources: [raw/ai-chat/2026-05-02-tdd-ddd-testing-notes.md]
 created: 2026-05-15
-updated: 2026-05-15
+updated: 2026-05-21
 summary: 从数据采集工程师视角剖析 TDD/DDD 方法论的隐藏前提，提出 "取需要的、扔不合适的" 务实做法与项目结构模板。
+confidence: low
 ---
 
 # 数据采集工程师视角下的 TDD / DDD / 三种测试

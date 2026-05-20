@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-05-20
+sha256: c9572e5a8e22f66daab5c74a5e71d7735251dedf30b8f3af254a7ce4dd3d9a95
+---
+
 # 用户提示词导师案例：seller-shopee-spider 自动登录采集流程
 
 > 用户提供的真实工作流原型，用于沉淀「提示词导师 Agent」方法论。

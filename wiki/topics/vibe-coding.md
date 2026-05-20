@@ -6,8 +6,9 @@ sources:
   - "raw/notion/articles/vibe-coding：我的 AI 编程实践 60ddeb93255d4c3488122b5843a55694.md"
   - raw/ai-chat/VibeCoding就该这么做.md
 created: 2026-03-24
-updated: 2026-05-18
+updated: 2026-05-21
 summary: AI 辅助编程方法论 Vibe Coding：通过需求→设计→任务划分→多 Agent 协作四步流程引导 AI 输出可维护代码，以 B 站老王 FC 模拟器开发为完整实例。
+confidence: medium
 ---
 
 # Vibe Coding 实践

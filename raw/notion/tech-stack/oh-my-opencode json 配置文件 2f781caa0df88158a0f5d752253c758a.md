@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: 8fa49c3fe81628ba2b2a2a4d507254a3e3ce6e84029b0aeedf4a480c4588e2d2
+---
+
 # oh-my-opencode.json 配置文件
 
 > Oh My OpenCode 的 Agent 和 Category 配置

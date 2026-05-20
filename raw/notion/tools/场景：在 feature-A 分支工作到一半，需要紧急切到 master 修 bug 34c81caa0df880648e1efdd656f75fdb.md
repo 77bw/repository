@@ -1,3 +1,9 @@
+---
+source_url: ""
+ingested: 2026-04-29
+sha256: 855e0d8b8d20783cae74a4e142cb2eb237778ea145b8ea396b26df2fbb6cb6a0
+---
+
 # 场景：在 feature-A 分支工作到一半，需要紧急切到 master 修 bug
 
 # 1. 暂存 feature-A 的工作

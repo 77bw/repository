@@ -5,8 +5,9 @@ tags: [ai-coding, ai]
 sources:
   - 'raw/feishu/Claude.md,AI 编程的 “宪法”，如何编写 Claude.md 新手指南 - 飞书云文档.md'
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: ETH Zurich 研究：CLAUDE.md 上下文文件反而降低 AI 编程 Agent 任务成功率，并增加推理成本超过 20%。
+confidence: medium
 ---
 
 # Claude.md 新手指南

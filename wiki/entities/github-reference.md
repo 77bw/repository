@@ -4,8 +4,9 @@ type: entity
 tags: [full-stack]
 sources: ["raw/notion/tools/GitHub 功能术语速查 31981caa0df8805fb2daccb0659dd904.md"]
 created: 2026-04-26
-updated: 2026-05-18
+updated: 2026-05-21
 summary: GitHub 核心功能速查表，帮助快速了解各功能的用途和使用场景。
+confidence: medium
 ---
 
 # GitHub 功能术语速查
