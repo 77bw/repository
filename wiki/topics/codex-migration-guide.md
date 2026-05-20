@@ -225,4 +225,4 @@ codex -s read-only "请阅读项目，不要改文件。输出：架构概览、
 
 ## 来源
 
-- [[raw/docs/codex-migration-manual]]
+- [[raw/docs/codex-migration-manual.html]]

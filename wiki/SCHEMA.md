@@ -38,7 +38,7 @@ repository/
 
 **职责边界**：
 
-- `raw/`：正文不可改、文件不可删。**允许在文件头添加/更新 frontmatter 元数据块**用于溯源（source_url / ingested / sha256），这是一次性基线建立 + 后续漂移检测的需要。
+- `raw/`：只读不可改。AI 仅读取，永不修改。新文件落盘时自带 frontmatter，已有文件不再动。
 - `wiki/`：AI 完全负责创建、更新、交叉引用、归档。
 - `SCHEMA.md`：人定规则，AI 严格执行。
 

@@ -27,3 +27,4 @@ OpenClaw 是 AI 驱动的个人知识库管理系统，支持网页存档、GitH
 ## 相关实体
 
 - [[entities/everything-claude-code]]
+- [[topics/karpathy-knowledge-base-sop]]

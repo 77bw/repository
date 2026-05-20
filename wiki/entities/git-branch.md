@@ -41,3 +41,4 @@ git stash pop
 ## 相关实体
 
 - [[entities/github-reference]]
+- [[topics/ai-driven-git-workflow]]
