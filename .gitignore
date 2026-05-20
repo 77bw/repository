@@ -7,9 +7,6 @@ Thumbs.db
 .idea/
 *.swp
 
-# Claude Code
-.claude/
-
 # Python
 __pycache__/
 *.pyc
