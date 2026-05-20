@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "1dde75318c6e4525",
+        "id": "96947757743fd0ad",
         "type": "tabs",
         "children": [
           {
-            "id": "2a77c4669a186392",
+            "id": "cf3a78e665ad7c48",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -174,8 +174,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 575.5,
-    "collapsed": true
+    "width": 545.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -189,8 +188,10 @@
       "realclaudian:Open Claudian": false
     }
   },
-  "active": "01903e07b3431ebe",
+  "active": "0bab1f0cbcddd4a0",
   "lastOpenFiles": [
+    "未命名.base",
+    "wiki/INDEX.md",
     "graphify-out/cache/ef5d16131eafdc821a164bcd6fa445469ce1c13d2550ab3bf800538b47fc9b0d.json",
     "graphify-out/cache/06d181d629126228ea95461c85d3dccb101674a75c7adefe97dd0dca3890001b.json",
     "graphify-out/cache/fa3c89b7a1f783c9fc66f717f46b3e4119b8929bddc19221a7fe06e2e87e0f12.json",
@@ -200,8 +201,6 @@
     "graphify-out/cache/a8ecc5e139f5d38bfcaa20d4c637f057d38a0ebda8033c8222787f8eb3d9c39d.json",
     "graphify-out/cache/d804a20e00f21b59a56977a0e4eea11853cd419d8d137fef61da55c09bb9062c.json",
     "graphify-out/cache/60dffcf8b0e15db5755565a12e3da6117e4a4200f2e13414e5d787161dda4a75.json",
-    "graphify-out/cache/173d7d1e880640b1926e47c6d2d05eed303a37d7a9a7f8ac4bf1065e015fc79f.json",
-    "graphify-out/cache/3d944c8981f22051ef40dcb953b2889538e808f133f8f057c413fef10db629e0.json",
     "raw/wechat/微信视频号内容总结文档.md",
     "wiki/topics/prompt-mentor-guide.md",
     "raw/ai-chat/2026-05-20-prompt-mentor-shopee-case.md",
@@ -213,7 +212,6 @@
     "2026-05-18.md",
     "未命名.canvas",
     "wiki/entities/git-branch.md",
-    "wiki/INDEX.md",
     "wiki/concepts/context-files.md",
     "wiki/concepts/coding-agent.md",
     "wiki/concepts/claude-md.md",

@@ -1,0 +1,23 @@
+{
+  "id": "conv-1779288334810-2qnc1a1qv",
+  "providerId": "claude",
+  "title": "帮我查询该知识库，然后简单回复我一个提示词吧。就是在Cloud Code中的规则，然后在Cloud ...",
+  "titleGenerationStatus": "failed",
+  "createdAt": 1779288334811,
+  "updatedAt": 1779288459201,
+  "lastResponseAt": 1779288459200,
+  "sessionId": "17e02570-d1f0-4a37-bf55-20d0731a5d6f",
+  "providerState": {
+    "providerSessionId": "17e02570-d1f0-4a37-bf55-20d0731a5d6f"
+  },
+  "usage": {
+    "model": "opus[1m]",
+    "inputTokens": 12163,
+    "cacheCreationInputTokens": 5494,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 1000000,
+    "contextTokens": 17657,
+    "percentage": 2,
+    "contextWindowIsAuthoritative": true
+  }
+}
