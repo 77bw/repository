@@ -38,7 +38,7 @@
 - [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令
 - [[topics/codex-command-mapping]] — Claude Code 到 Codex 的完整命令映射、CLI 总览、权限沙盒与提示词模板
 - [[topics/codex-migration-guide]] — 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册
-- [[topics/karpathy-knowledge-base-sop]] — Karpathy 知识库 + Graphify 搭建与使用完整 SOP
+- [[topics/karpathy-knowledge-base-sop]] — Karpathy 知识库搭建与使用完整 SOP
 - [[topics/prompt-mentor-case-study]] — 提示词导师实战案例：Shopee 爬虫交付包、调度速查表、双 CLI 协作要点
 - [[topics/prompt-mentor-guide]] — 双 CLI 提示词导师方法论：澄清→调研→拆解→交付包，含启动语模板与爬虫案例完整产出
 - [[topics/rag-optimization]] — RAG 系统从检索到生成的完整链路性能优化

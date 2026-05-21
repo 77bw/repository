@@ -1,24 +1,23 @@
 ---
-title: Karpathy 知识库 + Graphify 搭建与使用 SOP
+title: Karpathy 知识库搭建与使用 SOP
 type: topic
 tags: [knowledge-management, ai-coding, ai]
 sources: [raw/web/karpathy-knowledge-base-article.md]
 created: 2026-04-26
 updated: 2026-05-21
-summary: 基于 Karpathy 方法论，结合 Graphify 图谱检索工具，从零搭建可持续生长的个人 AI 知识库的完整 SOP
+summary: 基于 Karpathy 方法论，从零搭建可持续生长的个人 AI 知识库的完整 SOP
 confidence: low
 ---
 
-# Karpathy 知识库 + Graphify 搭建与使用 SOP
+# Karpathy 知识库搭建与使用 SOP
 
 ## 概述
 
-本 SOP 基于 Andrej Karpathy 提出的"AI 图书管理员"方法论，结合 Graphify 图谱检索工具（Claude Code 内置 `/graphify` 技能），形成一套可持续运转的个人知识库工作流。
+本 SOP 基于 Andrej Karpathy 提出的"AI 图书管理员"方法论，形成一套可持续运转的个人知识库工作流。
 
 **核心角色分工：**
 - 你 = 采集者 + 提问者
 - AI = 图书管理员（整理、分类、建立关联）
-- Graphify = 检索加速器（知识库大了之后提升 AI 读取效率）
 
 ---
 
@@ -96,32 +95,7 @@ my-knowledge-base/
 
 ---
 
-## 阶段四：Graphify 图谱生成（知识库 50+ 篇后启用）
-
-### 为什么需要 Graphify
-
-wiki 文章超过 50 篇后，AI 逐一读取文件会消耗大量 token，且难以发现跨文章的深层关联。Graphify 将整个 wiki 转成**关系图谱**，AI 读图谱比读文件更快、更省上下文。
-
-### 使用方式
-
-在 Claude Code 中执行：
-
-```
-/graphify
-```
-
-Graphify 会读取指定目录（如 `wiki/`），输出：
-- `knowledge-graph.html` — 可视化关系图（节点 = 文章，连线 = 关联）
-- `knowledge-graph.json` — 供 AI 查询的结构化数据
-- 审计报告 — 发现孤立节点、缺失链接等问题
-
-### 更新时机
-
-每次 wiki 有较大更新后（新增 10+ 篇），重新运行一次 `/graphify`。
-
----
-
-## 阶段五：提问与复利使用（持续进行）
+## 阶段四：提问与复利使用（持续进行）
 
 ### 基础提问模板
 
@@ -141,7 +115,7 @@ Graphify 会读取指定目录（如 `wiki/`），输出：
 
 ---
 
-## 阶段六：定期维护（每 1-2 周）
+## 阶段五：定期维护（每 1-2 周）
 
 ### 健康检查指令
 
@@ -167,8 +141,6 @@ Graphify 会读取指定目录（如 `wiki/`），输出：
 [告诉 Claude Code 更新 wiki]
       ↓
 [wiki 自动生长]
-      ↓
-[50篇后运行 /graphify 生成图谱]
       ↓
 [随时提问，AI 用整个知识网络回答]
       ↓

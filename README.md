@@ -8,17 +8,16 @@ Karpathy 风格的个人 AI 技术知识库。原始素材存入 `raw/`，由 Cl
 
 ## 目录结构
 
-| 路径 | 用途 | 维护者 |
-|------|------|--------|
-| `raw/` | 原始素材，只进不改 | 人工放入 |
-| `wiki/` | 结构化知识库 | Claude Code |
-| `wiki/INDEX.md` | 全库索引入口 | Claude Code |
-| `wiki/SCHEMA.md` | wiki 规范说明书（命名/frontmatter/tag） | 人工维护 |
-| `wiki/concepts/` | 概念定义页 | Claude Code |
-| `wiki/entities/` | 人物/工具/产品页 | Claude Code |
-| `wiki/topics/` | 主题分析页 | Claude Code |
-| `outputs/` | 问答报告，按 `YYYY-MM-DD-主题.md` 命名 | Claude Code |
-| `graphify-out/` | 知识图谱可视化 | graphify 工具 |
+| 路径               | 用途                             | 维护者         |
+| ---------------- | ------------------------------ | ----------- |
+| `raw/`           | 原始素材，只进不改                      | 人工放入        |
+| `wiki/`          | 结构化知识库                         | Claude Code |
+| `wiki/INDEX.md`  | 全库索引入口                         | Claude Code |
+| `wiki/SCHEMA.md` | wiki 规范说明书（命名/frontmatter/tag） | 人工维护        |
+| `wiki/concepts/` | 概念定义页                          | Claude Code |
+| `wiki/entities/` | 人物/工具/产品页                      | Claude Code |
+| `wiki/topics/`   | 主题分析页                          | Claude Code |
+| `outputs/`       | 问答报告，按 `YYYY-MM-DD-主题.md` 命名   | Claude Code |
 
 ---
 
@@ -35,7 +34,7 @@ Karpathy 风格的个人 AI 技术知识库。原始素材存入 `raw/`，由 Cl
 
 **步骤 3：开始使用**
 
-直接在 Claude Code 中提问，或打开 `graphify-out/graph.html` 浏览知识图谱。
+直接在 Claude Code 中提问。
 
 ---
 
@@ -45,7 +44,7 @@ Karpathy 风格的个人 AI 技术知识库。原始素材存入 `raw/`，由 Cl
 |------|----------|------|
 | **存入** | 有新素材 | 放入 `raw/`，无需其他操作 |
 | **构建** | raw/ 有新文件 | 说："处理 raw/ 下的新文件，按 SCHEMA.md 整理，更新 INDEX.md" |
-| **使用** | 随时 | 直接提问，或用 graphify 查询 |
+| **使用** | 随时 | 直接提问 |
 | **维护** | 每新增 10 篇后 | 说："对 wiki/ 做健康检查：找孤立文件、死链、可合并条目，建议新方向" |
 
 ---
@@ -59,7 +58,6 @@ Karpathy 风格的个人 AI 技术知识库。原始素材存入 `raw/`，由 Cl
 | 对比分析 | `对比 wiki/ 中 [A] 和 [B] 的异同` |
 | 保存回答 | `将这个回答保存到 outputs/YYYY-MM-DD-[主题].md` |
 | 健康检查 | `检查 wiki/ 中的孤立文件、死链、可合并条目，建议新方向` |
-| 更新图谱 | `graphify ./wiki --update` 然后打开 `graphify-out/graph.html` |
 
 ---
 
@@ -80,19 +78,16 @@ Karpathy 风格的个人 AI 技术知识库。原始素材存入 `raw/`，由 Cl
 **5. outputs/ 和 wiki/ 有什么区别？**
 `wiki/` 是长期积累的常青知识条目；`outputs/` 是某次具体问答的结果（有时效性）。好的 outputs 可以手动提炼后移入 wiki。
 
-**6. 知识图谱怎么更新？**
-wiki 有较大更新后运行 `graphify ./wiki --update`，重新打开 `graphify-out/graph.html`。
-
-**7. 需要向量数据库吗？**
+**6. 需要向量数据库吗？**
 不需要。wiki 总量在 400K 字符以内时，Claude Code 直接读取全部文件即可，无需额外工具。
 
-**8. 现有的 articles/tools/resources 目录怎么处理？**
+**7. 现有的 articles/tools/resources 目录怎么处理？**
 暂时保留，下次处理新素材时顺带迁移到 `concepts/`、`entities/`、`topics/`。不需要一次性迁移。
 
-**9. 如何搜索特定主题？**
-三种方式：① 直接问 Claude Code；② 在 Obsidian 中用全文搜索（Vault 路径设为 `wiki/`）；③ 用 `graphify query "关键词"`。
+**8. 如何搜索特定主题？**
+两种方式：① 直接问 Claude Code；② 在 Obsidian 中用全文搜索（Vault 路径设为 `wiki/`）。
 
-**10. 健康检查多久做一次？**
+**9. 健康检查多久做一次？**
 建议每新增 10 篇素材后做一次，或每月一次。触发语："对 wiki/ 做健康检查"。
 
 ---

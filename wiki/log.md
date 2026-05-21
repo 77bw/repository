@@ -75,3 +75,20 @@
 
 **报告：**
 - `outputs/2026-05-21-p2-review.md`
+
+
+## [2026-05-21 22:30] update | 移除文档中残留的 graphify 引用
+
+**背景：** /graphify skill 已在用户层面彻底删除，但项目文档（README + wiki）仍残留推荐用法，按当前状态会误导读者去用一个不存在的工具。
+
+**清理：**
+- `README.md`：第 37 行去掉 graphify-out 浏览提示；表格删「更新图谱」一行，「使用」一行去掉 graphify 查询；FAQ 删「知识图谱怎么更新？」，后续编号 7-10 → 6-9；「如何搜索特定主题？」由三种方式改两种
+- `wiki/topics/karpathy-knowledge-base-sop.md`：标题/summary/H1 去掉「+ Graphify」字样；概述删 Graphify 角色分工；删除整个「阶段四：Graphify 图谱生成」章节；后续阶段五/六重新编号为四/五；完整工作流 ASCII 删除 `/graphify` 节点
+- `wiki/INDEX.md`：第 41 行条目描述同步更新
+
+**保留（按规则）：**
+- `raw/web/karpathy-knowledge-base-article.md` 原文不动（raw/ 严格只读）
+- `log.md` 既有 2 条历史记录保留（log append-only）
+- `.obsidian/workspace.json` 不动（Obsidian 个人配置）
+
+**验证：** `grep -rn graphify` 仅命中 raw/ 与 log.md 历史条目，所有面向读者的推荐已清除。
