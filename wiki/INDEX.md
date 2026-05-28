@@ -33,7 +33,7 @@
 - [[topics/claude-code-gen]] — Claude 3.5 Sonnet 代码生成能力评测与最佳实践
 - [[topics/claude-code-teamcreate-practice]] — Claude Code teamcreate 七大经典场景提示词模板
 - [[topics/claude-code-tips]] — 整合 Claude Code 团队内部技巧与社区高频实用技巧，涵盖并行开发、Plan 模式、子代理等
-- [[topics/claude-md-best-practices]] — CLAUDE.md 写作规范、60行精简法、推荐目录结构与调试方法
+- [[topics/claude-md-best-practices]] — CLAUDE.md 写作规范、组织方法、推荐目录结构与调试方法
 - [[topics/claude-md-guide]] — ETH Zurich 研究：CLAUDE.md 反而降低 Agent 成功率并增加成本 20%+
 - [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令
 - [[topics/codex-command-mapping]] — Claude Code 到 Codex 的完整命令映射、CLI 总览、权限沙盒与提示词模板

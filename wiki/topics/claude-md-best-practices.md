@@ -1,21 +1,20 @@
 ---
-title: CLAUDE.md 最佳实践与精简实战
+title: CLAUDE.md 最佳实践
 type: topic
 tags: [ai-coding, ai, knowledge-management]
 sources:
   - raw/ai-chat/claude_md_complete_guide.md
-  - raw/wechat/wechat-video-content-summary.md
 created: 2026-05-21
-updated: 2026-05-21
-summary: CLAUDE.md 写作规范、60行精简法实战、两种机制选择、推荐目录结构、调试方法与 Auto Memory 互补关系。
-confidence: high
+updated: 2026-05-28
+summary: CLAUDE.md 写作规范、组织方法、两种机制选择、推荐目录结构、调试方法与 Auto Memory 互补关系。
+confidence: medium
 ---
 
-# CLAUDE.md 最佳实践与精简实战
+# CLAUDE.md 最佳实践
 
 ## 概述
 
-本文从 [[topics/claude-md-mechanisms]] 中拆分，聚焦 CLAUDE.md 的实操最佳实践：写作规范、60 行精简法、机制选择决策树、推荐目录结构、调试方法，以及与 Auto Memory 的互补关系。机制原理（文件层级、加载机制、rules 路径作用域、渐进式披露指令）见父页面。
+本文从 [[topics/claude-md-mechanisms]] 中拆分，聚焦 CLAUDE.md 的实操最佳实践：写作规范、组织方法、机制选择决策树、推荐目录结构、调试方法，以及与 Auto Memory 的互补关系。机制原理（文件层级、加载机制、rules 路径作用域、渐进式披露指令）见父页面。
 
 ## 写作规范
 
@@ -24,15 +23,13 @@ confidence: high
 - **具体性**：写可验证的指令（✅ "使用 2 空格缩进" / ❌ "格式化好代码"）
 - **HTML 注释**：`<!-- ... -->` 注入前被去除，可写给人看的说明而不消耗 token
 
-## 60 行精简法实战案例
+## CLAUDE.md 组织方法
 
-Ali 厂长 2026-05 实践分享：社区实践表明，将 root CLAUDE.md 压到 60 行以内能显著提升 Claude 遵从度并降低维护成本。压不下来的根本原因往往是把"全局约束"和"模块/场景规则"混在一处。三步可行做法：
+当 CLAUDE.md 内容膨胀导致维护困难或遵从度下降时，可按以下方法拆分组织：
 
 1. **根文件做薄**——主 CLAUDE.md 只保留真正全局的约束（命名规范、提交规范、文档地图），任何带"如果……则……"的条件性规则都迁出。
 2. **规则按关注点拆 `.claude/rules/`**——按文件类型或模块拆分（`typescript.md`、`testing.md`、`sql.md`、`frontend/react.md`），配合 `paths` frontmatter 触发，根文件不再背负这些规则。
 3. **用 `/memory` 命令逐条验收**——每删一条规则，运行 `/memory` 确认当前 session 加载链路仍完整；保留即"删了就不工作"的规则，删除即"保留也无人遵守"的规则。
-
-实践者反馈：从 200+ 行压到 60 行以内，反而避免了文件膨胀导致的"越用越蠢"现象——这与 [[topics/claude-md-guide]] 中的 ETH 研究结论方向一致。
 
 ## 两种机制的选择
 

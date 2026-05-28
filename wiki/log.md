@@ -92,3 +92,13 @@
 - `.obsidian/workspace.json` 不动（Obsidian 个人配置）
 
 **验证：** `grep -rn graphify` 仅命中 raw/ 与 log.md 历史条目，所有面向读者的推荐已清除。
+
+## [2026-05-28 12:55] delete | raw/wechat/wechat-video-content-summary.md
+
+**原因：** Ali 厂长视频号内容主张"将 CLAUDE.md 压到 60 行以内"，该建议缺乏可靠依据，用户判定为误导性内容。
+
+**操作：**
+- `git rm raw/wechat/wechat-video-content-summary.md`
+- `wiki/topics/claude-md-best-practices.md`：重写"60 行精简法"小节为"CLAUDE.md 组织方法"（保留三步拆分方法论，去掉60行结论和归因）；更新 title/summary/confidence
+- `wiki/topics/claude-md-mechanisms.md`：移除 sources 引用；更新 summary 和正文
+- `wiki/INDEX.md`：更新 best-practices 条目描述
