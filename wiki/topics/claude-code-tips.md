@@ -6,7 +6,7 @@ sources:
   - "raw/feishu/claude-code-15-tips.md"
   - "raw/feishu/claude-code-10-internal-tips.md"
 created: 2026-04-26
-updated: 2026-05-21
+updated: 2026-06-01
 summary: 整合 Claude Code 团队内部技巧与社区高频实用技巧，涵盖并行开发、Plan 模式、子代理、技能等核心用法。
 confidence: high
 ---
@@ -48,7 +48,7 @@ confidence: high
 
 - [[concepts/claude-md]]
 - [[concepts/coding-agent]]
-- [[entities/claude-plugins-official]]
+- claude-plugins-official (archived)
 - [[entities/opencode]]
 - [[topics/claude-code-gen]]
 

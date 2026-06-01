@@ -4,7 +4,7 @@ type: topic
 tags: [spider, full-stack, knowledge-management]
 sources: [raw/ai-chat/2026-05-02-tdd-ddd-testing-notes.md]
 created: 2026-05-15
-updated: 2026-05-21
+updated: 2026-06-01
 summary: 从数据采集工程师视角剖析 TDD/DDD 方法论的隐藏前提，提出 "取需要的、扔不合适的" 务实做法与项目结构模板。
 confidence: low
 ---
@@ -127,7 +127,9 @@ live-monitor/
 
 ### Skills 生态备忘（架构相关）
 
-| 技能 | 安装量 |
+> 安装量为 `npx skills find` 截至 2026-05 的快照，数值会随时间漂移，仅作相对量级参考。
+
+| 技能 | 安装量（截至 2026-05 快照） |
 |------|--------|
 | `mattpocock/skills@improve-codebase-architecture` | 31.8K |
 | `wshobson/agents@architecture-patterns` | 14.2K |

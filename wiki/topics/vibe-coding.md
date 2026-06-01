@@ -6,7 +6,7 @@ sources:
   - "raw/notion/articles/vibe-coding-practice.md"
   - raw/ai-chat/vibe-coding-how-to.md
 created: 2026-03-24
-updated: 2026-05-21
+updated: 2026-06-01
 summary: AI 辅助编程方法论 Vibe Coding：通过需求→设计→任务划分→多 Agent 协作四步流程引导 AI 输出可维护代码，以 B 站老王 FC 模拟器开发为完整实例。
 confidence: medium
 ---
@@ -84,7 +84,7 @@ B 站程序员老王在 [VibeCoding就该这么做！](https://www.bilibili.com/
 
 ### 四、与 [[entities/everything-claude-code]] 的关系
 
-Everything Claude Code 提供了 Vibe Coding 方法论的工程化落地——`/plan`、`/tdd`、`/orchestrate` 等命令对应到四步方法论的"设计 / 实现 / 多 Agent 编排"环节，`memory-bank` 文件夹相当于 Vibe Coding 流程中的 `doc/` 工件存储。两者关注点一致，前者偏方法论、后者偏工具实现。
+Everything Claude Code 提供了 Vibe Coding 方法论的工程化落地——`/plan`（仍在维护）配合 tdd-workflow / multi-workflow 等 skill，对应到四步方法论的"设计 / 实现 / 多 Agent 编排"环节（早期的 `/tdd`、`/orchestrate` 命令已退役进 legacy-command-shims，官方提示改用 tdd-workflow / dmux-workflows / multi-workflow 等 skill）；`memory-bank` 文件夹可松散类比为 Vibe Coding 流程中的 `doc/` 工件存储（注：官方 README 并无 memory-bank 特性，最接近的是 memory-persistence hooks）。两者关注点一致，前者偏方法论、后者偏工具实现。
 
 ## 结论
 

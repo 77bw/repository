@@ -5,7 +5,7 @@ tags: [ai-coding, full-stack]
 sources:
   - "raw/notion/tools/git-assistance.md"
 created: 2026-05-18
-updated: 2026-05-21
+updated: 2026-06-01
 summary: "AI 协助 Git 的六层协作模式：让 AI 写 commit、创建 PR、做 review、跑自定义 Commands/Skills、连接 MCP——你是调度者，不是 Git 工程师。"
 confidence: low
 ---
@@ -69,13 +69,17 @@ AI 会自动：
 review 当前改动
 ```
 
-或在 GitHub PR 评论里 @ 自动化机器人：
+或在 GitHub PR / issue 评论里 @ 自动化机器人（注意官方约定为小写 `@claude`）：
 
 ```
-@Claude review
+@claude review
 ```
+
+> 前置步骤：需先在仓库终端运行 `/install-github-app` 安装 Claude GitHub App 并配置 `ANTHROPIC_API_KEY` secret（仓库 admin 权限）。安装后，评论中 `@claude` 才会触发 Action。依据官方文档 [code.claude.com/docs/en/github-actions](https://code.claude.com/docs/en/github-actions)。
 
 **层级 4 —— 自定义 Slash Commands（强烈推荐）**
+
+> 版本说明：自 v2.1.3（2026-01）起，自定义 slash 命令已并入 skills。`.claude/commands/deploy.md` 与 `.claude/skills/deploy/SKILL.md` 都会生成 `/deploy` 且行为一致；`.claude/commands/` 仅作向后兼容保留，仍可正常使用。新项目推荐直接写 SKILL.md（多一个支持文件目录、frontmatter 调用控制、按需自动加载等能力）。依据官方文档 [code.claude.com/docs/en/slash-commands](https://code.claude.com/docs/en/slash-commands)。
 
 把高频 Git 流程沉淀成可复用命令：
 
@@ -100,7 +104,7 @@ review 当前改动
 - 分支命名规范（feature/xxx、fix/xxx、release/x.y.z）
 - PR 描述模板（Summary / Test plan / Risk）
 
-Claude 此后会自动遵守你的 Git 规则，无需每次重复说明。Skills 与 Commands 的区别见 [[concepts/agentic-engineering]]。
+Claude 此后会自动遵守你的 Git 规则，无需每次重复说明。注意 Commands 与 Skills 现已统一为同一机制（见上方层级 4 版本说明），Skills 形式额外提供按需自动加载等能力，相关取舍见 [[concepts/agentic-engineering]]。
 
 **层级 6 —— MCP 连接 GitHub（进阶全自动化）**
 

@@ -102,3 +102,43 @@
 - `wiki/topics/claude-md-best-practices.md`：重写"60 行精简法"小节为"CLAUDE.md 组织方法"（保留三步拆分方法论，去掉60行结论和归因）；更新 title/summary/confidence
 - `wiki/topics/claude-md-mechanisms.md`：移除 sources 引用；更新 summary 和正文
 - `wiki/INDEX.md`：更新 best-practices 条目描述
+
+## [2026-06-01 01:45] archive | 3 个高危整页归档
+
+**原因 + 操作：**
+- `entities/claude-plugins-official.md` —— 实体名不存在，内容源自第三方飞书误导信息 → 移入 `_archive/`
+- `topics/ai-agent-principles.md` —— 空壳 stub，无实质内容 → 移入 `_archive/`
+- `topics/claude-code-teamcreate-practice.md` —— teamcreate 命令为幻觉（实际无此命令）→ 移入 `_archive/`
+
+**衍生处理：**
+- 指向上述 3 页的反链已转为纯文本（标注 archived）
+- `raw/ai-chat/claude-code-agent-team-guide.md` 添加 correction frontmatter（标注 teamcreate 命令幻觉订正）
+
+## [2026-06-01 01:45] update | wiki 全库审计修复（详见 outputs/2026-06-01-wiki-audit-suggestions.md）
+
+**主要修复主题（涉及约 21 个页面）：**
+- commands 概念并入 skills（命令体系归并）
+- teamcreate 命令引用全面移除（幻觉命令清理）
+- ETH Zurich 论文表述准确化（arXiv 2602.11988：自动生成的 CLAUDE.md/AGENTS.md 多数拖累成功率，人工编写可小幅提升，成本 +20%）
+- opencode 更名修正
+- `--full-auto` 标记为废弃
+- `@import` 修正为 4 层嵌套上限
+- 其余断链 / 描述漂移 / frontmatter 字段同步修复
+
+**INDEX 同步：** Total pages 28 → 25；Last updated → 2026-06-01；agents / agent-team-architecture / claude-md-guide 条目描述更新；3 个归档页条目移除。
+
+## [2026-06-01 23:58] archive | 移除 ETH Zurich 研究引用（用户判断：不认同该研究在 wiki 中的位置）
+
+**归档：**
+- `topics/claude-md-guide.md` —— 整页主题即 ETH Zurich 研究（arXiv 2602.11988）解读，移入 `_archive/`
+
+**清理（7 个页面）：**
+- `concepts/agents.md` L17、L22 —— 删除 ETH Zurich 研究相关表述
+- `concepts/claude-md.md` L27 —— 删除 ETH Zurich 研究 bullet
+- `concepts/context-files.md` L22-24 —— 删除 ETH Zurich 研究整段（LLM 生成 vs 人工编写对比）
+- `concepts/coding-agent.md` / `claude-md-best-practices.md` / `claude-md-mechanisms.md` —— 删除指向 claude-md-guide 的反链
+- `claude-md-mechanisms.md` L188 —— 删除隐含 ETH 结论的警示段落（"盲目添加 CLAUDE.md 反而降低成功率并增加成本 20%+"）
+
+**来源区修正：** 4 个页面的"来源"区原指向已归档的 `[[topics/claude-md-guide]]`，改回真实 raw 源 `raw/feishu/claude-md-beginner-guide.md`（该源本身保持只读不动，ETH 研究非事实性错误仅为编辑取舍）。
+
+**INDEX 同步：** 删除 claude-md-guide 条目；Total pages 25 → 24；Last updated 保持 2026-06-01。

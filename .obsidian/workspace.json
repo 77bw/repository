@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "wiki/log.md",
+                "file": "outputs/2026-06-01-wiki-audit-suggestions.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "log"
+              "title": "2026-06-01-wiki-audit-suggestions"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Boris Cherny",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": true,
@@ -74,8 +74,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -95,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "wiki/log.md",
+                "file": "README.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "log 的反向链接列表"
+              "title": "README 的反向链接列表"
             }
           },
           {
@@ -157,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "wiki/log.md",
+                "file": "README.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "log 的大纲"
+              "title": "README 的大纲"
             }
           },
           {
@@ -198,33 +197,35 @@
   },
   "active": "cf3a78e665ad7c48",
   "lastOpenFiles": [
+    "wiki/_archive/topics/claude-md-guide.md",
+    "wiki/_archive/topics/claude-code-teamcreate-practice.md",
+    "wiki/_archive/topics/ai-agent-principles.md",
+    "wiki/_archive/topics",
+    "wiki/_archive/entities/claude-plugins-official.md",
+    "wiki/_archive/entities",
+    "raw/docs/好用的提示词.md",
+    "outputs/2026-06-01-wiki-audit-suggestions.md",
+    "AGENTS.md",
+    "wiki/topics/codex-command-mapping.md",
+    "wiki/concepts/claude-md.md",
+    "wiki/topics/claude-md-guide.md",
+    "wiki/topics/claude-md-mechanisms.md",
+    "wiki/topics/claude-md-best-practices.md",
+    "raw/wechat/wechat-video-content-summary.md",
+    "raw/ai-chat/claude_md_complete_guide.md",
+    "wiki/topics/claude-code-teamcreate-practice.md",
+    "wiki/topics/claude-code-gen.md",
+    "raw/docs/obsidian-ai-the-complete-guide-v1.0.0.pdf",
+    "2026-05-24.md",
+    "raw/feishu/claude-md-beginner-guide.md",
+    "README.md",
+    "CLAUDE.md",
+    "wiki/topics/prompt-mentor-guide.md",
+    "wiki/log.md",
     "outputs/2026-05-21-p2-review.md",
     "wiki/topics/agent-team-architecture.md",
-    "wiki/topics/codex-command-mapping.md",
     "wiki/topics/prompt-mentor-case-study.md",
-    "wiki/topics/claude-md-best-practices.md",
-    "wiki/topics/claude-code-teamcreate-practice.md",
-    "raw/wechat/wechat-video-content-summary.md",
     "raw/web/karpathy-knowledge-base-article.md",
-    "raw/notion/knowledge-base-index.md",
-    "raw/notion/tools/tools-usage.md",
-    "raw/notion/tools/git-stash-switch-branch-scenario.md",
-    "raw/notion/tools/git-branch-commands.md",
-    "raw/notion/tools/github-terminology-reference.md",
-    "raw/notion/tools/git-assistance.md",
-    "raw/notion/tech-stack/configuration.md",
-    "raw/notion/tech-stack/usage-guide.md",
-    "raw/notion/tech-stack/usage-tips.md",
-    "raw/notion/tech-stack/opencode-json-config.md",
-    "raw/notion/tech-stack/oh-my-opencode-json-config.md",
-    "raw/notion/tech-stack/everything-claude-code-guide-raw.md",
-    "raw/notion/tech-stack/opencode-oh-my-opencode-guide.md",
-    "raw/notion/tech-stack/everything-claude-code-guide.md",
-    "raw/notion/tech-stack/claude-code-overview.md",
-    "raw/notion/tech-stack/anthropic-hackathon-claude-code-config.md",
-    "raw/notion/tech-stack/ai-tech-stack.md",
-    "raw/notion/tech-stack/claude-code-top-5-techniques.md",
-    "raw/docs/obsidian-ai-the-complete-guide-v1.0.0.pdf",
     "raw/docs/codex-migration-manual.html.meta.yaml",
     "raw/docs/claude-code-cheatsheet.html.meta.yaml",
     "raw/docs/Obsidian-AI-The-Complete-Guide-v1.0.0.pdf.meta.yaml",
@@ -232,8 +233,6 @@
     "wiki/_archive",
     "wiki/queries",
     "wiki/comparisons",
-    "未命名.base",
-    "graphify-out/cache/ef5d16131eafdc821a164bcd6fa445469ce1c13d2550ab3bf800538b47fc9b0d.json",
     "未命名.canvas",
     "raw/claude-code-best-practice/tutorial/day0/assets/login.png",
     "raw/claude-code-best-practice/tips/assets/thariq-26-4-16/9.png",

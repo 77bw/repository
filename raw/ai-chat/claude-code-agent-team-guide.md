@@ -2,6 +2,14 @@
 source_url: ""
 ingested: 2026-05-16
 sha256: 506c7c010febbdbeaac61a18a06ac5159d67e5d4d869f9d5f4235d87dd9d64d5
+correction: |
+  [2026-06-01 审计纠错] 本文"核心触发机制"声称必须用 `teamcreate` 前缀触发 Agent
+  Team —— 此命令在 Claude Code 官方文档中不存在,系本源虚构/幻觉。
+  官方机制:Agent Teams 为实验性功能,需在 settings.json 启用
+  CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS,再以自然语言提示创建
+  (如 "Create an agent team to ..."),无 teamcreate 命令前缀。
+  官方依据: https://code.claude.com/docs/en/agent-teams
+  正文保持原样仅供溯源,衍生 wiki 页已据官方文档重写,不再依赖本源的 teamcreate 断言。
 ---
 
 # 🧠 Claude Code Agent Team 实战指南与核心提示词库

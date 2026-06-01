@@ -4,7 +4,7 @@ type: topic
 tags: [ai-coding]
 sources: [raw/docs/codex-migration-manual.html]
 created: 2026-05-21
-updated: 2026-05-21
+updated: 2026-06-01
 summary: Claude Code 到 Codex 的完整命令映射、CLI 命令总览、Slash 命令、权限沙盒配置、常用工作流与提示词模板。
 confidence: medium
 ---
@@ -49,9 +49,9 @@ confidence: medium
 
 | 参数 | 作用 |
 |------|------|
-| `--full-auto` | 低摩擦预设：workspace-write + on-request |
+| `--full-auto` | **已废弃**：顶层不再解析（`codex --full-auto` 会报错），改用 `-s workspace-write`（需审批再配 `-a on-request`） |
 | `-s read-only / workspace-write / danger-full-access` | 沙盒级别 |
-| `-a untrusted / on-request / never` | 审批策略 |
+| `-a untrusted / on-request / never` | 审批策略（另有 `on-failure`，源码已标 DEPRECATED） |
 | `--search` | 启用实时 web search |
 | `-i <FILE>` | 附加图片输入 |
 | `-c key=value` | 临时覆盖配置 |
@@ -82,7 +82,7 @@ confidence: medium
 codex -s read-only "解释这个仓库的构建流程"
 
 # 日常开发
-codex --full-auto "实现登录页错误提示，并运行相关测试"
+codex -s workspace-write "实现登录页错误提示，并运行相关测试"
 
 # 自动化脚本
 codex exec -a never -s workspace-write "格式化并运行单元测试"
@@ -96,7 +96,7 @@ codex exec -a never -s workspace-write "格式化并运行单元测试"
 
 **修 bug：**
 ```
-codex --full-auto "复现并修复这个 bug：[报错]。先找根因，再做最小改动，最后运行相关测试"
+codex exec -s workspace-write -a on-request "复现并修复这个 bug：[报错]。先找根因，再做最小改动，最后运行相关测试"
 ```
 
 **理解陌生项目：**

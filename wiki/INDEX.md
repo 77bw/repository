@@ -4,21 +4,20 @@
 > 任何查询前先读此文件定位相关页。
 > 详细规则见 [[SCHEMA]]。
 >
-> Last updated: 2026-05-21 | Total pages: 28
+> Last updated: 2026-06-01 | Total pages: 24
 
 ---
 
 ## Concepts
 
 - [[concepts/agentic-engineering]] — 将 AI 从聊天工具升级为可重复工程系统的五大技巧
-- [[concepts/agents]] — 与 CLAUDE.md 本质相同的 AI Agent 上下文配置文件
+- [[concepts/agents]] — 跨工具通用的 AI Agent 上下文配置文件名（OpenAI 主导的开放格式，Codex、Cursor 等采用）；非 Claude Code 官方支持，Claude Code 用 CLAUDE.md
 - [[concepts/claude-md]] — AI 编程 Agent 的上下文配置文件
 - [[concepts/coding-agent]] — 能够自主执行编程任务的 AI 系统
 - [[concepts/context-files]] — 向 AI Agent 提供项目级别指令的配置文件
 
 ## Entities
 
-- [[entities/claude-plugins-official]] — Claude Code 官方插件集合，覆盖 AI 编程全流程
 - [[entities/everything-claude-code]] — Anthropic 黑客马拉松冠军的完整 Claude Code 配置集合
 - [[entities/git-branch]] — Git 分支操作常用命令速查
 - [[entities/github-reference]] — GitHub 核心功能术语速查表
@@ -27,14 +26,11 @@
 
 ## Topics
 
-- [[topics/agent-team-architecture]] — Claude Code teamcreate 七大场景实战 + Mavis Worker-Verifier-Engine 架构哲学
-- [[topics/ai-agent-principles]] — 深入理解 AI Agent 工作原理与实践应用
+- [[topics/agent-team-architecture]] — Claude Code Agent Teams 七大实战场景提示词 + Mavis Worker-Verifier-Engine 架构哲学，多 Agent 协作从操作技巧到系统设计的完整视角
 - [[topics/ai-driven-git-workflow]] — AI 协助 Git 的六层协作模式：你是调度者，不是 Git 工程师
 - [[topics/claude-code-gen]] — Claude 3.5 Sonnet 代码生成能力评测与最佳实践
-- [[topics/claude-code-teamcreate-practice]] — Claude Code teamcreate 七大经典场景提示词模板
 - [[topics/claude-code-tips]] — 整合 Claude Code 团队内部技巧与社区高频实用技巧，涵盖并行开发、Plan 模式、子代理等
 - [[topics/claude-md-best-practices]] — CLAUDE.md 写作规范、组织方法、推荐目录结构与调试方法
-- [[topics/claude-md-guide]] — ETH Zurich 研究：CLAUDE.md 反而降低 Agent 成功率并增加成本 20%+
 - [[topics/claude-md-mechanisms]] — CLAUDE.md 完整机制：文件层级、懒加载、rules 路径作用域、渐进式披露指令
 - [[topics/codex-command-mapping]] — Claude Code 到 Codex 的完整命令映射、CLI 总览、权限沙盒与提示词模板
 - [[topics/codex-migration-guide]] — 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册

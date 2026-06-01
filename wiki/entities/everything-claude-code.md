@@ -8,7 +8,7 @@ sources:
   - "raw/notion/tech-stack/everything-claude-code-guide-raw.md"
   - "raw/notion/tech-stack/usage-guide.md"
 created: 2026-04-26
-updated: 2026-05-21
+updated: 2026-06-01
 summary: Anthropic 黑客马拉松冠军 affaan-m 整理的 Claude Code 配置集合，覆盖跨会话记忆、持续学习、项目可维护性、子智能体编排，提供 PLAN→CHECKPOINT→TDD→VERIFY→REVIEW→LEARN→RECORD 七步标准开发循环。
 confidence: high
 ---
@@ -18,6 +18,8 @@ confidence: high
 [everything-claude-code](https://github.com/affaan-m/everything-claude-code) 是 Anthropic 黑客马拉松冠军 affaan-m 整理的完整 Claude Code 配置集合，包含 Agents、Skills、Commands、Hooks、Rules 五类组件，围绕 Memory Bank 模式构建复杂软件项目的可复用工作流。
 
 ## 安装
+
+> 以下为 v1.10.0（仓库当时名为 `everything-claude-code`）的安装方式。**已核实**：仓库后续更名为 ECC，v2.0+ 改用 `/plugin marketplace add affaan-m/ECC` 与 `/plugin install ecc@ecc`（命令前缀相应变为 `/ecc:`）。安装最新版前请以官方 README 为准。
 
 ```bash
 /plugin marketplace add affaan-m/everything-claude-code
@@ -30,11 +32,13 @@ cp -r everything-claude-code/rules/* ~/.claude/rules/
 
 ## 组件概览
 
-| 组件 | 自动安装 | 数量 |
+> 以下数量基于 v1.10.0 的 `plugin.json`。组件随版本快速增长，安装后请以本地 `plugin.json` 为准（仓库后续已更名为 ECC，v2.0+ 数量更大）。
+
+| 组件 | 自动安装 | 数量（v1.10.0） |
 |---|---|---|
-| Agents | ✅ | 13 个 |
-| Skills | ✅ | 28 个 |
-| Commands | ✅ | 24 个 |
+| Agents | ✅ | 38 个 |
+| Skills | ✅ | 156 个 |
+| Commands | ✅ | 72 个（legacy command shims，命令已并入 skills，仅作向后兼容） |
 | Rules | ❌ 需手动复制 | 8 个 |
 
 ## 四大核心功能
@@ -87,7 +91,7 @@ cp -r everything-claude-code/rules/* ~/.claude/rules/
 请以"导师"身份，教我如何开始构建项目。回答时：
 1. 给出具体可执行的 Prompt 范例
 2. 解释每个步骤的目的
-3. 使用规范的命令格式（带 /everything-claude-code: 前缀）
+3. 使用规范的命令格式（如 `/plan`、`/checkpoint create`，无需前缀）
 ```
 
 ## 标准 7 步开发循环
@@ -101,12 +105,12 @@ PLAN  →  CHECKPOINT  →  TDD  →  VERIFY  →  REVIEW  →  LEARN  →  RECO
 
 | 步骤 | 命令 | 说明 |
 |------|------|------|
-| 1. PLAN | `/everything-claude-code:plan` | 输出实现方案，等待用户确认 |
-| 2. CHECKPOINT | `/everything-claude-code:checkpoint create` | 保存初始状态 |
-| 3. TDD | `/everything-claude-code:tdd` | 测试先行，逐模块实现 |
-| 4. VERIFY | `/everything-claude-code:checkpoint verify` | 验证所有变更 |
-| 5. REVIEW | `/everything-claude-code:python-review` / `go-review` | 语言专项审查 |
-| 6. LEARN | `/everything-claude-code:learn` | 提取可复用模式 |
+| 1. PLAN | `/plan` | 输出实现方案，等待用户确认 |
+| 2. CHECKPOINT | `/checkpoint create` | 保存初始状态 |
+| 3. TDD | `/tdd` | 测试先行，逐模块实现 |
+| 4. VERIFY | `/checkpoint verify` | 验证所有变更 |
+| 5. REVIEW | `/python-review` / `/go-review` | 语言专项审查 |
+| 6. LEARN | `/learn` | 提取可复用模式 |
 | 7. RECORD | 更新 `memory-bank/` + `git commit` | 记录进度并提交 |
 
 **两种执行模式：**
@@ -125,23 +129,23 @@ PLAN  →  CHECKPOINT  →  TDD  →  VERIFY  →  REVIEW  →  LEARN  →  RECO
 
 ## 常用命令速查
 
-**插件命令（需前缀 `/everything-claude-code:`）：**
+**插件命令：**
 
 | 命令 | 用途 | 使用时机 |
 |------|------|----------|
-| `plan` | 规划实现方案 | 开始新功能前 |
-| `checkpoint create` | 保存当前状态 | 写代码前 |
-| `checkpoint verify` | 验证变更 | 写代码后 |
-| `tdd` | 测试驱动开发 | 实现功能时 |
-| `python-review` / `go-review` | 语言专项审查 | 代码完成后 |
-| `learn` | 保存学习记录 | 发现好模式时 |
-| `build-fix` | 修复构建错误 | 构建失败时 |
-| `refactor-clean` | 清理冗余代码 | 代码维护时 |
-| `verify quick` | 快速验证 | 快速检查时 |
-| `e2e` | E2E 测试 | 端到端测试时 |
-| `orchestrate` | 编排子智能体 | 复杂任务时 |
+| `/plan` | 规划实现方案 | 开始新功能前 |
+| `/checkpoint create` | 保存当前状态 | 写代码前 |
+| `/checkpoint verify` | 验证变更 | 写代码后 |
+| `/tdd` | 测试驱动开发 | 实现功能时 |
+| `/python-review` / `/go-review` | 语言专项审查 | 代码完成后 |
+| `/learn` | 保存学习记录 | 发现好模式时 |
+| `/build-fix` | 修复构建错误 | 构建失败时 |
+| `/refactor-clean` | 清理冗余代码 | 代码维护时 |
+| `/verify quick` | 快速验证 | 快速检查时 |
+| `/e2e` | E2E 测试 | 端到端测试时 |
+| `/orchestrate` | 编排子智能体 | 复杂任务时 |
 
-**原生命令（无需前缀）：** `/clear` `/compact` `/help` `/cost` `/resume`
+**原生命令：** `/clear` `/compact` `/help` `/cost` `/resume`
 
 ## Hooks 自动化
 
@@ -175,8 +179,7 @@ PLAN  →  CHECKPOINT  →  TDD  →  VERIFY  →  REVIEW  →  LEARN  →  RECO
 
 | 问题 | 解决方案 |
 |------|----------|
-| 命令报错 "Skill is not a prompt-based skill" | 使用 `Task` 工具或 `EnterPlanMode` 替代直接调用 |
-| 忘记命令前缀 | 所有命令必须加 `/everything-claude-code:` 前缀 |
+| 命令报错 "Skill is not a prompt-based skill"（早期版本可能遇到，v1.10.0 重构后待验证） | 使用 `Task` 工具或 `EnterPlanMode` 替代直接调用 |
 | 上下文过长 | 使用 `/compact` 压缩，或 `/clear` 清除后重新开始 |
 
 ## 相关实体与概念

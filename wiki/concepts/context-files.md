@@ -5,7 +5,7 @@ tags: [ai-coding, ai]
 sources:
   - 'raw/feishu/claude-md-beginner-guide.md'
 created: 2026-04-26
-updated: 2026-05-21
+updated: 2026-06-01
 summary: 向 AI Agent 提供项目级别指令的配置文件（如 CLAUDE.md、AGENTS.md），研究表明其效果存在争议。
 confidence: medium
 ---
@@ -19,8 +19,7 @@ confidence: medium
 ## 核心要点
 
 - 用于定义项目背景、规范、禁止行为等上下文
-- ETH Zurich 研究：有上下文文件时 AI 任务成功率反而下降，成本增加 20%+
-- 不同工具使用不同文件名：Claude Code 用 CLAUDE.md，OpenCode 用 AGENTS.md
+- 不同工具使用不同文件名：Claude Code 用 CLAUDE.md；Cursor、Copilot 等支持 AGENTS.md（OpenAI 主导的开放格式，github.com/openai/agents.md）；部分项目用符号链接统一两者
 
 ## 相关概念
 
@@ -30,4 +29,4 @@ confidence: medium
 
 ## 来源
 
-- [[topics/claude-md-guide]]
+- `raw/feishu/claude-md-beginner-guide.md`

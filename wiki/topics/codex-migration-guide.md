@@ -4,7 +4,7 @@ type: topic
 tags: [ai-coding]
 sources: [raw/docs/codex-migration-manual.html]
 created: 2026-04-26
-updated: 2026-05-21
+updated: 2026-06-01
 summary: 面向 Claude Code 用户的 Codex CLI/App 完整迁移手册，含命令映射、权限配置、工作流与提示词模板
 confidence: medium
 ---
@@ -43,7 +43,9 @@ codex
 codex "请先阅读这个项目，说明目录结构、启动方式、测试方式，不要改文件"
 
 # 低摩擦自动模式
-codex --full-auto "修复当前测试失败，保持改动最小"
+# --full-auto 等价于 -a on-request -s workspace-write（按需审批 + 工作区可写）
+# 注意：新版 CLI 顶层已弃用 --full-auto，建议直接写 -s workspace-write（需审批再加 -a on-request）
+codex -s workspace-write "修复当前测试失败，保持改动最小"
 
 # 非交互式（适合脚本/CI）
 codex exec --cd /path/to/repo "运行测试并总结失败原因"
@@ -96,12 +98,12 @@ Claude Code 到 Codex 的完整命令映射表、CLI 命令总览、Slash 命令
 
 | 维度 | Claude Code | Codex |
 |------|-------------|-------|
-| 规则文件 | `CLAUDE.md` + `rules/` | `AGENTS.md` |
+| 规则文件 | `CLAUDE.md`（可经 `@import` 拆分） | `AGENTS.md` |
 | 配置文件 | `.claude/settings.json` | `~/.codex/config.toml` |
 | Skills | `/skill-name` | `$skill-name`（App）|
 | 子智能体 | Agent tool + subagent_type | `/agent` + `codex fork` |
 | 上下文压缩 | `/compact` | `/compact` |
-| 记忆持久化 | Hooks（session-start/end） | 暂无内置，需 AGENTS.md 补充 |
+| 记忆持久化 | Hooks（session-start/end） | Codex 已推出持久记忆预览（2026-04 起分阶段放量），AGENTS.md 仍可作显式补充 |
 
 **迁移核心原则**（来自 [[concepts/agentic-engineering]]）：
 - `CLAUDE.md` 的内容直接迁移到 `AGENTS.md`，结构不变

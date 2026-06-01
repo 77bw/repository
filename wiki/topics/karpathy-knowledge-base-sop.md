@@ -4,7 +4,7 @@ type: topic
 tags: [knowledge-management, ai-coding, ai]
 sources: [raw/web/karpathy-knowledge-base-article.md]
 created: 2026-04-26
-updated: 2026-05-21
+updated: 2026-06-01
 summary: 基于 Karpathy 方法论，从零搭建可持续生长的个人 AI 知识库的完整 SOP
 confidence: low
 ---
@@ -14,6 +14,8 @@ confidence: low
 ## 概述
 
 本 SOP 基于 Andrej Karpathy 提出的"AI 图书管理员"方法论，形成一套可持续运转的个人知识库工作流。
+
+> 注：「AI 图书管理员」是 linux.do 社区作者对 Karpathy 想法的转述比喻，非其原话。Karpathy 原推大意是让 LLM 充当个人知识的整理与关联者，措辞未逐字核实。
 
 **核心角色分工：**
 - 你 = 采集者 + 提问者
@@ -55,6 +57,8 @@ my-knowledge-base/
 # 我关注的方向
 [列出 3-5 个重点领域]
 ```
+
+> 补充：Claude Code 官方推荐用 `/init` 命令在项目根自动生成 CLAUDE.md 初稿，再按需精简。官方强调 CLAUDE.md 应「保持精简」——只放高频、确定性的规则，避免堆砌冗长内容（过载反而稀释指令权重、增加 token 成本）。参见 [[concepts/claude-md]] 与 [[topics/claude-md-best-practices]]。
 
 ### 3. 编写 wiki/SCHEMA.md
 
