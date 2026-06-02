@@ -142,3 +142,44 @@
 **来源区修正：** 4 个页面的"来源"区原指向已归档的 `[[topics/claude-md-guide]]`，改回真实 raw 源 `raw/feishu/claude-md-beginner-guide.md`（该源本身保持只读不动，ETH 研究非事实性错误仅为编辑取舍）。
 
 **INDEX 同步：** 删除 claude-md-guide 条目；Total pages 25 → 24；Last updated 保持 2026-06-01。
+
+## [2026-06-02 13:25] ingest | iv8 与 AI JS 逆向知识簇
+
+**新增概念页：**
+- `concepts/js-reverse-supplement-env.md` —— JS 逆向补环境定义、三路线对比与检测面
+
+**新增实体页：**
+- `entities/iv8.md` —— Python 原生 V8 + 浏览器 API 运行时，含 macOS 不支持与 WebGL/ServiceWorker 矛盾标注
+- `entities/reverse-skill.md` —— 715494637/reverse-skill 中文逆向方法论与 jsr-reverse skill 仓库
+- `entities/js-reverse-mcp.md` —— zhizhuodemao/js-reverse-mcp 真实 Chrome 插桩 MCP
+- `entities/ai-reverse-toolkit.md` —— zhizhuodemao/ai-reverse-toolkit 四 skill 工具集
+
+**新增主题页：**
+- `topics/ai-js-reverse-workflow.md` —— MCP + skill + iv8 的 AI JS 逆向 0→1 工作流与提示词模板
+- `topics/iv8-api-reference.md` —— JSContext / environment / config / `__iv8__` API 速查
+- `topics/iv8-supplement-env-handbook.md` —— iv8 缺啥补啥方法论、发现/注入/验证闭环
+- `topics/iv8-reverse-cases.md` —— 抖音、京东、腾讯防水墙、BOSS、瑞数、Akamai 案例库
+- `topics/js-reverse-general-techniques.md` —— JSVMP、AST 反混淆、边界选择与最小恢复
+- `topics/js-reverse-runtime-bridge-techniques.md` —— WASM / Worker / Webpack / 反调试桥接契约
+
+**关键处理：**
+- `wiki/INDEX.md` Total pages 24 → 35，新增条目按分段字母序插入
+- 纠正三仓库归属：`715494637/reverse-skill`、`zhizhuodemao/js-reverse-mcp`、`zhizhuodemao/ai-reverse-toolkit`
+- iv8 WebGL 矛盾按实时 GitHub README + `demos/full_configuration.py` 裁决；`chrome.runtime` 与 ServiceWorker 仍保留 contested 风险
+- 识别平台限制：iv8 当前仅 Windows/Linux x64，macOS 需 WSL2 / Linux 容器 / 远程 Linux
+- 按 SCHEMA 超长页阈值拆出 `iv8-api-reference.md`、`iv8-reverse-cases.md`、`js-reverse-runtime-bridge-techniques.md`
+
+## [2026-06-02 14:04] update | iv8 与 AI JS 逆向知识簇审查优化
+
+**目标：** 对当前 iv8 / JS 逆向 wiki 变更做一手仓库核验与事实降调，确保后续 AI 读取时能区分“官方声明 / demo 可证 / 目标站待实测”。
+
+**主要修正：**
+- `entities/reverse-skill.md`：将核心能力从“js-reverse-mcp 五类工具”校正为 `jsr-reverse` 阶段主干（`intake -> evidence -> locate -> recover -> runtime -> validation -> handoff`），MCP 工具改为依赖能力。
+- `entities/iv8.md` / `topics/iv8-api-reference.md` / `topics/iv8-supplement-env-handbook.md`：把 WebGL、`wrapNative`、`__iv8__` 隐身、C++ 原生形态等表述降为 README/demos 可证范围；CreepJS 类组合指纹、真实 GPU 语义、`chrome.runtime`、ServiceWorker 标为待实测边界。
+- `topics/iv8-reverse-cases.md`：区分官方 examples（抖音/京东/腾讯防水墙/BOSS/瑞数等）与微信文章 Akamai 5 步迁移参考，避免混成同一证据等级。
+- `topics/ai-js-reverse-workflow.md` 与 `wiki/INDEX.md`：收敛为 iv8-first 主线：真实 Chrome 侦察 → 阶段路由 → iv8 离线出参 → Python HTTP 回灌。
+- `raw/README.md`：新增 `github/` 原始摘录目录说明并同步 sha256，避免源漂移误报。
+
+**复审后补充：**
+- `raw/github/HanZzzzz000iv8.md` 与 `raw/wechat/Python V8 原生扩展，重新定义 JS 逆向的玩法.md`：将 clipping 风格 frontmatter 规范化为 `source_url` / `ingested` / `sha256`，正文不改。
+- 原大写 GitHub raw 目录：规范化为小写 `raw/github/`，同步 wiki provenance 与 `raw/README.md`，避免目录规范冲突。

@@ -1,7 +1,7 @@
 ---
 source_url: ""
 ingested: 2026-04-29
-sha256: 0f948a84ceb419e534df0c1cfe2625abfd3956b4479fa8b38f0364f7088861a7
+sha256: 7a3bcf711ba02fb43081b06a9adfcc60ff485681c6536bec3b25ed2b3e0c30b5
 ---
 
 # raw/ 原始素材目录
@@ -11,16 +11,16 @@ sha256: 0f948a84ceb419e534df0c1cfe2625abfd3956b4479fa8b38f0364f7088861a7
 
 ## 目录说明
 
-| 目录 | 来源 | 内容 |
-|------|------|------|
-| `feishu/` | 飞书云文档 | Claude Code 技巧、插件、Claude.md 指南 |
-| `notion/` | Notion 工作区 | 按原始 Notion 结构细分 |
-| `notion/tech-stack/` | Notion → AI 技术栈 | ClaudeCode、OpenCode 等 |
-| `notion/tools/` | Notion → 工具使用 | Git 协助、分支操作 |
-| `notion/best-practices/` | Notion → 最佳实践 | 方法论和规范 |
-| `notion/articles/` | Notion → 文章收藏 | AI Agent、RAG、vibe-coding 等 |
-| `docs/` | 参考文档 | PDF、HTML 速查手册、迁移指南 |
-| `web/` | 网页文章 | Karpathy 知识库方法等 |
-| `wechat/` | 微信公众号 | 收藏的公众号文章（预留） |
-| `ai-chat/` | AI 对话沉淀 | 日常开发中与 AI 对话产出的有用文档 |
-| `claude-code-best-practice/` | GitHub 仓库 | shanraisshan 的 Claude Code 最佳实践 |
+| 目录                       | 来源              | 内容                              |
+| ------------------------ | --------------- | ------------------------------- |
+| `feishu/`                | 飞书云文档           | Claude Code 技巧、插件、Claude.md 指南  |
+| `notion/`                | Notion 工作区      | 按原始 Notion 结构细分                 |
+| `notion/tech-stack/`     | Notion → AI 技术栈 | ClaudeCode、OpenCode 等           |
+| `notion/tools/`          | Notion → 工具使用   | Git 协助、分支操作                     |
+| `notion/best-practices/` | Notion → 最佳实践   | 方法论和规范                          |
+| `notion/articles/`       | Notion → 文章收藏   | AI Agent、RAG、vibe-coding 等      |
+| `docs/`                  | 参考文档            | PDF、HTML 速查手册、迁移指南              |
+| `web/`                   | 网页文章            | Karpathy 知识库方法等                 |
+| `wechat/`                | 微信公众号           | 收藏的公众号文章（预留）                    |
+| `ai-chat/`               | AI 对话沉淀         | 日常开发中与 AI 对话产出的有用文档             |
+| `github/`                | GitHub 仓库       | GitHub 项目 README / docs 的原始摘录 |

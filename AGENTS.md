@@ -116,77 +116,74 @@
 <claude-mem-context>
 # Memory Context
 
-# [repository] recent context, 2026-06-01 1:34am GMT+8
+# [repository] recent context, 2026-06-02 2:09pm GMT+8
 
 Legend: 🎯session 🔴bugfix 🟣feature 🔄refactor ✅change 🔵discovery ⚖️decision 🚨security_alert 🔐security_note
 Format: ID TIME TYPE TITLE
 Fetch details: get_observations([IDs]) | Search: mem-search skill
 
-Stats: 50 obs (20,667t read) | 630,581t work | 97% savings
+Stats: 50 obs (10,636t read) | 0t work
 
-### May 21, 2026
-586 1:39a 🔄 Consolidated Codex migration guide to strategic overview with linked references
-S198 知识库规则重构与全库反链补齐：从 Hermes/Karpathy 标准出发，重新组织 wiki 结构，分离战略指南与操作参考，并建立页面间的语义关联 (May 21 at 1:39 AM)
-588 " ✅ Reorganized cross-references in CLAUDE.md mechanisms topic
-589 1:40a ✅ Consolidated cross-references across multiple wiki topics
-590 " 🔄 Compressed Agent Team architecture topic to meet size constraint
-591 " ✅ Removed trailing separator to achieve 200-line target
-592 " 🔵 Knowledge base restructuring completed with all topics meeting 200-line constraint
-593 1:41a ✅ Updated wiki INDEX.md to reflect new page count after restructuring
-594 " ✅ Updated wiki INDEX.md with new topics and refined descriptions
-595 " 🔵 Final verification of knowledge base restructuring results
-596 1:42a 🔵 Launched background task to complete wiki backlinks and eliminate isolated pages
-S200 Complete P2 phase verification and finalization for Karpathy LLM Wiki v2: validate file name normalization (32 raw files), SCHEMA repairs + sidecar metadata (3 files), page splitting (4→8 pages), and backlink completion (28 pages all linked). Execute final commit and push. (May 21 at 1:42 AM)
-597 " 🔵 Background task analyzing wiki page interconnections and wikilink distribution
-S202 Plan user-level graphify cleanup after project-level removal, with execution approval workflow (May 21 at 1:42 AM)
-609 1:56a 🔵 User-level graphify artifacts inventory
-610 " 🔵 Graphify cleanup scope detailed
-611 " 🔵 Project-level graphify references mapped
-S203 Clean up user-level graphify artifacts after project-level removal, with plan review and execution (May 21 at 1:57 AM)
-613 1:58a ✅ Graphify skill directory deleted
-614 " ✅ Graphify section removed from user CLAUDE.md
-S208 Remove deprecated /graphify skill references from knowledge base documentation (README and wiki) to prevent user confusion; preserve Karpathy knowledge management methodology (May 21 at 1:58 AM)
-S260 Delete misleading wechat-video-content-summary.md source article and clean up all derived wiki content that promoted the "compress CLAUDE.md to 60 lines" methodology (May 21 at 10:33 PM)
-### May 28, 2026
-903 12:53p 🔵 Contradictory CLAUDE.md guidance in wiki sourced from single WeChat video
-904 12:54p 🔵 Wiki dependency mapping: wechat-video source influences two CLAUDE.md-related topics
-905 12:55p 🔵 Explicit contradiction in claude-md-mechanisms.md conclusion vs wechat-video source claim
-906 " 🔵 INDEX.md stale timestamp and incomplete contradiction documentation
-907 " 🔵 Wiki log.md shows schema v2 migration but contradictions not yet recorded
-908 12:56p ⚖️ User intent: Delete wechat-video source and remediate downstream wiki pages
-909 " 🔵 Wechat-video source is single-point dependency with no cross-references in raw/ layer
-910 " 🔵 Wechat-video source file is tracked in git and ready for deletion
-911 12:57p ⚖️ Detailed remediation plan generated for wechat-video source deletion and wiki cleanup
-913 1:02p ⚖️ Revised plan to rewrite rather than delete "60-line simplification" section
-914 " ⚖️ Refined design decision: preserve methodology while removing prescriptive 60-line target
-915 1:03p ⚖️ Plan approved and ready for execution: wiki cleanup with source removal and methodology preservation
-916 " ✅ Deleted problematic source article about 60-line CLAUDE.md compression
-917 1:04p ✅ Updated claude-md-best-practices.md frontmatter to remove wechat source and adjust confidence
-918 " ✅ Updated main heading and INDEX.md entry to remove "60行精简法" references
-919 " ✅ Updated overview section to replace "60行精简法" with "组织方法"
-920 1:05p ✅ Rewrote section to remove 60-line compression target and Ali 厂长 attribution
-921 " ✅ Cleaned up claude-md-mechanisms.md to remove wechat source and 60-line references
-922 " ✅ Appended cleanup operation record to wiki log
-923 " 🔵 Verification complete: all misleading references removed from wiki content
-S261 Delete misleading wechat-video-content-summary.md source article about compressing CLAUDE.md to 60 lines, and clean up all derived wiki content promoting this flawed methodology (May 28 at 1:06 PM)
-924 1:07p 🔵 Git status shows cleanup changes staged and ready for commit
-925 " ✅ Cleanup changes committed to master branch
-926 " ✅ Cleanup changes pushed to remote repository
-S305 Optimize wiki documentation by auditing all pages for incorrect, outdated, or conflicting content; produce a prioritized modification recommendation document without making direct changes. (May 28 at 1:07 PM)
 ### Jun 1, 2026
-1461 12:52a 🔵 Wiki topics directory contains 17 markdown documents
 S306 Generate optimized prompt package for wiki audit task; design two-phase workflow (Phase 1: audit recommendations only, Phase 2: execute changes after approval). (Jun 1 at 12:59 AM)
-1462 1:03a ⚖️ Wiki Audit Workflow Architecture: Four-Phase Pipeline with Model Tiering
-S307 Wiki 全库内容审计 — 扫描 28 页 wiki，找出过时/错误/与官方冲突的内容，生成分级建议文档 (Jun 1 at 1:03 AM)
-1463 " 🔵 Wiki Inventory Complete: 31 Pages Across 5 Concept + 6 Entity + 19 Topic Categories
-1464 1:04a 🔵 Wiki Content Audit: 31 Pages Sampled, 3016 Total Lines, Confidence/Update Patterns Identified
-1465 " 🔵 Wiki Inventory Extraction Complete: 28 INDEX Pages vs 28 Actual Files, All Tags Registered
-1466 " 🔵 Phase 2 Mechanical Check: 4 Broken Wikilinks Detected, 0 Orphaned Pages, Perfect INDEX Alignment
-1467 1:05a 🔵 Phase 2 Mechanical Check Complete: INDEX Contains Wikilinks to SCHEMA and Wikilink Concept (Not Files)
-1468 " 🔵 Phase 2 Mechanical Check Final: 1 Broken Link (Placeholder Text), 0 Orphans, 0 Frontmatter Issues, 0 Long Pages
-1469 " 🔵 Broken Link Root Cause: Placeholder Text in karpathy-knowledge-base-sop.md Line 52
-1470 1:06a 🔵 Phase 2 Mechanical Check FINAL: 0 Actionable Broken Links (All Excluded: Anchors, Raw References, Placeholders)
-1471 " 🔵 Phase 3 Content Audit Ready: Official Documentation Verification Complete
-
-Access 631k tokens of past work via get_observations([IDs]) or mem-search skill.
+S307 Wiki 全库内容审计 — 扫描 28 页 wiki，找出过时/错误/与官方冲突的内容，生成分级建议文档 (Jun 1 at 1:00 AM)
+S309 Optimize personal knowledge base according to wiki audit suggestions from outputs/2026-06-01-wiki-audit-suggestions.md (Jun 1 at 1:03 AM)
+S310 Wiki 全库内容审计 → 修改建议文档。扫描 wiki/ 全部页面，找出内容不正确/过时/与官方文档冲突/内部不一致的点，产出建议文档。 (Jun 1 at 1:33 AM)
+### Jun 2, 2026
+S311 Execute git-quick workflow to commit and push comprehensive wiki audit corrections (Jun 2 at 12:01 AM)
+S315 Research iv8 JavaScript execution environment and create comprehensive wiki documentation focusing on environment补充 (environment patching) techniques and anti-scraping countermeasures (Jun 2 at 12:16 AM)
+S316 Deep analysis of iv8 (Python V8 runtime) and reverse-skill (AI-driven JS reverse-engineering) repositories to synthesize reusable knowledge clusters: iv8 supplement-env handbook + AI reverse-engineering 0→1 workflow guide with Node→iv8 technique mapping. (Jun 2 at 12:56 AM)
+S317 Deep reverse engineering knowledge synthesis: extract & orchestrate iv8 implementation documentation, reverse-skill JS逆向 methodology (17 references + AST handbook), ai-reverse-toolkit & js-reverse-mcp frameworks into unified wiki knowledge base via multi-phase workflow orchestration. (Jun 2 at 1:13 AM)
+S319 补写并整理 iv8 与 AI JS 逆向 wiki 知识簇，并同步索引与日志 (Jun 2 at 9:17 AM)
+S320 开启 fast 模式：确认现有上下文后，仅补充一小段 fast 模式规则，避免覆盖已有改动 (Jun 2 at 1:35 PM)
+1818 1:57p 🟣 h5st example packages the canonical iv8 replay recipe
+1819 " 🟣 abogus example confirms the Douyin netLog harvest pattern
+1820 " 🟣 tdc example combines vision, POW, and trusted pointer replay
+1817 " 🔵 iv8 逆向知识页的事实漂移与待校准点已定位
+1823 " ✅ iv8 实体页已补齐为可复用的补环境基座
+1824 " ✅ reverse-skill 实体页已收敛为“侦察 + 补环境”双层工作流
+1825 " ✅ iv8-first 逆向工作流与补环境手册已形成统一主线
+1829 1:58p 🟣 abogus example codifies the Douyin replay pattern
+1830 " 🟣 h5st example packages the canonical iv8 signing recipe
+1831 " 🟣 tdc example combines vision, POW, and trusted input replay
+1832 " 🟣 税务 and 药监局 examples mark the minimal iv8 footprint
+1833 " 🔵 Current wiki pages already encode the upstream boundaries and caveats
+1826 " 🔵 Context7 未收录 iv8，只能回退到 V8 与 Node.js 背景库
+1827 " ✅ js-reverse-mcp 实体页已固定为真实 Chrome 侦察层
+1828 " 🔵 iv8 / reverse-skill / js-reverse-mcp / ai-reverse-toolkit 的一手校验素材已定位
+1835 " ⚖️ jsr-reverse 的默认路由已收敛为七阶段工作脊柱
+1836 " ✅ reverse-skill README 已对齐统一入口与交接工件
+1837 " 🔵 iv8 仓库的一手 API 和 demo 证据已被确认
+1838 " 🔵 raw 源目录已收敛到一份 GitHub 与一份 WeChat 原始文件
+1834 1:59p 🔵 Issue #9 captures a Ruishu edge case where AJAX cookie validation fails
+1839 " 🔵 raw/GitHub 与 raw/wechat 源文件缺少摄入 frontmatter
+1840 " 🔵 jsr-reverse 的 stage 路由已固化为两步决策
+1841 " ✅ iv8 相关一手证据已从文案落到 demos/examples
+1842 " ⚖️ Context7 的 iv8 缺口已确认，后续只能借 V8/Node 背景补位
+1843 2:00p ✅ JS 逆向补环境概念页已抽象为通用方法论
+1844 " 🔵 当前 iv8 知识页规模受控，未触发单页拆分阈值
+1845 " 🔵 reverse-skill 仓库已形成完整的技能、参考与测试分层
+1846 2:01p ✅ iv8 相关断言已改为“可证能力 + 需实测边界”
+1847 " ✅ reverse-skill 实体页已对齐真实 stage spine 与入口来源
+1848 " ✅ 逆向工具与案例页的热度与职责边界已刷新
+1849 2:02p ✅ iv8 概念与实体页已收敛为“可证能力 + 实测边界”
+1850 " ✅ reverse-skill 实体页已对齐仓库本体与阶段主干
+1851 " ✅ js-reverse-mcp 与 ai-reverse-toolkit 的热度与定位已刷新
+1852 2:03p ✅ iv8 API 速查页已弱化过度承诺并强化实测边界
+1853 " ✅ iv8 补环境手册已去重并重排证据等级
+1854 " ✅ iv8 反爬案例库已标清官方 examples 与迁移参考边界
+1855 " ✅ iv8 API 速查页已收敛为“可证能力 + 实测边界”
+1858 2:04p ⚖️ Converged on IV8 reverse-engineering wiki goal
+1859 2:05p ✅ Wiki index and raw catalog updated for IV8 reverse-engineering corpus
+1860 " 🔵 Wiki corpus expanded with new iv8 and JS reverse-engineering pages
+1861 " 🔵 iv8 case pages now separate official examples from Akamai migration reference
+1862 2:06p 🔵 Wiki frontmatter validation script failed on missing Date constant
+1863 " 🔵 Wiki link audit exposed one false-positive wikilink and two dangling raw references
+1864 " 🔵 Raw corpus integrity check revealed widespread sha256 drift and missing frontmatter
+1865 2:07p 🔵 Wiki frontmatter validation exposed a tag taxonomy mismatch across the corpus
+1866 " 🔵 Wiki index parity check passed after filtering to navigation entries only
+1867 " 🔵 Wiki link validation now passes with raw provenance links excluded
+1868 " 🔵 Updated raw README checksum now matches the file body
+1869 " 🔵 Wiki schema now clearly defines the allowed tag taxonomy v2
+1870 " 🔵 Raw ingestion spec hashes only the post-frontmatter body
 </claude-mem-context>
